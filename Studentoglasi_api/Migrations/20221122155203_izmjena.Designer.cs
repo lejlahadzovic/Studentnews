@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentOglasi.Data;
 
@@ -11,9 +12,11 @@ using StudentOglasi.Data;
 namespace StudentOglasi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221122155203_izmjena")]
+    partial class izmjena
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,18 +243,46 @@ namespace StudentOglasi.Migrations
 
             modelBuilder.Entity("StudentOglasi.Models.Ocjena", b =>
                 {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int?>("FakultetID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FirmaID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SmjestajID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StipenditorID")
+                        .HasColumnType("int");
+
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SmjestajId")
+                    b.Property<int?>("UniverzitetID")
                         .HasColumnType("int");
 
                     b.Property<int>("Vrijednost")
                         .HasColumnType("int");
 
-                    b.HasKey("StudentId", "SmjestajId");
+                    b.HasKey("ID");
 
-                    b.HasIndex("SmjestajId");
+                    b.HasIndex("FakultetID");
+
+                    b.HasIndex("FirmaID");
+
+                    b.HasIndex("SmjestajID");
+
+                    b.HasIndex("StipenditorID");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("UniverzitetID");
 
                     b.ToTable("Ocjena");
                 });
@@ -780,11 +811,21 @@ namespace StudentOglasi.Migrations
 
             modelBuilder.Entity("StudentOglasi.Models.Ocjena", b =>
                 {
-                    b.HasOne("StudentOglasi.Models.Smjestaj", "Smjestaj")
+                    b.HasOne("StudentOglasi.Models.Fakultet", null)
                         .WithMany("Ocjene")
-                        .HasForeignKey("SmjestajId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FakultetID");
+
+                    b.HasOne("StudentOglasi.Models.Firma", null)
+                        .WithMany("Ocjene")
+                        .HasForeignKey("FirmaID");
+
+                    b.HasOne("StudentOglasi.Models.Smjestaj", null)
+                        .WithMany("Ocjene")
+                        .HasForeignKey("SmjestajID");
+
+                    b.HasOne("StudentOglasi.Models.Stipenditor", null)
+                        .WithMany("Ocjene")
+                        .HasForeignKey("StipenditorID");
 
                     b.HasOne("StudentOglasi.Models.Student", "Student")
                         .WithMany("OcjenaSmjestaja")
@@ -792,7 +833,9 @@ namespace StudentOglasi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Smjestaj");
+                    b.HasOne("StudentOglasi.Models.Univerzitet", null)
+                        .WithMany("Ocjene")
+                        .HasForeignKey("UniverzitetID");
 
                     b.Navigation("Student");
                 });
@@ -1036,6 +1079,26 @@ namespace StudentOglasi.Migrations
                         .IsRequired();
 
                     b.Navigation("Uposlenik");
+                });
+
+            modelBuilder.Entity("StudentOglasi.Models.Fakultet", b =>
+                {
+                    b.Navigation("Ocjene");
+                });
+
+            modelBuilder.Entity("StudentOglasi.Models.Firma", b =>
+                {
+                    b.Navigation("Ocjene");
+                });
+
+            modelBuilder.Entity("StudentOglasi.Models.Stipenditor", b =>
+                {
+                    b.Navigation("Ocjene");
+                });
+
+            modelBuilder.Entity("StudentOglasi.Models.Univerzitet", b =>
+                {
+                    b.Navigation("Ocjene");
                 });
 
             modelBuilder.Entity("StudentOglasi.Models.ReferentFakulteta", b =>
