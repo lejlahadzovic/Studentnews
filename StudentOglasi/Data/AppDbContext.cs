@@ -48,20 +48,6 @@ namespace StudentOglasi.Data
                 .HasForeignKey(r => r.StudentId);
 
 
-            modelBuilder.Entity<Ocjena>()
-                .HasKey(x => new { x.StudentId, x.SmjestajId });
-
-            modelBuilder.Entity<Ocjena>()
-            .HasOne(o => o.Smjestaj)
-            .WithMany(p => p.Ocjene)
-            .HasForeignKey(o => o.SmjestajId);
-
-            modelBuilder.Entity<Ocjena>()
-                .HasOne(o => o.Student)
-                .WithMany(t => t.OcjenaSmjestaja)
-                .HasForeignKey(o => o.StudentId);
-
-
             modelBuilder.Entity<PrijavaPraksa>()
                .HasKey(x => new { x.StudentId, x.PraksaId });
 
