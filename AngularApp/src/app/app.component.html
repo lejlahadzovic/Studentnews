@@ -1,0 +1,21 @@
+<p> Prikaz univerziteta</p>
+
+<table class="table table-bordered">
+  <thead >
+  <tr>
+    <th>Naziv</th>
+    <th>Email</th>
+    <th>Telefon</th>
+    <th>Veza </th>
+    <th>Grad</th>
+  </tr>
+
+  </thead>
+  <tr *ngFor="let x of getPodaci()">
+    <td>{{x.naziv}}</td>
+    <td>{{x.email}}</td>
+    <td>{{x.telefon}}</td>
+    <td>{{x.veza}}</td>
+    <td>{{x.grad}}</td>
+  </tr>
+</table>
