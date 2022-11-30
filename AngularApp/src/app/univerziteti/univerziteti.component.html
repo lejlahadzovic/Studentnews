@@ -1,0 +1,39 @@
+<p> Prikaz univerziteta</p>
+
+
+<table mat-table [dataSource]="podaci" class="mat-elevation-z8">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="naziv">
+    <th mat-header-cell *matHeaderCellDef> Naziv </th>
+    <td mat-cell *matCellDef="let element"> {{element.naziv}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef> Email </th>
+    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="telefon">
+    <th mat-header-cell *matHeaderCellDef> Broj telefona </th>
+    <td mat-cell *matCellDef="let element"> {{element.telefon}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="veza">
+    <th mat-header-cell *matHeaderCellDef> Link </th>
+    <td mat-cell *matCellDef="let element"> {{element.veza}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="grad">
+    <th mat-header-cell *matHeaderCellDef> Grad </th>
+    <td mat-cell *matCellDef="let element"> {{element.grad}} </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

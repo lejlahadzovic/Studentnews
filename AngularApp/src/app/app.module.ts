@@ -3,14 +3,33 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatTableModule} from "@angular/material/table";
+import { UniverzitetiComponent } from './univerziteti/univerziteti.component';
+import {RouterModule} from "@angular/router";
+import {FormsModule} from "@angular/forms";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import { FakultetiComponent } from './fakulteti/fakulteti.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UniverzitetiComponent,
+    FakultetiComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    RouterModule.forRoot([
+      {path: 'putanja-univerziteti', component: UniverzitetiComponent},
+      {path: 'putanja-fakulteti', component: FakultetiComponent}
+    ]),
+    FormsModule,
+    MatToolbarModule,
+    MatButtonToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

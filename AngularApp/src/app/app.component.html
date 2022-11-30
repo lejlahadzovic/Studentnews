@@ -1,21 +1,16 @@
-<p> Prikaz univerziteta</p>
+<mat-toolbar color="primary">
+  <span>StudentOglasi</span>
 
-<table class="table table-bordered">
-  <thead >
-  <tr>
-    <th>Naziv</th>
-    <th>Email</th>
-    <th>Telefon</th>
-    <th>Veza </th>
-    <th>Grad</th>
-  </tr>
+  <!-- This fills the remaining space of the current row -->
+  <span class="example-fill-remaining-space"></span>
+  <mat-button-toggle-group  name="fontStyle" aria-label="Font Style">
+    <mat-button-toggle routerLink="/putanja-univerziteti">Univerziteti</mat-button-toggle>
+    <mat-button-toggle   routerLink="/putanja-fakulteti">Fakulteti</mat-button-toggle>
 
-  </thead>
-  <tr *ngFor="let x of getPodaci()">
-    <td>{{x.naziv}}</td>
-    <td>{{x.email}}</td>
-    <td>{{x.telefon}}</td>
-    <td>{{x.veza}}</td>
-    <td>{{x.grad}}</td>
-  </tr>
-</table>
+  </mat-button-toggle-group>
+</mat-toolbar>
+
+<div >
+  <router-outlet></router-outlet>
+
+</div>
