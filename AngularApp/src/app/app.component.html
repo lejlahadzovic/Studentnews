@@ -6,6 +6,27 @@
   <mat-button-toggle-group  name="fontStyle" aria-label="Font Style">
     <mat-button-toggle routerLink="/putanja-univerziteti">Univerziteti</mat-button-toggle>
     <mat-button-toggle   routerLink="/putanja-fakulteti">Fakulteti</mat-button-toggle>
+    <mat-button-toggle mat-button [matMenuTriggerFor]="upravljanje">Upravljanje podacima</mat-button-toggle>
+    <mat-menu #upravljanje="matMenu">
+      <button mat-menu-item [matMenuTriggerFor]="korisnici">Korisnici</button>
+    </mat-menu>
+
+    <mat-menu #korisnici="matMenu">
+      <button mat-menu-item routerLink="/putanja-studenti">Studenti</button>
+      <button mat-menu-item routerLink="/putanja-izdavaci">Izdavači smještaja</button>
+      <button mat-menu-item [matMenuTriggerFor]="referenti">Referenti</button>
+      <button mat-menu-item [matMenuTriggerFor]="uposlenici">Uposlenici</button>
+    </mat-menu>
+
+    <mat-menu #referenti="matMenu">
+      <button mat-menu-item routerLink="/putanja-referentifakulteta">Referenti fakulteta</button>
+      <button mat-menu-item routerLink="/putanja-referentiuniverziteta">Referenti univerziteta</button>
+    </mat-menu>
+
+    <mat-menu #uposlenici="matMenu">
+      <button mat-menu-item routerLink="/putanja-uposleniciFirme">Uposlenici firmi</button>
+      <button mat-menu-item routerLink="/putanja-uposleniciStipenditora">Uposlenici stipenditora</button>
+    </mat-menu>
 
   </mat-button-toggle-group>
 </mat-toolbar>

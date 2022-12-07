@@ -1,0 +1,107 @@
+<div id="prikaz">
+  <h1>Uposlenici firmi</h1>
+  <button mat-raised-button color="primary" (click)="dodajUposlenika(); openDialog(dialogUposlenik)">
+    <mat-icon>add</mat-icon> Dodaj uposlenika
+  </button>
+  <br>
+
+  <mat-form-field appearance="standard" id="filterIme">
+    <mat-label>Ime i prezime</mat-label>
+    <input [(ngModel)]="filter_imePrezime" matInput placeholder="Ime i prezime" #input)>
+  </mat-form-field>
+
+  <table mat-table [dataSource]="getpodaci()" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="ime">
+      <th mat-header-cell *matHeaderCellDef> Ime </th>
+      <td mat-cell *matCellDef="let element"> {{element.ime}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="prezime">
+      <th mat-header-cell *matHeaderCellDef> Prezime </th>
+      <td mat-cell *matCellDef="let element"> {{element.prezime}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="firma">
+      <th mat-header-cell *matHeaderCellDef> Firma </th>
+      <td mat-cell *matCellDef="let element"> {{element.naziv_firme}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="pozicija">
+      <th mat-header-cell *matHeaderCellDef> Pozicija </th>
+      <td mat-cell *matCellDef="let element"> {{element.pozicija}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="akcije">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button (click)="editUposlenika(element); openDialog(dialogUposlenik)" color="primary" mat-icon-button>
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button (click)="obrisiUposlenika(element)" mat-icon-button color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+
+<ng-template #dialogUposlenik>
+  <h1>{{this.dialogtitle}}</h1>
+  <mat-dialog-content>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input matInput [(ngModel)]="this.uposlenik.username">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput [(ngModel)]="this.uposlenik.password">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Ime</mat-label>
+      <input matInput [(ngModel)]="this.uposlenik.ime">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Prezime</mat-label>
+      <input matInput [(ngModel)]="this.uposlenik.prezime">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="this.uposlenik.email">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Firma</mat-label>
+      <mat-select [(ngModel)]="this.uposlenik.firmaID" name="food">
+        <mat-option *ngFor="let firma of this.firmePodaci" [value]="firma.id">
+          {{firma.naziv}}
+        </mat-option>
+      </mat-select>
+
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Pozicija</mat-label>
+      <input matInput [(ngModel)]="this.uposlenik.pozicija">
+    </mat-form-field>
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
+    <button mat-raised-button mat-dialog-close [disabled]="validacija()" color="primary" (click)="snimi()">Snimi</button>
+  </mat-dialog-actions>
+</ng-template>
