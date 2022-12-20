@@ -20,6 +20,21 @@ namespace StudentOglasi.Controllers
         }
 
         [HttpGet]
+        public ActionResult GetKategorije()
+        {
+            var data = _dbContext.Kategorija
+                .OrderBy(s => s.Naziv)
+                .Select(s => new
+                {
+                    id = s.ID,
+                    naziv = s.Naziv
+
+                })
+                .AsQueryable();
+            return Ok(data.Take(100).ToList());
+        }
+
+        [HttpGet]
         public ActionResult GetAll()
         {
             var data = _dbContext.Fakultet
@@ -33,6 +48,48 @@ namespace StudentOglasi.Controllers
                     Veza = s.Link
 
 
+                })
+                .AsQueryable();
+            return Ok(data.Take(100).ToList());
+        }
+
+        [HttpGet]
+        public ActionResult GetFirme()
+        {
+            var data = _dbContext.Firma
+                .OrderBy(s => s.Naziv)
+                .Select(s => new
+                {
+                    id = s.ID,
+                    naziv = s.Naziv
+                })
+                .AsQueryable();
+            return Ok(data.Take(100).ToList());
+        }
+
+        [HttpGet]
+        public ActionResult GetStipenditori()
+        {
+            var data = _dbContext.Stipenditor
+                .OrderBy(s => s.Naziv)
+                .Select(s => new
+                {
+                    id = s.ID,
+                    naziv = s.Naziv
+                })
+                .AsQueryable();
+            return Ok(data.Take(100).ToList());
+        }
+
+        [HttpGet]
+        public ActionResult GetGradovi()
+        {
+            var data = _dbContext.Grad
+                .OrderBy(s => s.Naziv)
+                .Select(s => new
+                {
+                    id = s.ID,
+                    naziv = s.Naziv
                 })
                 .AsQueryable();
             return Ok(data.Take(100).ToList());

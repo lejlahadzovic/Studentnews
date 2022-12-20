@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentOglasi.Data;
 
@@ -11,9 +12,11 @@ using StudentOglasi.Data;
 namespace StudentOglasi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221213114908_izmjena213")]
+    partial class izmjena213
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -291,10 +294,6 @@ namespace StudentOglasi.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("Naslov")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Opis")
                         .IsRequired()
@@ -675,8 +674,9 @@ namespace StudentOglasi.Migrations
                     b.Property<int>("BrojSoba")
                         .HasColumnType("int");
 
-                    b.Property<double>("Cijena")
-                        .HasColumnType("float");
+                    b.Property<string>("Cijena")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DodatneUsluge")
                         .IsRequired()
@@ -712,8 +712,9 @@ namespace StudentOglasi.Migrations
                     b.Property<int>("BrojStipendisata")
                         .HasColumnType("int");
 
-                    b.Property<double>("Iznos")
-                        .HasColumnType("float");
+                    b.Property<string>("Iznos")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Izvor")
                         .IsRequired()

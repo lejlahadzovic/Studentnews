@@ -31,6 +31,8 @@ app.UseCors(
         .AllowCredentials()
 ); //This needs to set everything allowed
 
+app.UseStaticFiles();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

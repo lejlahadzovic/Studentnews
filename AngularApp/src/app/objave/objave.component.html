@@ -1,0 +1,104 @@
+<div id="prikaz">
+  <h1>Objave</h1>
+  <button mat-raised-button color="primary" (click)="dodajObjavu(); openDialog(dialogObjava)">
+    <mat-icon>add</mat-icon> Dodaj objavu
+  </button>
+  <br>
+
+  <mat-form-field appearance="standard" id="filterNaziv">
+    <mat-label>Naziv</mat-label>
+    <input [(ngModel)]="filter_naziv" matInput placeholder="Naziv" #input)>
+  </mat-form-field>
+
+  <mat-form-field appearance="standard" id="filterKategorija">
+    <mat-label>Kategorija</mat-label>
+    <mat-select [(ngModel)]="this.filter_kategorija">
+      <mat-option *ngFor="let kategorija of this.kategorijePodaci" [value]="kategorija.id">
+        {{kategorija.naziv}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="accent" (click)="this.restart()" style="margin-left: 1%">Ukloni filtere</button>
+
+  <table mat-table [dataSource]="getpodaci()" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="naslov">
+      <th mat-header-cell *matHeaderCellDef> Naslov </th>
+      <td mat-cell *matCellDef="let element"> {{element.naslov}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sadrzaj">
+      <th mat-header-cell *matHeaderCellDef> Sadržaj </th>
+      <td mat-cell *matCellDef="let element"> {{element.sadrzaj}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="kategorija">
+      <th mat-header-cell *matHeaderCellDef> Kategorija</th>
+      <td mat-cell *matCellDef="let element"> {{element.naziv_kategorije}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="datumVrijeme">
+      <th mat-header-cell *matHeaderCellDef> Datum objave </th>
+      <td mat-cell *matCellDef="let element"> {{element.vrijemeObjave}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="akcije">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button (click)="editObjave(element); openDialog(dialogObjava)" color="primary" mat-icon-button>
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button (click)="obrisiObjavu(element)" mat-icon-button color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+</div>
+
+<ng-template #dialogObjava>
+  <h1>{{this.dialogtitle}}</h1>
+
+  <mat-dialog-content>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Naslov</mat-label>
+      <input matInput [(ngModel)]="this.objava.naslov">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Sadržaj</mat-label>
+      <textarea  matInput [(ngModel)]="this.objava.sadrzaj"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Kategorija</mat-label>
+      <mat-select [(ngModel)]="this.objava.kategorijaID" name="food">
+        <mat-option *ngFor="let kategorija of this.kategorijePodaci" [value]="kategorija.id">
+          {{kategorija.naziv}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="imagePreview" *ngIf="slikaURL && slikaURL !== ''">
+      <img [src]="this.slikaURL" alt="profile picture" style="width:250px; height:150px;">
+    </div>
+
+    <div class="col-md-3">
+      <input type="file" #file placeholder="Choose file" (change)="chooseFile(file.files)" style="display:none;">
+      <button mat-raised-button color="primary" (click)="file.click()">Dodaj sliku</button>
+    </div>
+
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close color="warn">Odustani</button>
+    <button mat-raised-button mat-dialog-close color="primary" [disabled]="validacija()" color="primary" (click)="snimi()">Snimi</button>
+  </mat-dialog-actions>
+</ng-template>
+

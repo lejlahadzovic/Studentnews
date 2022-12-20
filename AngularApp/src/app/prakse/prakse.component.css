@@ -1,0 +1,32 @@
+#prikaz{
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+}
+.mat-form-field{
+  font-size: 14px;
+  width: 100%;
+}
+table{
+  width: 100%;
+}
+th.mat-header-cell, td{
+  text-align: center;
+}
+#datum{
+  width: 35%;
+}
+#datumTrajanje{
+  width: 55%;
+  margin-left: 10%;
+}
+textarea{
+  width: 100%;
+  height: 100px;
+}
+#filterFirma{
+  width: 35%;
+}
+#filterPlacena{
+  margin-left: 5%;
+}

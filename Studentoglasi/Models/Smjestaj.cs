@@ -5,11 +5,10 @@ namespace StudentOglasi.Models
     [Table("Smjestaj")]
     public class Smjestaj : Oglas
     {
-        public string Cijena { get; set; }
+        public double Cijena { get; set; }
         public int Kapacitet { get; set; }
         public string DodatneUsluge { get; set; }
         public int BrojSoba { get; set; }
-        public string Slika { get; set; }
         public bool Parking { get; set; }
         public string NacinGrijanja { get; set; }
         [ForeignKey("GradID")]

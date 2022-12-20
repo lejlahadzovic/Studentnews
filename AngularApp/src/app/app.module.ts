@@ -25,6 +25,13 @@ import { ReferentiUniverzitetaComponent } from './referenti-univerziteta/referen
 import { UposleniciFirmeComponent } from './uposlenici-firme/uposlenici-firme.component';
 import {MatMenuModule} from "@angular/material/menu";
 import { UposleniciStipenditoraComponent } from './uposlenici-stipenditora/uposlenici-stipenditora.component';
+import { ObjaveComponent } from './objave/objave.component';
+import { PrakseComponent } from './prakse/prakse.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { StipendijeComponent } from './stipendije/stipendije.component';
+import { SmjestajiComponent } from './smjestaji/smjestaji.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +43,11 @@ import { UposleniciStipenditoraComponent } from './uposlenici-stipenditora/uposl
     ReferentiFakultetaComponent,
     ReferentiUniverzitetaComponent,
     UposleniciFirmeComponent,
-    UposleniciStipenditoraComponent
+    UposleniciStipenditoraComponent,
+    ObjaveComponent,
+    PrakseComponent,
+    StipendijeComponent,
+    SmjestajiComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +62,11 @@ import { UposleniciStipenditoraComponent } from './uposlenici-stipenditora/uposl
       {path: 'putanja-referentifakulteta', component: ReferentiFakultetaComponent},
       {path: 'putanja-referentiuniverziteta', component: ReferentiUniverzitetaComponent},
       {path: 'putanja-uposleniciFirme', component: UposleniciFirmeComponent},
-      {path: 'putanja-uposleniciStipenditora', component: UposleniciStipenditoraComponent}
+      {path: 'putanja-uposleniciStipenditora', component: UposleniciStipenditoraComponent},
+      {path: 'putanja-objave', component: ObjaveComponent},
+      {path: 'putanja-prakse', component: PrakseComponent},
+      {path: 'putanja-stipendije', component: StipendijeComponent},
+      {path: 'putanja-smjestaji', component: SmjestajiComponent}
     ]),
     FormsModule,
     MatToolbarModule,
@@ -64,7 +79,10 @@ import { UposleniciStipenditoraComponent } from './uposlenici-stipenditora/uposl
     ReactiveFormsModule,
     MatGridListModule,
     MatDialogModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

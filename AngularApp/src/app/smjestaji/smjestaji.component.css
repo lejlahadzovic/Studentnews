@@ -1,0 +1,38 @@
+#prikaz{
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+}
+.mat-form-field{
+  font-size: 14px;
+  width: 100%;
+}
+table{
+  width: 100%;
+}
+th.mat-header-cell, td{
+  text-align: center;
+}
+#naslov{
+  width: 60%;
+}
+#usluge{
+  width: 65%;
+}
+#rokPrijave{
+  width: 35%;
+  margin-left: 5%;
+}
+#cijena,#grad,#filterGrad{
+  width: 30%;
+}
+#filterIzdavac{
+  width: 30%;
+  margin-left: 1%;
+}
+#brojSoba,#kapacitet,#parking,#nacinGrijanja, #izdavac{
+  width: 30%;
+  margin-left: 5%;
+}
+
+

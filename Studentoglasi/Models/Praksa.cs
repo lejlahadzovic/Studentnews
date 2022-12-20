@@ -5,7 +5,8 @@ namespace StudentOglasi.Models
     [Table("Praksa")]
     public class Praksa:Oglas
     {
-        public DateTime Trajanje { get; set; }
+        public DateTime PocetakPrakse { get; set; }
+        public DateTime KrajPrakse { get; set; }
         public string Kvalifikacije { get; set; }
         public string Benefiti { get; set; }
         public bool Placena { get; set; }

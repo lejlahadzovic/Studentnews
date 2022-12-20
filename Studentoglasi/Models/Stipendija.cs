@@ -7,7 +7,7 @@ namespace StudentOglasi.Models
     public class Stipendija:Oglas
     {
         public string Uslovi { get; set; }
-        public string Iznos { get; set; }
+        public double Iznos { get; set; }
         public string Kriterij { get; set; }
         public string PotrebnaDokumentacija { get; set; }
         public string Izvor { get; set; }

@@ -1,0 +1,24 @@
+#prikaz{
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+}
+#filterNaziv, #filterKategorija{
+  width: 25%;
+}
+#filterKategorija{
+  margin-left: 1%;
+}
+table{
+  width: 100%;
+}
+th.mat-header-cell, td{
+  text-align: center;
+}
+.mat-form-field{
+  font-size: 14px;
+  width: 100%;
+}
+textarea{
+  height: 100px;
+}
