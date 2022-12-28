@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentOglasi.Data;
 
@@ -11,9 +12,11 @@ using StudentOglasi.Data;
 namespace StudentOglasi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221227131243_korisnikUloge")]
+    partial class korisnikUloge
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,31 +24,6 @@ namespace StudentOglasi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("StudentOglasi.Autentifikacija.Models.AutentifikacijaToken", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<int>("KorisnikId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("vrijednost")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("vrijemeEvidentiranja")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("KorisnikId");
-
-                    b.ToTable("AutentifikacijaToken");
-                });
 
             modelBuilder.Entity("StudentOglasi.Models.Fakultet", b =>
                 {
@@ -770,17 +748,6 @@ namespace StudentOglasi.Migrations
                     b.HasIndex("UposlenikID");
 
                     b.ToTable("Stipendija");
-                });
-
-            modelBuilder.Entity("StudentOglasi.Autentifikacija.Models.AutentifikacijaToken", b =>
-                {
-                    b.HasOne("StudentOglasi.Models.Korisnik", "korisnik")
-                        .WithMany()
-                        .HasForeignKey("KorisnikId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("korisnik");
                 });
 
             modelBuilder.Entity("StudentOglasi.Models.Fakultet", b =>

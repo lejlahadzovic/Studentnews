@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StudentOglasi.Autentifikacija.Models;
 using StudentOglasi.Models;
 
 namespace StudentOglasi.Data
@@ -32,6 +33,7 @@ namespace StudentOglasi.Data
         public DbSet<Ocjena> Ocjena { get; set; }
         public DbSet<PrijavaPraksa> PrijavaPraksa { get; set; }
         public DbSet<PrijavaStipendija> PrijavaStipendija { get; set; }
+        public DbSet<AutentifikacijaToken> AutentifikacijaToken { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Rezervacija>()

@@ -42,9 +42,44 @@
     </mat-menu>
 
   </mat-button-toggle-group>
+  <p *ngIf="loginInfo().isLogiran==true">
+  <button style="position: absolute; right: 5%;top: 15px;" mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <span>Profil</span>
+    </button>
+    <button mat-menu-item  (click)="logout()">
+      <span>Odjavi se</span>
+    </button>
+  </mat-menu>
+  </p>
+  <p *ngIf="loginInfo().isLogiran==false">
+    <button mat-raised-button style="position: absolute; right: 5%;top: 15px;" (click)="openDialog(dialogLogin)">
+      Prijavi se</button>
+  </p>
 </mat-toolbar>
 
 <div >
   <router-outlet></router-outlet>
 
 </div>
+
+<ng-template #dialogLogin>
+  <h1>Prijavi se</h1>
+  <mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Korisnicko ime</mat-label>
+    <input matInput placeholder="Korisnicko ime" [(ngModel)]="username" name="username" required>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Lozinka</mat-label>
+    <input matInput type="password" placeholder="Lozinka" [(ngModel)]="password" name="Lozinka" required>
+  </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close color="primary" (click)="btnLogin()">Login</button>
+  </mat-dialog-actions>
+</ng-template>
