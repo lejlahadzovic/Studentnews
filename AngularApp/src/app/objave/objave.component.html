@@ -66,17 +66,12 @@
 
   <mat-dialog-content>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" id="naslov">
       <mat-label>Naslov</mat-label>
       <input matInput [(ngModel)]="this.objava.naslov">
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Sadržaj</mat-label>
-      <textarea  matInput [(ngModel)]="this.objava.sadrzaj"></textarea>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" id="kategorija">
       <mat-label>Kategorija</mat-label>
       <mat-select [(ngModel)]="this.objava.kategorijaID" name="food">
         <mat-option *ngFor="let kategorija of this.kategorijePodaci" [value]="kategorija.id">
@@ -85,13 +80,16 @@
       </mat-select>
     </mat-form-field>
 
-    <div class="imagePreview" *ngIf="slikaURL && slikaURL !== ''">
-      <img [src]="this.slikaURL" alt="profile picture" style="width:250px; height:150px;">
-    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Sadržaj</mat-label>
+      <textarea  matInput [(ngModel)]="this.objava.sadrzaj"></textarea>
+    </mat-form-field>
 
-    <div class="col-md-3">
+    <div class="slika" *ngIf="slikaURL && slikaURL !== ''">
+      <img [src]="this.slikaURL" alt="profile picture" style="max-width: 100%;height: 450px">
       <input type="file" #file placeholder="Choose file" (change)="chooseFile(file.files)" style="display:none;">
-      <button mat-raised-button color="primary" (click)="file.click()">Dodaj sliku</button>
+      <button style="display:block; position: relative;top: -50px;left: 8px;"  mat-raised-button color="primary" (click)="file.click()">
+        Dodaj sliku</button>
     </div>
 
 

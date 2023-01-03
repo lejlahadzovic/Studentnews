@@ -15,6 +15,8 @@ export class UposleniciStipenditoraComponent implements OnInit {
   dialogtitle: any;
   filter_imePrezime= '';
   stipenditoriPodaci: any;
+  slika:any;
+  slikaURL:string="assets/Images/User%20icon.png";
 
   constructor(private httpKlijent:HttpClient,private dialog: MatDialog) { }
 
@@ -29,7 +31,7 @@ export class UposleniciStipenditoraComponent implements OnInit {
     }));
   }
   getStipenditori() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/F/GetAll").subscribe(((x: any) => {
+    this.httpKlijent.get(MojConfig.adresa_servera + "/F/GetStipenditori").subscribe(((x: any) => {
       this.stipenditoriPodaci = x;
     }));
   }
@@ -49,6 +51,8 @@ export class UposleniciStipenditoraComponent implements OnInit {
 
   dodajUposlenika() {
     this.dialogtitle='Dodaj uposlenika';
+    this.slikaURL="assets/Images/User%20icon.png";
+    this.slika=null;
     this.uposlenik={
       id:0,
       password:'',
@@ -61,7 +65,16 @@ export class UposleniciStipenditoraComponent implements OnInit {
   }
 
   snimi() {
-    this.httpKlijent.post(MojConfig.adresa_servera+"/UposlenikStipenditora/Snimi",this.uposlenik).subscribe((s:any)=>{
+    const formData = new FormData();
+    formData.append('id', this.uposlenik.id);
+    formData.append('slika', this.slika);
+    formData.append('password', this.uposlenik.password);
+    formData.append('username', this.uposlenik.username);
+    formData.append('ime', this.uposlenik.ime);
+    formData.append('prezime', this.uposlenik.prezime);
+    formData.append('email', this.uposlenik.email);
+    formData.append('stipenditorID', this.uposlenik.stipenditorID);
+    this.httpKlijent.post(MojConfig.adresa_servera+"/UposlenikStipenditora/Snimi",formData).subscribe((s:any)=>{
       this.getUposlenici();
     })
   }
@@ -77,11 +90,26 @@ export class UposleniciStipenditoraComponent implements OnInit {
   editUposlenika(x:any) {
     this.dialogtitle='Edit uposlenika';
     this.uposlenik=x;
+    if(this.uposlenik.slika!=null && this.uposlenik.slika!='') {
+      this.slikaURL = MojConfig.SlikePutanja + this.uposlenik.slika;
+    }
+    else{
+      this.slikaURL="assets/Images/User%20icon.png";
+    }
   }
 
   obrisiUposlenika(x:any) {
-    this.httpKlijent.post(MojConfig.adresa_servera+"/UposlenikStipenditora/Obrisi",x).subscribe((s:any)=>{
+    this.httpKlijent.post(MojConfig.adresa_servera+"/UposlenikStipenditora/Obrisi",x.id).subscribe((s:any)=>{
       this.getUposlenici();
     })
+  }
+  chooseFile(files: any) {
+    this.slika = files[0];
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.slikaURL = reader.result as string;
+    }
+    reader.readAsDataURL(this.slika)
   }
 }

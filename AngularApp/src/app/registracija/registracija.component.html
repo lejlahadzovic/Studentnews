@@ -1,0 +1,220 @@
+<div id="prikaz">
+
+
+
+  <input type="file" #file placeholder="Choose file" (change)="chooseFile(file.files)" style="display:none;">
+  <div class="container" (click)="file.click()">
+    <img class="image" [src]="this.slikaURL">
+    <div class="overlay">
+      <div class="text">Dodaj sliku</div>
+    </div>
+  </div>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Username</mat-label>
+    <input matInput [(ngModel)]="this.username">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Password</mat-label>
+    <input matInput type="password" [(ngModel)]="this.password">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Tip korisnika</mat-label>
+    <mat-select [(value)]="tipKorisnika" disableRipple>
+      <mat-option value="student">Student</mat-option>
+      <mat-option value="izdavac">Izdavač smještaja</mat-option>
+      <mat-option value="referentFakulteta">Referent fakulteta</mat-option>
+      <mat-option value="referentUniverziteta">Referent univerziteta</mat-option>
+      <mat-option value="uposlenikFirme">Uposlenik firme</mat-option>
+      <mat-option value="uposlenikStipenditora">Uposlenik stipenditora</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+
+  <div *ngIf="tipKorisnika=='student'">
+    <mat-form-field appearance="fill">
+      <mat-label>Broj indeksa</mat-label>
+      <input matInput [(ngModel)]="this.broj_indeksa">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Ime</mat-label>
+      <input matInput [(ngModel)]="this.ime">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Prezime</mat-label>
+      <input matInput [(ngModel)]="this.prezime">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Fakultet</mat-label>
+      <mat-select [(ngModel)]="fakultetID" name="food">
+        <mat-option *ngFor="let fakultet of this.fakultetiPodaci" [value]="fakultet.id">
+          {{fakultet.naziv}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Godina studija</mat-label>
+      <mat-select [(value)]="godinaStudija" disableRipple>
+        <mat-option value="1">1. godina</mat-option>
+        <mat-option value="2">2. godina</mat-option>
+        <mat-option value="3">3. godina</mat-option>
+        <mat-option value="4">4. godina</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Način studiranja</mat-label>
+      <mat-select [(value)]="nacin_studiranja" disableRipple>
+        <mat-option value="Redovan student">Redovan student</mat-option>
+        <mat-option value="DL student">DL student</mat-option>
+        <mat-option value="Vanredni studenti">Vanredni studenti</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="tipKorisnika=='izdavac'">
+
+    <mat-form-field appearance="fill">
+      <mat-label>Ime</mat-label>
+      <input matInput [(ngModel)]="this.ime">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Prezime</mat-label>
+      <input matInput [(ngModel)]="this.prezime">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="this.email">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Broj telefona</mat-label>
+      <input matInput [(ngModel)]="this.broj_telefona">
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="tipKorisnika=='referentFakulteta'">
+
+    <mat-form-field appearance="fill">
+      <mat-label>Ime</mat-label>
+      <input matInput [(ngModel)]="this.ime">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Prezime</mat-label>
+      <input matInput [(ngModel)]="this.prezime">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="this.email">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Fakultet</mat-label>
+      <mat-select [(ngModel)]="this.fakultetID">
+        <mat-option *ngFor="let fakultet of this.fakultetiPodaci" [value]="fakultet.id">
+          {{fakultet.naziv}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="tipKorisnika=='referentUniverziteta'">
+
+    <mat-form-field appearance="fill">
+      <mat-label>Ime</mat-label>
+      <input matInput [(ngModel)]="this.ime">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Prezime</mat-label>
+      <input matInput [(ngModel)]="this.prezime">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="this.email">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Univerzitet</mat-label>
+      <mat-select [(ngModel)]="this.univerzitetID">
+        <mat-option *ngFor="let univerzitet of this.univerzitetiPodaci" [value]="univerzitet.id">
+          {{univerzitet.naziv}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="tipKorisnika=='uposlenikFirme'">
+
+    <mat-form-field appearance="fill">
+      <mat-label>Ime</mat-label>
+      <input matInput [(ngModel)]="this.ime">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Prezime</mat-label>
+      <input matInput [(ngModel)]="this.prezime">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="this.email">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Firma</mat-label>
+      <mat-select [(ngModel)]="this.firmaID" name="food">
+        <mat-option *ngFor="let firma of this.firmePodaci" [value]="firma.id">
+          {{firma.naziv}}
+        </mat-option>
+      </mat-select>
+
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Pozicija</mat-label>
+      <input matInput [(ngModel)]="this.pozicija">
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="tipKorisnika=='uposlenikStipenditora'">
+
+    <mat-form-field appearance="fill">
+      <mat-label>Ime</mat-label>
+      <input matInput [(ngModel)]="this.ime">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Prezime</mat-label>
+      <input matInput [(ngModel)]="this.prezime">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="this.email">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Stipenditor</mat-label>
+      <mat-select [(ngModel)]="this.stipenditorID" name="food">
+        <mat-option *ngFor="let stipenditor of this.stipenditoriPodaci" [value]="stipenditor.id">
+          {{stipenditor.naziv}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+  <button mat-raised-button [disabled]="validacija()" color="primary" (click)="snimi()">Registruj se</button>
+</div>

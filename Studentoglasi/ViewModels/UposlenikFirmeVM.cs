@@ -11,5 +11,6 @@
         public string pozicija { get; set; }
         public int firmaID { get; set; }
         public string? naziv_firme { get; set; }
+        public IFormFile? slika { get; set; }
     }
 }

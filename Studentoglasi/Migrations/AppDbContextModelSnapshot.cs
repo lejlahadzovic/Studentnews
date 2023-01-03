@@ -200,7 +200,6 @@ namespace StudentOglasi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Slika")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")

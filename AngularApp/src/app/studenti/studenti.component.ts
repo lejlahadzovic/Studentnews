@@ -3,6 +3,7 @@ import {MojConfig} from "../MojConfig";
 import {HttpClient} from "@angular/common/http";
 import {MatDialog} from '@angular/material/dialog';
 
+
 @Component({
   selector: 'app-studenti',
   templateUrl: './studenti.component.html',
@@ -16,6 +17,9 @@ export class StudentiComponent implements OnInit {
   filter_brojIndeksa= '';
   filter_imePrezime= '';
   fakultetiPodaci: any;
+  slika:any;
+  slikaURL:string="assets/Images/User%20icon.png";
+
 
   constructor(private httpKlijent:HttpClient,private dialog: MatDialog) {
 
@@ -25,7 +29,6 @@ export class StudentiComponent implements OnInit {
     this.getStudenti();
     this.getFakulteti();
   }
-
   getStudenti() {
     this.httpKlijent.get(MojConfig.adresa_servera + "/Student/GetAll").subscribe(((x: any) => {
       this.studentiPodaci = x;
@@ -55,6 +58,8 @@ export class StudentiComponent implements OnInit {
 
   dodajStudenta() {
     this.dialogtitle='Dodaj studenta';
+    this.slikaURL="assets/Images/User%20icon.png";
+    this.slika=null;
     this.student={
       id:0,
       password:'',
@@ -62,14 +67,25 @@ export class StudentiComponent implements OnInit {
       ime:'',
       prezime:'',
       broj_indeksa:'',
-      godinaStudija: 0,
+      godinaStudija: 1,
       nacin_studiranja:'Redovan student',
       fakultetID: 1
     }
   }
 
   snimi() {
-    this.httpKlijent.post(MojConfig.adresa_servera+"/Student/Snimi",this.student).subscribe((s:any)=>{
+    const formData = new FormData();
+    formData.append('id', this.student.id);
+    formData.append('password', this.student.password);
+    formData.append('username', this.student.username);
+    formData.append('ime', this.student.ime);
+    formData.append('prezime', this.student.prezime);
+    formData.append('broj_indeksa', this.student.broj_indeksa);
+    formData.append('godinaStudija', this.student.godinaStudija);
+    formData.append('nacin_studiranja', this.student.nacin_studiranja);
+    formData.append('fakultetID', this.student.fakultetID);
+    formData.append('slika',this.slika);
+    this.httpKlijent.post(MojConfig.adresa_servera+"/Student/Snimi",formData).subscribe((s:any)=>{
       this.getStudenti();
     })
   }
@@ -86,11 +102,27 @@ export class StudentiComponent implements OnInit {
   editStudenta(s:any) {
     this.dialogtitle='Edit studenta';
     this.student=s;
+    if(this.student.slika!=null) {
+      this.slikaURL = MojConfig.SlikePutanja + this.student.slika;
+    }
+    else{
+      this.slikaURL="assets/Images/User%20icon.png";
+    }
   }
 
   obrisiStudenta(s:any) {
-    this.httpKlijent.post(MojConfig.adresa_servera+"/Student/Obrisi",s).subscribe((s:any)=>{
+    this.httpKlijent.post(MojConfig.adresa_servera+"/Student/Obrisi",s.id).subscribe((s:any)=>{
       this.getStudenti();
     })
+  }
+
+  chooseFile(files: any) {
+    this.slika = files[0];
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.slikaURL = reader.result as string;
+    }
+    reader.readAsDataURL(this.slika)
   }
 }

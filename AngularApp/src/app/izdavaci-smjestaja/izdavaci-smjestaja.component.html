@@ -53,6 +53,15 @@
 <ng-template #dialogIzdavac>
   <h1>{{this.dialogtitle}}</h1>
   <mat-dialog-content>
+
+    <input type="file" #file placeholder="Choose file" (change)="chooseFile(file.files)" style="display:none;">
+    <div class="container" (click)="file.click()">
+      <img class="image" [src]="this.slikaURL">
+      <div class="overlay">
+        <div class="text">Dodaj sliku</div>
+      </div>
+    </div>
+
     <mat-form-field appearance="fill">
       <mat-label>Username</mat-label>
       <input matInput [(ngModel)]="this.izdavac.username">
@@ -60,7 +69,7 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Password</mat-label>
-      <input matInput [(ngModel)]="this.izdavac.password">
+      <input type="password" matInput [(ngModel)]="this.izdavac.password">
     </mat-form-field>
 
     <mat-form-field appearance="fill">

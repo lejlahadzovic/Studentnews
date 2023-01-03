@@ -74,9 +74,10 @@ namespace StudentOglasi.Controllers
 
                     var filename = $"{Guid.NewGuid()}{ekstenzija}";
 
-                    x.slika.CopyTo(new FileStream(Config.SlikeFolder + filename, FileMode.Create));
+                    var myFile = new FileStream(Config.SlikeFolder + filename, FileMode.Create);
+                    x.slika.CopyTo(myFile);
                     smjestaj.Slika = filename;
-
+                    myFile.Close();
                 }
                 _dbContext.SaveChanges();
                 return Ok(smjestaj);
@@ -119,14 +120,13 @@ namespace StudentOglasi.Controllers
         public ActionResult Obrisi([FromBody] int id)
         {
             Smjestaj x = _dbContext.Smjestaj.Find(id);
+                string webRootPath = _hostingEnvironment.WebRootPath;
+                var fullPath = webRootPath + "/Slike/" + x.Slika;
 
-            string webRootPath = _hostingEnvironment.WebRootPath;
-            var fullPath = webRootPath + "/Slike/" + x.Slika;
-
-            if (System.IO.File.Exists(fullPath))
-            {
-                System.IO.File.Delete(fullPath);
-            }
+                if (System.IO.File.Exists(fullPath))
+                {
+                    System.IO.File.Delete(fullPath);
+                }
 
             _dbContext.Remove(x);
             _dbContext.SaveChanges();

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using StudentOglasi.Data;
 using StudentOglasi.Models;
 using StudentOglasi.ViewModels;
+using StudentOglasi.Helper;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace StudentOglasi.Controllers
 {
@@ -11,57 +13,102 @@ namespace StudentOglasi.Controllers
     public class IzdavacSmjestajaController : ControllerBase
     {
         private readonly AppDbContext _dbContext;
-        public IzdavacSmjestajaController(AppDbContext dbContext)
+        private readonly IHostingEnvironment _hostingEnvironment;
+        public IzdavacSmjestajaController(AppDbContext dbContext, IHostingEnvironment hostingEnvironment)
         {
             _dbContext = dbContext;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [HttpPost]
-        public ActionResult Snimi([FromBody] IzdavacSmjestajaVM x)
+        public ActionResult Snimi([FromForm] IzdavacSmjestajaVM x)
         {
-            IzdavacSmjestaja izdavac;
-            if (x.id == 0)
+            try
             {
-                izdavac = new IzdavacSmjestaja();
-                _dbContext.Add(izdavac);
-            }
-            else
-            {
-                izdavac = _dbContext.IzdavacSmjestaja.Find(x.id);
-            }
-            izdavac.Username = x.username;
-            izdavac.Password = x.password;
-            izdavac.Ime = x.ime;
-            izdavac.Prezime = x.prezime;
-            izdavac.Telefon = x.broj_telefona;
-            izdavac.Email = x.email;
+                bool edit = false;
+                IzdavacSmjestaja izdavac;
+                if (x.id == 0)
+                {
+                    izdavac = new IzdavacSmjestaja();
+                    _dbContext.Add(izdavac);
+                }
+                else
+                {
+                    izdavac = _dbContext.IzdavacSmjestaja.Find(x.id);
+                    edit = true;
+                }
+                izdavac.Username = x.username;
+                izdavac.Password = x.password;
+                izdavac.Ime = x.ime;
+                izdavac.Prezime = x.prezime;
+                izdavac.Telefon = x.broj_telefona;
+                izdavac.Email = x.email;
+                if (x.slika != null)
+                {
+                    if (x.slika.Length > 500 * 1000)
+                        return BadRequest("maksimalna velicina fajla je 500 KB");
 
-            _dbContext.SaveChanges();
-            return Ok();
+                    if (edit == true)
+                    {
+                        string webRootPath = _hostingEnvironment.WebRootPath;
+                        var fullPath = webRootPath + "/Slike/" + izdavac.Slika;
+
+                        if (System.IO.File.Exists(fullPath))
+                        {
+                            System.IO.File.Delete(fullPath);
+                        }
+                    }
+
+                    string ekstenzija = Path.GetExtension(x.slika.FileName);
+                    string contetntType = x.slika.ContentType;
+
+                    var filename = $"{Guid.NewGuid()}{ekstenzija}";
+
+                    var myFile = new FileStream(Config.SlikeFolder + filename, FileMode.Create);
+                    x.slika.CopyTo(myFile);
+                    izdavac.Slika = filename;
+                    myFile.Close();
+                }
+
+                _dbContext.SaveChanges();
+                return Ok();
+                }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message + ex.InnerException);
+            }
         }
 
         [HttpGet]
-        public ActionResult<List<IzdavacSmjestajaVM>> GetAll()
+        public ActionResult GetAll()
         {
             var data = _dbContext.IzdavacSmjestaja.
                 OrderBy(x => x.Ime)
-                .Select(x => new IzdavacSmjestajaVM
+                .Select(x => new
                 {
                     id = x.ID,
                     password = x.Password,
                     username = x.Username,
                     ime = x.Ime,
+                    slika = x.Slika,
                     prezime = x.Prezime,
                     broj_telefona = x.Telefon,
                     email = x.Email
-                });
-            return data.ToList();
+                }).AsQueryable();
+            return Ok(data);
         }
 
         [HttpPost]
-        public ActionResult Obrisi([FromBody] IzdavacSmjestajaVM x)
+        public ActionResult Obrisi([FromBody] int id)
         {
-            IzdavacSmjestaja izdavac = _dbContext.IzdavacSmjestaja.Find(x.id);
+            IzdavacSmjestaja izdavac = _dbContext.IzdavacSmjestaja.Find(id);
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            var fullPath = webRootPath + "/Slike/" + izdavac.Slika;
+
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+            }
             _dbContext.Remove(izdavac);
             _dbContext.SaveChanges();
             return Ok();

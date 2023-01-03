@@ -13,13 +13,6 @@ table{
 th.mat-header-cell, td{
   text-align: center;
 }
-#datum{
-  width: 35%;
-}
-#datumTrajanje{
-  width: 55%;
-  margin-left: 10%;
-}
 textarea{
   width: 100%;
   height: 100px;
@@ -29,4 +22,13 @@ textarea{
 }
 #filterPlacena{
   margin-left: 5%;
+}
+#naslov, #objavljivac,#datum, #datumTrajanje{
+  width: 45%;
+  margin-left: 5%;
+}
+.slika{
+  width:50%;
+  max-height: 265px;
+  float: left;
 }

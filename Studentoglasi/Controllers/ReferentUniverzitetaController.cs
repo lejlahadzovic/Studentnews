@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StudentOglasi.Data;
+using StudentOglasi.Helper;
 using StudentOglasi.Models;
 using StudentOglasi.ViewModels;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace StudentOglasi.Controllers
 {
@@ -11,41 +13,77 @@ namespace StudentOglasi.Controllers
     public class ReferentUniverzitetaController : ControllerBase
     {
         private readonly AppDbContext _dbContext;
-
-        public ReferentUniverzitetaController(AppDbContext dbContext)
+        private readonly IHostingEnvironment _hostingEnvironment;
+        public ReferentUniverzitetaController(AppDbContext dbContext, IHostingEnvironment hostingEnvironment)
         {
             _dbContext = dbContext;
+            _hostingEnvironment = hostingEnvironment;
         }
         [HttpPost]
-        public ActionResult Snimi([FromBody] ReferentUniverzitetaVM x)
+        public ActionResult Snimi([FromForm] ReferentUniverzitetaVM x)
         {
-            ReferentUniverziteta referent;
-            if (x.id == 0)
+            try
             {
-                referent = new ReferentUniverziteta();
-                _dbContext.Add(referent);
-            }
-            else
-            {
-                referent = _dbContext.ReferentUniverziteta.Find(x.id);
-            }
-            referent.Username = x.username;
-            referent.Password = x.password;
-            referent.Ime = x.ime;
-            referent.Prezime = x.prezime;
-            referent.Email = x.email;
-            referent.UnivetzitetID = x.univerzitetID;
+                bool edit = false;
+                ReferentUniverziteta referent;
+                if (x.id == 0)
+                {
+                    referent = new ReferentUniverziteta();
+                    _dbContext.Add(referent);
+                }
+                else
+                {
+                    referent = _dbContext.ReferentUniverziteta.Find(x.id);
+                    edit = true;
+                }
+                referent.Username = x.username;
+                referent.Password = x.password;
+                referent.Ime = x.ime;
+                referent.Prezime = x.prezime;
+                referent.Email = x.email;
+                referent.UnivetzitetID = x.univerzitetID;
+                if (x.slika != null)
+                {
+                    if (x.slika.Length > 500 * 1000)
+                        return BadRequest("maksimalna velicina fajla je 500 KB");
 
-            _dbContext.SaveChanges();
-            return Ok();
+                    if (edit == true)
+                    {
+                        string webRootPath = _hostingEnvironment.WebRootPath;
+                        var fullPath = webRootPath + "/Slike/" + referent.Slika;
+
+                        if (System.IO.File.Exists(fullPath))
+                        {
+                            System.IO.File.Delete(fullPath);
+                        }
+                    }
+
+                    string ekstenzija = Path.GetExtension(x.slika.FileName);
+                    string contetntType = x.slika.ContentType;
+
+                    var filename = $"{Guid.NewGuid()}{ekstenzija}";
+
+                    var myFile = new FileStream(Config.SlikeFolder + filename, FileMode.Create);
+                    x.slika.CopyTo(myFile);
+                    referent.Slika = filename;
+                    myFile.Close();
+                }
+
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message + ex.InnerException);
+            }
         }
 
         [HttpGet]
-        public ActionResult<List<ReferentUniverzitetaVM>> GetAll()
+        public ActionResult GetAll()
         {
             var data = _dbContext.ReferentUniverziteta.
                 OrderBy(x => x.Ime)
-                .Select(x => new ReferentUniverzitetaVM
+                .Select(x => new
                 {
                     id = x.ID,
                     password = x.Password,
@@ -54,15 +92,23 @@ namespace StudentOglasi.Controllers
                     prezime = x.Prezime,
                     email = x.Email,
                     univerzitetID = x.UnivetzitetID,
-                    naziv_univerziteta = x.Univerzitet.Naziv
-                });
-            return data.ToList();
+                    naziv_univerziteta = x.Univerzitet.Naziv,
+                    slika = x.Slika
+                }).AsQueryable();
+            return Ok(data);
         }
 
         [HttpPost]
-        public ActionResult Obrisi([FromBody] ReferentUniverzitetaVM referent)
+        public ActionResult Obrisi([FromBody] int id)
         {
-            ReferentUniverziteta r = _dbContext.ReferentUniverziteta.Find(referent.id);
+            ReferentUniverziteta r = _dbContext.ReferentUniverziteta.Find(id);
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            var fullPath = webRootPath + "/Slike/" + r.Slika;
+
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+            }
             _dbContext.Remove(r);
             _dbContext.SaveChanges();
             return Ok();

@@ -64,4 +64,8 @@ export class AppComponent{
         }
       });
   }
+
+  registracija() {
+    this.router.navigateByUrl("/registracija");
+  }
 }

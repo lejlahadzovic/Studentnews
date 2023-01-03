@@ -10,7 +10,7 @@ namespace StudentOglasi.Models
         public string Username { get; set; }
         [JsonIgnore]
         public string Password { get; set; }
-        public string Slika { get; set; }
+        public string? Slika { get; set; }
 
         [JsonIgnore]
         public Student student => this as Student;

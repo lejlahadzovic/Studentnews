@@ -33,6 +33,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import { StipendijeComponent } from './stipendije/stipendije.component';
 import { SmjestajiComponent } from './smjestaji/smjestaji.component';
 import {MatCardModule} from "@angular/material/card";
+import { RegistracijaComponent } from './registracija/registracija.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {MatCardModule} from "@angular/material/card";
     ObjaveComponent,
     PrakseComponent,
     StipendijeComponent,
-    SmjestajiComponent
+    SmjestajiComponent,
+    RegistracijaComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +69,8 @@ import {MatCardModule} from "@angular/material/card";
       {path: 'putanja-objave', component: ObjaveComponent},
       {path: 'putanja-prakse', component: PrakseComponent},
       {path: 'putanja-stipendije', component: StipendijeComponent},
-      {path: 'putanja-smjestaji', component: SmjestajiComponent}
+      {path: 'putanja-smjestaji', component: SmjestajiComponent},
+      {path: 'registracija', component: RegistracijaComponent}
     ]),
     FormsModule,
     MatToolbarModule,

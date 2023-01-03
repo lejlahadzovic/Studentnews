@@ -13,26 +13,40 @@ table{
 th.mat-header-cell, td{
   text-align: center;
 }
-#naslov{
-  width: 60%;
-}
-#usluge{
-  width: 65%;
-}
-#rokPrijave{
-  width: 35%;
+#naslov,#rokPrijave{
+  width: 45%;
   margin-left: 5%;
 }
-#cijena,#grad,#filterGrad{
+#brojSoba, #kapacitet, #grad, #parking{
+  width: 14%;
+  margin-left: 1.5%;
+}
+#cijena, #izdavac{
+  width: 14%;
+  margin-left: 5%;
+}
+#opis{
+  height: 100px;
+}
+#filterGrad{
   width: 30%;
+}
+#usluge{
+  width: 60%;
+  height: 50px;
 }
 #filterIzdavac{
   width: 30%;
   margin-left: 1%;
 }
-#brojSoba,#kapacitet,#parking,#nacinGrijanja, #izdavac{
-  width: 30%;
+#nacinGrijanja{
+  width: 35%;
   margin-left: 5%;
+}
+.slika{
+  width:50%;
+  max-height: 265px;
+  float: left;
 }
 
 

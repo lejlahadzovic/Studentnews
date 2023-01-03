@@ -14,7 +14,7 @@ export class PrakseComponent implements OnInit {
   praksePodaci:any;
   praksa:any;
   slika:any;
-  slikaURL:string="";
+  slikaURL:string="assets/Images/no-image.jpg";
   displayedColumns: string[] = ['naslov', 'rokPrijave', 'trajanjePrakse', 'placena','firma','akcije'];
   uposleniciPodaci: any;
   firmePodaci: any;
@@ -30,7 +30,7 @@ export class PrakseComponent implements OnInit {
 
   openDialog(templateRef:any) {
     this.dialog.open(templateRef, {
-      width:'50%'
+      width:'60%'
     });
   }
 
@@ -54,6 +54,8 @@ export class PrakseComponent implements OnInit {
 
   dodajOglas() {
     this.dialogtitle='Dodaj oglas';
+    this.dialogtitle='Dodaj objavu';
+    this.slikaURL="assets/Images/no-image.jpg";
     this.praksa={
       id:0,
       naslov:'',
@@ -85,7 +87,7 @@ export class PrakseComponent implements OnInit {
       this.praksa.krajPrakse==''||
       this.praksa.kvalifikacije==''||
       this.praksa.benefiti==''||
-      this.slikaURL==''||
+      this.slikaURL=='assets/Images/no-image.jpg'||
       this.praksa.naslov=='';
   }
 

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using StudentOglasi.Data;
 using StudentOglasi.Models;
 using StudentOglasi.ViewModels;
+using StudentOglasi.Helper;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace StudentOglasi.Controllers
 {
@@ -11,58 +13,104 @@ namespace StudentOglasi.Controllers
     public class ReferentFakultetaController : ControllerBase
     {
         private readonly AppDbContext _dbContext;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ReferentFakultetaController(AppDbContext dbContext)
+        public ReferentFakultetaController(AppDbContext dbContext, IHostingEnvironment hostingEnvironment)
         {
             _dbContext = dbContext;
+            _hostingEnvironment = hostingEnvironment;
         }
         [HttpPost]
-        public ActionResult Snimi([FromBody] ReferentFakultetaVM x)
+        public ActionResult Snimi([FromForm] ReferentFakultetaVM x)
         {
-            ReferentFakulteta referent;
-            if (x.id == 0)
+            try
             {
-                referent = new ReferentFakulteta();
-                _dbContext.Add(referent);
-            }
-            else
-            {
-                referent = _dbContext.ReferentFakulteta.Find(x.id);
-            }
-            referent.Username = x.username;
-            referent.Password = x.password;
-            referent.Ime = x.ime;
-            referent.Prezime = x.prezime;
-            referent.Email = x.email;
-            referent.FakultetID = x.fakultetID;
+                bool edit = false;
+                ReferentFakulteta referent;
+                if (x.id == 0)
+                {
+                    referent = new ReferentFakulteta();
+                    _dbContext.Add(referent);
+                }
+                else
+                {
+                    referent = _dbContext.ReferentFakulteta.Find(x.id);
+                    edit = true;
+                }
+                referent.Username = x.username;
+                referent.Password = x.password;
+                referent.Ime = x.ime;
+                referent.Prezime = x.prezime;
+                referent.Email = x.email;
+                referent.FakultetID = x.fakultetID;
+                if (x.slika != null)
+                {
+                    if (x.slika.Length > 500 * 1000)
+                        return BadRequest("maksimalna velicina fajla je 500 KB");
 
-            _dbContext.SaveChanges();
-            return Ok();
+                    if (edit == true)
+                    {
+                        string webRootPath = _hostingEnvironment.WebRootPath;
+                        var fullPath = webRootPath + "/Slike/" + referent.Slika;
+
+                        if (System.IO.File.Exists(fullPath))
+                        {
+                            System.IO.File.Delete(fullPath);
+                        }
+                    }
+
+                    string ekstenzija = Path.GetExtension(x.slika.FileName);
+                    string contetntType = x.slika.ContentType;
+
+                    var filename = $"{Guid.NewGuid()}{ekstenzija}";
+
+                    var myFile = new FileStream(Config.SlikeFolder + filename, FileMode.Create);
+                    x.slika.CopyTo(myFile);
+                    referent.Slika = filename;
+                    myFile.Close();
+                }
+
+                _dbContext.SaveChanges();
+                return Ok();
+                }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message + ex.InnerException);
+            }
         }
 
+
         [HttpGet]
-        public ActionResult<List<ReferentFakultetaVM>> GetAll()
+        public ActionResult GetAll()
         {
             var data = _dbContext.ReferentFakulteta.
                 OrderBy(x => x.Ime)
-                .Select(x => new ReferentFakultetaVM
+                .Select(x => new
                 {
                     id = x.ID,
                     password = x.Password,
                     username = x.Username,
                     ime = x.Ime,
                     prezime = x.Prezime,
+                    slika = x.Slika,
                     email = x.Email,
                     fakultetID = x.FakultetID,
                     naziv_fakulteta = x.Fakultet.Naziv
-                });
-            return data.ToList();
+                }).AsQueryable();
+            return Ok(data);
         }
 
         [HttpPost]
-        public ActionResult Obrisi([FromBody] ReferentFakultetaVM referent)
+        public ActionResult Obrisi([FromBody] int id)
         {
-            ReferentFakulteta r = _dbContext.ReferentFakulteta.Find(referent.id);
+            ReferentFakulteta r = _dbContext.ReferentFakulteta.Find(id);
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            var fullPath = webRootPath + "/Slike/" + r.Slika;
+
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+            }
             _dbContext.Remove(r);
             _dbContext.SaveChanges();
             return Ok();

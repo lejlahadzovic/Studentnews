@@ -4,6 +4,7 @@ import {AutentifikacijaHelper} from "./helper/autentifikacija-helper";
 export class MojConfig{
 
   static adresa_servera="https://localhost:7296";
+  static SlikePutanja = "https://localhost:7296/Slike/";
 
   static http_opcije= function (){
 

@@ -54,6 +54,14 @@
   <h1>{{this.dialogtitle}}</h1>
   <mat-dialog-content>
 
+    <input type="file" #file placeholder="Choose file" (change)="chooseFile(file.files)" style="display:none;">
+    <div class="container" (click)="file.click()">
+      <img class="image" [src]="this.slikaURL">
+      <div class="overlay">
+        <div class="text">Dodaj sliku</div>
+      </div>
+    </div>
+
     <mat-form-field appearance="fill">
       <mat-label>Username</mat-label>
       <input matInput [(ngModel)]="this.uposlenik.username">
@@ -86,7 +94,6 @@
           {{stipenditor.naziv}}
         </mat-option>
       </mat-select>
-
     </mat-form-field>
 
   </mat-dialog-content>

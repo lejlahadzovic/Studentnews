@@ -17,7 +17,7 @@ export class StipendijeComponent implements OnInit {
   stipendija:any;
   uposleniciPodaci: any;
   slika:any;
-  slikaURL:string="";
+  slikaURL:string="assets/Images/no-image.jpg";
   filter_stipenditori:any;
   stipenditoriPodaci:any;
   constructor(private httpKlijent:HttpClient,private dialog: MatDialog) { }
@@ -30,7 +30,7 @@ export class StipendijeComponent implements OnInit {
 
   openDialog(templateRef:any) {
     this.dialog.open(templateRef, {
-      width:'50%'
+      width:'60%'
     });
   }
 
@@ -64,6 +64,8 @@ export class StipendijeComponent implements OnInit {
   }
   dodajOglas() {
     this.dialogtitle='Dodaj oglas';
+    this.dialogtitle='Dodaj objavu';
+    this.slikaURL="assets/Images/no-image.jpg";
     this.stipendija={
       id:0,
       naslov:'',
@@ -90,7 +92,7 @@ export class StipendijeComponent implements OnInit {
       this.stipendija.izvor==''||
       this.stipendija.nivoObrazovanja==''||
       this.stipendija.brojStipendisata==''||
-      this.slikaURL==''||
+      this.slikaURL=='assets/Images/no-image.jpg'||
       this.stipendija.naslov==''||
       this.stipendija.uposlenikID==0;
   }

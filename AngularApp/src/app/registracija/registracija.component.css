@@ -1,31 +1,26 @@
 #prikaz{
-  width: 80%;
-  margin: auto;
+  width: 40%;
   padding: 20px;
-}
-table{
-  width: 100%;
-}
-#filterIme{
-  font-size: 14px;
-  width: 30%;
+  margin: auto;
+  margin-top: 15px;
+  border: solid 2px rgb(240,240,240);
+  border-radius: 10px;
+  background-color: rgb(245,245,245);
 }
 .mat-form-field{
   font-size: 14px;
   width: 100%;
 }
-th.mat-header-cell, td{
-  text-align: center;
-}
+
+
 
 .container {
-  position: relative;
-  width: 180px;
-  height: 180px;
   margin: auto;
-  margin-bottom: 10px;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 15px;
 }
-
 .image{
   height: 100%;
   width: 100%;
@@ -46,7 +41,6 @@ th.mat-header-cell, td{
   transition: .5s ease;
   background-color: rgba(103, 58, 183, 0.85);
   border-radius: 50%;
-  cursor: pointer;
 }
 .text {
   color: #ffffff;

@@ -13,7 +13,7 @@ export class ObjaveComponent implements OnInit {
   objava:any;
   displayedColumns: string[] = ['naslov', 'sadrzaj', 'kategorija', 'datumVrijeme','akcije'];
   slika:any;
-  slikaURL:string="";
+  slikaURL:string="assets/Images/no-image.jpg";
   objavePodaci:any;
   kategorijePodaci: any;
   filter_naziv= '';
@@ -43,6 +43,8 @@ export class ObjaveComponent implements OnInit {
   }
   dodajObjavu() {
     this.dialogtitle='Dodaj objavu';
+    this.slikaURL="assets/Images/no-image.jpg";
+    this.slika=null;
     this.objava={
       id:0,
       naslov:'',
@@ -64,7 +66,7 @@ export class ObjaveComponent implements OnInit {
   validacija() {
     return this.objava.naslov==''||
       this.objava.sadrzaj==''||
-      this.slikaURL==''
+      this.slikaURL=='assets/Images/no-image.jpg'
   }
 
 

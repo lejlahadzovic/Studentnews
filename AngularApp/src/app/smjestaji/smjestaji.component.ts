@@ -16,7 +16,7 @@ export class SmjestajiComponent implements OnInit {
   dialogtitle: any;
   smjestaj:any;
   slika:any;
-  slikaURL:string="";
+  slikaURL:string="assets/Images/no-image.jpg";
   gradoviPodaci: any;
   izdavaciPodaci: any;
   filterGrad: any;
@@ -32,7 +32,7 @@ export class SmjestajiComponent implements OnInit {
 
   openDialog(templateRef:any) {
     this.dialog.open(templateRef, {
-      width:'50%'
+      width:'60%'
     });
   }
 
@@ -60,6 +60,8 @@ export class SmjestajiComponent implements OnInit {
 
   dodajOglas() {
     this.dialogtitle='Dodaj oglas';
+    this.dialogtitle='Dodaj objavu';
+    this.slikaURL="assets/Images/no-image.jpg";
     this.smjestaj={
       id:0,
       naslov:'',
@@ -69,7 +71,7 @@ export class SmjestajiComponent implements OnInit {
       kapacitet:'',
       dodatneUsluge:'',
       brojSoba:'',
-      parking:'',
+      parking:false,
       nacinGrijanja:'',
       gradID:0,
       izdavacID:0
@@ -85,7 +87,7 @@ export class SmjestajiComponent implements OnInit {
       this.smjestaj.dodatneUsluge==''||
       this.smjestaj.brojSoba==''||
       this.smjestaj.nacinGrijanja==''||
-      this.slikaURL==''||
+      this.slikaURL=='assets/Images/no-image.jpg'||
       this.smjestaj.gradID==''||
       this.smjestaj.izdavacID==0;
   }

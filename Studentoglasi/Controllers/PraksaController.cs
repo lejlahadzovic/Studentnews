@@ -72,9 +72,11 @@ namespace StudentOglasi.Controllers
 
                     var filename = $"{Guid.NewGuid()}{ekstenzija}";
 
-                    x.slika.CopyTo(new FileStream(Config.SlikeFolder + filename, FileMode.Create));
+                    var myFile = new FileStream(Config.SlikeFolder + filename, FileMode.Create);
+                    x.slika.CopyTo(myFile);
                     praksa.Slika = filename;
 
+                    myFile.Close();
                 }
                 _dbContext.SaveChanges();
                 return Ok(praksa);

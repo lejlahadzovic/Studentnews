@@ -48,3 +48,17 @@ input.example-right-align::-webkit-inner-spin-button {
 input.example-right-align {
   -moz-appearance: textfield;
 }
+
+.slika{
+  width:50%;
+  max-height: 265px;
+  float: left;
+}
+#naslov, #rokPrijave,#iznos, #brojStipendisata, #objavljivac{
+  width: 45%;
+  margin-left: 5%;
+}
+#iznos, #brojStipendisata{
+  width: 20%;
+  margin-left: 5%;
+}

@@ -67,7 +67,9 @@
 </div>
 
 <ng-template #dialogLogin>
-  <h1>Prijavi se</h1>
+  <div style="height: 150px; margin-bottom: 10%">
+  <img style="max-height: 100%; display: flex; margin: auto" src="assets/Images/Login-image.png">
+  </div>
   <mat-dialog-content>
   <mat-form-field appearance="fill">
     <mat-label>Korisnicko ime</mat-label>
@@ -78,8 +80,10 @@
     <input matInput type="password" placeholder="Lozinka" [(ngModel)]="password" name="Lozinka" required>
   </mat-form-field>
   </mat-dialog-content>
-
   <mat-dialog-actions align="end">
-    <button mat-raised-button mat-dialog-close color="primary" (click)="btnLogin()">Login</button>
+    <button mat-raised-button mat-dialog-close style="display:block; margin: auto; width: 80%" color="primary" (click)="btnLogin()">Prijavi se</button>
+    <span style="margin: auto; margin-top: 5px;">Nemate korisnički nalog?
+    <button mat-button color="primary" mat-dialog-close (click)="registracija()">Registrujte se</button>
+    </span>
   </mat-dialog-actions>
 </ng-template>

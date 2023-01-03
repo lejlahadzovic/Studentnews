@@ -9,5 +9,6 @@
         public string prezime { get; set; }
         public string email { get; set; }
         public string broj_telefona { get; set; }
+        public IFormFile? slika { get; set; }
     }
 }

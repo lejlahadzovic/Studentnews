@@ -14,6 +14,8 @@ export class IzdavaciSmjestajaComponent implements OnInit {
   displayedColumns: string[] = ['ime', 'prezime', 'email', 'broj_telefona','akcije'];
   dialogtitle: any;
   izdavac:any;
+  slika:any;
+  slikaURL:string="assets/Images/User%20icon.png";
 
   constructor(private httpKlijent:HttpClient,private dialog: MatDialog) { }
 
@@ -36,7 +38,17 @@ export class IzdavaciSmjestajaComponent implements OnInit {
   }
 
   snimi() {
-    this.httpKlijent.post(MojConfig.adresa_servera+"/IzdavacSmjestaja/Snimi",this.izdavac).subscribe((x:any)=>{
+    const formData = new FormData();
+    formData.append('id', this.izdavac.id);
+    formData.append('slika', this.izdavac.slika);
+    formData.append('password', this.izdavac.password);
+    formData.append('username', this.izdavac.username);
+    formData.append('ime', this.izdavac.ime);
+    formData.append('prezime', this.izdavac.prezime);
+    formData.append('email', this.izdavac.email);
+    formData.append('broj_telefona', this.izdavac.broj_telefona);
+    formData.append('slika',this.slika);
+    this.httpKlijent.post(MojConfig.adresa_servera+"/IzdavacSmjestaja/Snimi",formData).subscribe((x:any)=>{
       this.getIzdavaci();
     })
   }
@@ -49,6 +61,8 @@ export class IzdavaciSmjestajaComponent implements OnInit {
 
   dodaj() {
     this.dialogtitle='Dodaj izdavača';
+    this.slikaURL="assets/Images/User%20icon.png";
+    this.slika=null;
     this.izdavac={
       id:0,
       password:'',
@@ -63,6 +77,12 @@ export class IzdavaciSmjestajaComponent implements OnInit {
   editIzdavac(x:any) {
     this.dialogtitle='Edit izdavača';
     this.izdavac=x;
+    if(this.izdavac.slika!=null) {
+      this.slikaURL = MojConfig.SlikePutanja + this.izdavac.slika;
+    }
+    else{
+      this.slikaURL="assets/Images/User%20icon.png";
+    }
   }
 
   validacija() {
@@ -74,8 +94,17 @@ export class IzdavaciSmjestajaComponent implements OnInit {
       this.izdavac.broj_telefona=='';
   }
   obrisi(x:any) {
-    this.httpKlijent.post(MojConfig.adresa_servera+"/IzdavacSmjestaja/Obrisi",x).subscribe((x:any)=>{
+    this.httpKlijent.post(MojConfig.adresa_servera+"/IzdavacSmjestaja/Obrisi",x.id).subscribe((x:any)=>{
       this.getIzdavaci();
     })
+  }
+  chooseFile(files: any) {
+    this.slika = files[0];
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.slikaURL = reader.result as string;
+    }
+    reader.readAsDataURL(this.slika)
   }
 }

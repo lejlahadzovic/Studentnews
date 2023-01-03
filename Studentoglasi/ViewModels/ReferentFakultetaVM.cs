@@ -10,5 +10,6 @@
         public string email { get; set; }
         public int fakultetID { get; set; }
         public string? naziv_fakulteta { get; set; }
+        public IFormFile? slika { get; set; }
     }
 }

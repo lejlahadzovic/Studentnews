@@ -48,7 +48,7 @@ namespace StudentOglasi.Controllers
                 if (x.slika != null)
                 {
                     if (x.slika.Length > 500 * 1000)
-                        return BadRequest("max velicina fajla je 500 KB");
+                        return BadRequest("maksimalna velicina fajla je 500 KB");
 
                     if (edit == true)
                     {
@@ -66,9 +66,10 @@ namespace StudentOglasi.Controllers
 
                     var filename = $"{Guid.NewGuid()}{ekstenzija}";
 
-                    x.slika.CopyTo(new FileStream(Config.SlikeFolder + filename, FileMode.Create));
+                    var myFile = new FileStream(Config.SlikeFolder + filename, FileMode.Create);
+                    x.slika.CopyTo(myFile);
                     objava.Slika = filename;
-                    
+                    myFile.Close();
                 }
                 _dbContext.SaveChanges();
                 return Ok(objava);
