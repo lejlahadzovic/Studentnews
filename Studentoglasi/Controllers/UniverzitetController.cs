@@ -19,7 +19,7 @@ namespace StudentOglasi.Controllers
         }
 
     [HttpPost]
-    public Univerzitet Snimi([FromBody] UniverzitetAddVM x)
+    public Univerzitet Snimi([FromBody] UniverzitetVM x)
     {
         Univerzitet? objekat;
 
@@ -62,5 +62,19 @@ namespace StudentOglasi.Controllers
             .AsQueryable();
         return Ok(data.Take(100).ToList());
     }
-}
+
+        [HttpPost("{id}")]
+        public ActionResult Obrisi(int id)
+        {
+            Univerzitet? univerzitet = _dbContext.Univerzitet.Find(id);
+
+            if (univerzitet == null || id == 1)
+                return BadRequest("pogresan ID");
+
+            _dbContext.Remove(univerzitet);
+
+            _dbContext.SaveChanges();
+            return Ok(univerzitet);
+        }
+    }
 }

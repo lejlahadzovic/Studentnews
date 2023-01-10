@@ -42,12 +42,14 @@ namespace StudentOglasi.Data
             modelBuilder.Entity<Rezervacija>()
             .HasOne(r => r.Smjestaj)
             .WithMany(p => p.Rezervacije)
-            .HasForeignKey(r => r.SmjestajId);
+            .HasForeignKey(r => r.SmjestajId)
+            .OnDelete(DeleteBehavior.ClientSetNull);
 
             modelBuilder.Entity<Rezervacija>()
                 .HasOne(r => r.Student)
                 .WithMany(t => t.Rezervacije)
-                .HasForeignKey(r => r.StudentId);
+                .HasForeignKey(r => r.StudentId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
 
             modelBuilder.Entity<PrijavaPraksa>()
@@ -56,12 +58,14 @@ namespace StudentOglasi.Data
             modelBuilder.Entity<PrijavaPraksa>()
             .HasOne(pp => pp.Praksa)
             .WithMany(p => p.Prijave)
-            .HasForeignKey(pp => pp.PraksaId);
+            .HasForeignKey(pp => pp.PraksaId)
+            .OnDelete(DeleteBehavior.ClientSetNull); 
 
             modelBuilder.Entity<PrijavaPraksa>()
                 .HasOne(pp => pp.Student)
                 .WithMany(t => t.PrijavePrakse)
-                .HasForeignKey(pp => pp.StudentId);
+                .HasForeignKey(pp => pp.StudentId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
 
             modelBuilder.Entity<PrijavaStipendija>()
@@ -70,12 +74,14 @@ namespace StudentOglasi.Data
             modelBuilder.Entity<PrijavaStipendija>()
             .HasOne(ps => ps.Stipendija)
             .WithMany(p => p.Prijave)
-            .HasForeignKey(ps => ps.StipendijaID);
+            .HasForeignKey(ps => ps.StipendijaID)
+            .OnDelete(DeleteBehavior.ClientSetNull); ;
 
             modelBuilder.Entity<PrijavaStipendija>()
                 .HasOne(ps => ps.Student)
                 .WithMany(t => t.PrijaveStipendije)
-                .HasForeignKey(ps => ps.StudentId);
+                .HasForeignKey(ps => ps.StudentId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }

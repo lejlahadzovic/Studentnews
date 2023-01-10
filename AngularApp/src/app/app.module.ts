@@ -34,6 +34,9 @@ import { StipendijeComponent } from './stipendije/stipendije.component';
 import { SmjestajiComponent } from './smjestaji/smjestaji.component';
 import {MatCardModule} from "@angular/material/card";
 import { RegistracijaComponent } from './registracija/registracija.component';
+import { HomeComponent } from './home/home.component';
+import { FirmeComponent } from './firme/firme.component';
+import { StipenditoriComponent } from './stipenditori/stipenditori.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +53,10 @@ import { RegistracijaComponent } from './registracija/registracija.component';
     PrakseComponent,
     StipendijeComponent,
     SmjestajiComponent,
-    RegistracijaComponent
+    RegistracijaComponent,
+    HomeComponent,
+    FirmeComponent,
+    StipenditoriComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +76,10 @@ import { RegistracijaComponent } from './registracija/registracija.component';
       {path: 'putanja-prakse', component: PrakseComponent},
       {path: 'putanja-stipendije', component: StipendijeComponent},
       {path: 'putanja-smjestaji', component: SmjestajiComponent},
-      {path: 'registracija', component: RegistracijaComponent}
+      {path: 'registracija', component: RegistracijaComponent},
+      {path: '', component: HomeComponent},
+      {path: 'putanja-firme', component: FirmeComponent},
+      {path: 'putanja-stipenditori', component: StipenditoriComponent},
     ]),
     FormsModule,
     MatToolbarModule,

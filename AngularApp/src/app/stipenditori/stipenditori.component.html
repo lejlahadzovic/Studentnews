@@ -1,11 +1,11 @@
-<h1> Fakulteti</h1>
+<h1>Stipenditori</h1>
 
-<button mat-raised-button color="primary" (click)="dodajFakultet();  openDialog(dialogFakultet)">
-  <mat-icon>add</mat-icon> Dodaj Fakultet
+<button mat-raised-button color="primary" (click)="dodajStipenditora();  openDialog(dialogStipenditor)">
+  <mat-icon>add</mat-icon> Dodaj Stipenditora
 </button>
 <br>
 
-<table  style="width:100%" mat-table [dataSource]="podaciFakulteti" class="mat-elevation-z8">
+<table  style="width:100%" mat-table [dataSource]="podaciStipenditori" class="mat-elevation-z8">
 
   <ng-container matColumnDef="naziv">
     <th mat-header-cell *matHeaderCellDef> Naziv </th>
@@ -22,11 +22,7 @@
     <td mat-cell *matCellDef="let element"> {{element.email}} </td>
   </ng-container>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="telefon">
-    <th mat-header-cell *matHeaderCellDef> Broj telefona </th>
-    <td mat-cell *matCellDef="let element"> {{element.telefon}} </td>
-  </ng-container>
+
 
   <!-- Symbol Column -->
   <ng-container matColumnDef="veza">
@@ -34,18 +30,24 @@
     <td mat-cell *matCellDef="let element"> {{element.veza}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="univerzitet">
-    <th mat-header-cell *matHeaderCellDef> Univerzitet </th>
-    <td mat-cell *matCellDef="let element"> {{element.univerzitet}} </td>
+  <!-- Weight Column -->
+  <ng-container matColumnDef="tipUstanove">
+    <th mat-header-cell *matHeaderCellDef>Tip ustanove </th>
+    <td mat-cell *matCellDef="let element"> {{element.tipUstanove}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="grad">
+    <th mat-header-cell *matHeaderCellDef> Grad </th>
+    <td mat-cell *matCellDef="let element"> {{element.grad}} </td>
   </ng-container>
 
   <ng-container matColumnDef="akcije">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
-      <button (click)="fakultet=element; openDialog(dialogFakultet)" color="primary" mat-icon-button>
+      <button (click)="stipenditor=element; openDialog(dialogStipenditor)" color="primary" mat-icon-button>
         <mat-icon>edit</mat-icon>
       </button>
-      <button (click)="obrisiFakultet(element)" mat-icon-button color="warn">
+      <button (click)="obrisiStipenditora(element)" mat-icon-button color="warn">
         <mat-icon>delete</mat-icon>
       </button>
     </td>
@@ -54,7 +56,7 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-<ng-template #dialogFakultet >
+<ng-template #dialogStipenditor >
   <h1>{{this.dialogtitle}}</h1>
 
   <mat-dialog-content >
@@ -62,40 +64,39 @@
 
     <mat-form-field appearance="fill" id="naziv">
       <mat-label>Naziv</mat-label>
-      <input matInput [(ngModel)]="this.fakultet.naziv">
+      <input matInput [(ngModel)]="this.stipenditor.naziv">
     </mat-form-field>
 
 
     <mat-form-field appearance="fill"  id="adresa">
       <mat-label>Adresa</mat-label>
-      <input matInput  [(ngModel)]="this.fakultet.adresa" >
+      <input matInput  [(ngModel)]="this.stipenditor.adresa" >
 
     </mat-form-field>
     <mat-form-field appearance="fill"  id="email">
       <mat-label>Email</mat-label>
-      <input matInput  [(ngModel)]="this.fakultet.email" >
+      <input matInput  [(ngModel)]="this.stipenditor.email" >
 
     </mat-form-field>
-    <mat-form-field appearance="fill"  id="telefon">
-      <mat-label>Telefon</mat-label>
-      <input matInput  [(ngModel)]="this.fakultet.telefon">
+    <mat-form-field appearance="fill"  id="tipUstanove">
+      <mat-label>Tip ustanove</mat-label>
+      <input matInput  [(ngModel)]="this.stipenditor.tipUstanove">
     </mat-form-field>
 
     <mat-form-field appearance="fill"  id="veza">
-      <mat-label>Adresa</mat-label>
-      <input matInput  [(ngModel)]="this.fakultet.veza">
+      <mat-label>Link</mat-label>
+      <input matInput  [(ngModel)]="this.stipenditor.veza">
     </mat-form-field>
 
-
-
-    <mat-form-field  id="univerzitet">
-      <mat-label>Univerzitet</mat-label>
-      <mat-select  [(ngModel)]="this.fakultet.univerzitetID">
-        <mat-option *ngFor="let univerzitet of this.univerzitetPodaci" [value]="univerzitet.id">
-          {{univerzitet.naziv}}
+    <mat-form-field  id="grad">
+      <mat-label>Grad</mat-label>
+      <mat-select  [(ngModel)]="this.stipenditor.gradID">
+        <mat-option *ngFor="let grad of this.gradoviPodaci" [value]="grad.id">
+          {{grad.naziv}}
         </mat-option>
       </mat-select>
     </mat-form-field>
+
 
 
 
@@ -106,3 +107,4 @@
     <button mat-raised-button mat-dialog-close color="primary"  (click)="snimi_dugme()" >Snimi</button>
   </mat-dialog-actions>
 </ng-template>
+

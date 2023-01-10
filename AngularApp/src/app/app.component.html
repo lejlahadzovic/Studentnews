@@ -1,16 +1,28 @@
 <mat-toolbar color="primary">
   <span>StudentOglasi</span>
+  <button mat-button routerLink="/">Početna</button>
+  <button mat-button >Prakse</button>
 
-  <!-- This fills the remaining space of the current row -->
-  <span class="example-fill-remaining-space"></span>
-  <mat-button-toggle-group  name="fontStyle" aria-label="Font Style">
 
-    <mat-button-toggle mat-button [matMenuTriggerFor]="upravljanje">Upravljanje podacima</mat-button-toggle>
+  <button mat-button >Stipendije</button>
+
+
+  <button mat-button >Smještaj</button>
+
+
+
+  <button mat-button>Univerziteti</button>
+
+  <button mat-button >Fakulteti</button>
+
+    <mat-button-toggle  [matMenuTriggerFor]="upravljanje" style="font-size:medium;"  >Upravljanje podacima</mat-button-toggle>
     <mat-menu #upravljanje="matMenu">
       <button mat-menu-item [matMenuTriggerFor]="korisnici">Korisnici</button>
       <button mat-menu-item [matMenuTriggerFor]="oglasi">Oglasi</button>
       <button mat-menu-item [matMenuTriggerFor]="ustanove">Ustanove</button>
       <button mat-menu-item routerLink="/putanja-objave">Objave</button>
+      <button mat-menu-item routerLink="/putanja-firme">Firme</button>
+      <button mat-menu-item routerLink="/putanja-stipenditori">Stipenditori</button>
     </mat-menu>
 
     <mat-menu #ustanove="matMenu">
@@ -41,7 +53,8 @@
       <button mat-menu-item routerLink="/putanja-uposleniciStipenditora">Uposlenici stipenditora</button>
     </mat-menu>
 
-  </mat-button-toggle-group>
+
+
   <p *ngIf="loginInfo().isLogiran==true">
   <button style="position: absolute; right: 5%;top: 15px;" mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>more_vert</mat-icon>
@@ -62,10 +75,10 @@
 </mat-toolbar>
 
 <div >
-  <router-outlet></router-outlet>
+  <router-outlet ></router-outlet>
 
 </div>
-
+<div>
 <ng-template #dialogLogin>
   <div style="height: 150px; margin-bottom: 10%">
   <img style="max-height: 100%; display: flex; margin: auto" src="assets/Images/Login-image.png">
@@ -87,3 +100,5 @@
     </span>
   </mat-dialog-actions>
 </ng-template>
+</div>
+
