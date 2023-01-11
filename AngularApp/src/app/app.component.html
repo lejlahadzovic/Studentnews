@@ -43,17 +43,18 @@
 
   </mat-button-toggle-group>
   <p *ngIf="loginInfo().isLogiran==true">
-  <button style="position: absolute; right: 5%;top: 15px;" mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>more_vert</mat-icon>
-  </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item>
-      <span>Profil</span>
+    <button style="position: absolute; right: 5%;top: 15px;" mat-raised-button [matMenuTriggerFor]="menu">
+      {{loginInfo().autentifikacijaToken?.korisnik?.username}}
+      <mat-icon>keyboard_arrow_down</mat-icon>
     </button>
-    <button mat-menu-item  (click)="logout()">
-      <span>Odjavi se</span>
-    </button>
-  </mat-menu>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="profil()">
+        <span>Profil</span>
+      </button>
+      <button mat-menu-item  (click)="logout()">
+        <span>Odjavi se</span>
+      </button>
+    </mat-menu>
   </p>
   <p *ngIf="loginInfo().isLogiran==false">
     <button mat-raised-button style="position: absolute; right: 5%;top: 15px;" (click)="openDialog(dialogLogin)">

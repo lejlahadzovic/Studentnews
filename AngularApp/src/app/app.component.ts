@@ -17,6 +17,7 @@ export class AppComponent{
   title: string="Upravljanje podacima";
   username: any;
   password:any;
+  slikaURL: string="";
 
   ngOnInit(): void {
   }
@@ -56,7 +57,6 @@ export class AppComponent{
 
           AutentifikacijaHelper.setLoginInfo(x)
           this.router.navigateByUrl("/putanja-smjestaji");
-
         }
         else
         {
@@ -67,5 +67,9 @@ export class AppComponent{
 
   registracija() {
     this.router.navigateByUrl("/registracija");
+  }
+
+  profil() {
+    this.router.navigateByUrl("/profil");
   }
 }
