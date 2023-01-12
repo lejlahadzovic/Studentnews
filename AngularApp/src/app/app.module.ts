@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+
 import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -37,6 +38,8 @@ import { RegistracijaComponent } from './registracija/registracija.component';
 import { HomeComponent } from './home/home.component';
 import { FirmeComponent } from './firme/firme.component';
 import { StipenditoriComponent } from './stipenditori/stipenditori.component';
+import { MatDividerModule } from '@angular/material/divider';
+
 
 @NgModule({
   declarations: [

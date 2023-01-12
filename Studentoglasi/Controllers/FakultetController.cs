@@ -13,7 +13,7 @@ namespace StudentOglasi.Controllers
     {
 
         private readonly AppDbContext _dbContext;
-
+        
         public FakultetController(AppDbContext dbContext)
         {
             this._dbContext = dbContext;
@@ -41,7 +41,7 @@ namespace StudentOglasi.Controllers
                 objekat.Telefon = x.Telefon;
                 objekat.Link = x.Veza;
                 objekat.UniverzitetID = x.UniverzitetID;
-                objekat.Ocjene=x.Ocjene;
+               // objekat.Ocjene=x.Ocjene;
             _dbContext.SaveChanges(); //exceute sql -- update Predmet set ... where...
                 return objekat;
             }
@@ -60,7 +60,7 @@ namespace StudentOglasi.Controllers
                         telefon = s.Telefon,
                         Veza = s.Link,
                         univerzitet = s.Univerzitet.Naziv,
-                        ocjene=s.Ocjene,
+                        //ocjene=s.Ocjene,
 
 
                     })

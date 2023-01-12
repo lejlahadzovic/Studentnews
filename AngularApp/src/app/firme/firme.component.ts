@@ -13,7 +13,6 @@ export class FirmeComponent implements OnInit {
   podaciFirme: any;
   title: string="FirmaComponent" ;
   displayedColumns: string[] = ['naziv','adresa', 'email', 'telefon', 'veza','grad','akcije'];
-  odabraniFirma:any;
   dialogtitle: any;
   firma:any;
   gradoviPodaci:any;
@@ -30,16 +29,12 @@ export class FirmeComponent implements OnInit {
       email:'',
       telefon:'',
       veza:'',
-      gradID:0,
+      gradID:1,
 
     }
   }
 
-  urediFirma(x:any) {
-    this.dialogtitle='Uredi Firma';
-    this.firma=x;
 
-  }
   openDialog(templateRef:any) {
     this.dialog.open(templateRef, {
       width:'20%'

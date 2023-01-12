@@ -42,7 +42,7 @@ namespace StudentOglasi.Controllers
             objekat.TipUstanove = x.TipUstanove;
             objekat.Link = x.Veza;
             objekat.GradID = x.GradID;
-            objekat.Ocjene = x.Ocjene;
+          //  objekat.Ocjene = x.Ocjene;
             _dbContext.SaveChanges(); //exceute sql -- update Predmet set ... where...
             return objekat;
         }
@@ -61,7 +61,7 @@ namespace StudentOglasi.Controllers
                     tipUstanove = s.TipUstanove,
                     veza = s.Link,
                     grad = s.Grad.Naziv,
-                    ocjene = s.Ocjene,
+                 //   ocjene = s.Ocjene,
 
 
                 })

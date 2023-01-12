@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Slike\" />
+    <Folder Include="wwwroot\Slike\" />
   </ItemGroup>
 
 </Project>

@@ -13,6 +13,5 @@ namespace StudentOglasi.Controllers
         public string Veza { get; set; }
        
         public int GradID { get; set; }
-        public List<Ocjena> Ocjene { get; set; }
     }
 }

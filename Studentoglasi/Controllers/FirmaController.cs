@@ -12,8 +12,6 @@ namespace StudentOglasi.Controllers
     public class FirmaController : Controller
     {
 
-
-
         private readonly AppDbContext _dbContext;
 
         public FirmaController(AppDbContext dbContext)
@@ -43,7 +41,7 @@ namespace StudentOglasi.Controllers
             objekat.Telefon = x.Telefon;
             objekat.Link = x.Veza;
             objekat.GradID = x.GradID;
-            objekat.Ocjene = x.Ocjene;
+           // objekat.Ocjene = x.Ocjene;
             _dbContext.SaveChanges(); //exceute sql -- update Predmet set ... where...
             return objekat;
         }
@@ -60,9 +58,9 @@ namespace StudentOglasi.Controllers
                     adresa = s.Adresa,
                     email = s.Email,
                     telefon = s.Telefon,
-                    veza = s.Link,
+                    Veza = s.Link,
                     grad = s.Grad.Naziv,
-                    ocjene = s.Ocjene,
+                   // ocjene = s.Ocjene,
 
 
                 })

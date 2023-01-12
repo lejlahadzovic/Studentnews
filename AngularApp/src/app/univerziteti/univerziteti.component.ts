@@ -14,7 +14,6 @@ export class UniverzitetiComponent implements OnInit {
   podaciUniveziteti: any;
   title: string="AppComponent" ;
   displayedColumns: string[] = ['naziv', 'email', 'telefon', 'veza','grad','akcije'];
-odabraniUniverzitet:any;
   dialogtitle: any;
   univerzitet:any;
   gradoviPodaci:any;
@@ -35,11 +34,7 @@ odabraniUniverzitet:any;
     }
   }
 
-  urediUniverzitet(x:any) {
-    this.dialogtitle='Uredi univerzitet';
-    this.univerzitet=x;
 
-  }
   openDialog(templateRef:any) {
     this.dialog.open(templateRef, {
      width:'20%'
