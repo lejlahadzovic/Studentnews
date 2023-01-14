@@ -1,0 +1,18 @@
+<mat-drawer-container class="example-container">
+  <mat-drawer style="width:300px;margin-top:10px;" mode="side" opened><h1> Fakulteti</h1>
+
+  </mat-drawer>
+  <mat-drawer-content>
+    <mat-card  *ngFor="let i of podaciFakulteti" >
+      <mat-card-header>
+        <mat-card-title>{{i.naziv}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-actions>
+
+        <button mat-button>POGLEDAJ VIŠE</button>
+      </mat-card-actions>
+
+    </mat-card>
+    
+  </mat-drawer-content>
+</mat-drawer-container>

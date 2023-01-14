@@ -4,6 +4,14 @@
   <mat-icon>add</mat-icon> Dodaj Firmu
 </button>
 <br>
+<mat-form-field appearance="standard" id="filterStipenditor">
+  <mat-label>Grad</mat-label>
+  <mat-select [(ngModel)]="this.filter_gradovi">
+    <mat-option *ngFor="let gradovi of this.gradoviPodaci" [value]="gradovi.id">
+      {{gradovi.naziv}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 
 <table  style="width:100%" mat-table [dataSource]="podaciFirme" class="mat-elevation-z8">
 

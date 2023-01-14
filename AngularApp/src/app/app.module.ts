@@ -39,6 +39,14 @@ import { HomeComponent } from './home/home.component';
 import { FirmeComponent } from './firme/firme.component';
 import { StipenditoriComponent } from './stipenditori/stipenditori.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { PraksePregledComponent } from './prakse-pregled/prakse-pregled.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import { StipendijePregledComponent } from './stipendije-pregled/stipendije-pregled.component';
+import { SmjestajPregledComponent } from './smjestaj-pregled/smjestaj-pregled.component';
+import { UniverzitetiPregledComponent } from './univerziteti-pregled/univerziteti-pregled.component';
+import { FakultetiPregledComponent } from './fakulteti-pregled/fakulteti-pregled.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 
 @NgModule({
@@ -59,48 +67,61 @@ import { MatDividerModule } from '@angular/material/divider';
     RegistracijaComponent,
     HomeComponent,
     FirmeComponent,
-    StipenditoriComponent
+    StipenditoriComponent,
+    PraksePregledComponent,
+    StipendijePregledComponent,
+    SmjestajPregledComponent,
+    UniverzitetiPregledComponent,
+    FakultetiPregledComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatTableModule,
-    RouterModule.forRoot([
-      {path: 'putanja-univerziteti', component: UniverzitetiComponent},
-      {path: 'putanja-fakulteti', component: FakultetiComponent},
-      {path: 'putanja-studenti', component: StudentiComponent},
-      {path: 'putanja-izdavaci', component: IzdavaciSmjestajaComponent},
-      {path: 'putanja-referentifakulteta', component: ReferentiFakultetaComponent},
-      {path: 'putanja-referentiuniverziteta', component: ReferentiUniverzitetaComponent},
-      {path: 'putanja-uposleniciFirme', component: UposleniciFirmeComponent},
-      {path: 'putanja-uposleniciStipenditora', component: UposleniciStipenditoraComponent},
-      {path: 'putanja-objave', component: ObjaveComponent},
-      {path: 'putanja-prakse', component: PrakseComponent},
-      {path: 'putanja-stipendije', component: StipendijeComponent},
-      {path: 'putanja-smjestaji', component: SmjestajiComponent},
-      {path: 'registracija', component: RegistracijaComponent},
-      {path: '', component: HomeComponent},
-      {path: 'putanja-firme', component: FirmeComponent},
-      {path: 'putanja-stipenditori', component: StipenditoriComponent},
-    ]),
-    FormsModule,
-    MatToolbarModule,
-    MatButtonToggleModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    MatGridListModule,
-    MatDialogModule,
-    MatMenuModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCheckboxModule,
-    MatCardModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatTableModule,
+        RouterModule.forRoot([
+            {path: 'putanja-univerziteti', component: UniverzitetiComponent},
+            {path: 'putanja-fakulteti', component: FakultetiComponent},
+            {path: 'putanja-studenti', component: StudentiComponent},
+            {path: 'putanja-izdavaci', component: IzdavaciSmjestajaComponent},
+            {path: 'putanja-referentifakulteta', component: ReferentiFakultetaComponent},
+            {path: 'putanja-referentiuniverziteta', component: ReferentiUniverzitetaComponent},
+            {path: 'putanja-uposleniciFirme', component: UposleniciFirmeComponent},
+            {path: 'putanja-uposleniciStipenditora', component: UposleniciStipenditoraComponent},
+            {path: 'putanja-objave', component: ObjaveComponent},
+            {path: 'putanja-prakse', component: PrakseComponent},
+            {path: 'putanja-stipendije', component: StipendijeComponent},
+            {path: 'putanja-smjestaji', component: SmjestajiComponent},
+            {path: 'registracija', component: RegistracijaComponent},
+            {path: '', component: HomeComponent},
+            {path: 'putanja-firme', component: FirmeComponent},
+            {path: 'putanja-stipenditori', component: StipenditoriComponent},
+            {path: 'putanja-prakse-pregled', component: PraksePregledComponent},
+            {path: 'putanja-stipendije-pregled', component: StipendijePregledComponent},
+            {path: 'putanja-smjestaj-pregled', component: SmjestajPregledComponent},
+            {path: 'putanja-univerziteti-pregled', component: UniverzitetiPregledComponent},
+            {path: 'putanja-fakulteti-pregled', component: FakultetiPregledComponent},
+        ]),
+        FormsModule,
+        MatToolbarModule,
+        MatButtonToggleModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        MatGridListModule,
+        MatDialogModule,
+        MatMenuModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCheckboxModule,
+        MatCardModule,
+        MatSidenavModule,
+        MatTooltipModule,
+        MatPaginatorModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

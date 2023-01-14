@@ -1,19 +1,11 @@
 <mat-toolbar color="primary">
   <span>StudentOglasi</span>
   <button mat-button routerLink="/">Početna</button>
-  <button mat-button >Prakse</button>
-
-
-  <button mat-button >Stipendije</button>
-
-
-  <button mat-button >Smještaj</button>
-
-
-
-  <button mat-button>Univerziteti</button>
-
-  <button mat-button >Fakulteti</button>
+  <button mat-button routerLink="/putanja-prakse-pregled">Prakse</button>
+  <button mat-button  routerLink="/putanja-stipendije-pregled">Stipendije</button>
+  <button mat-button routerLink="/putanja-smjestaj-pregled">Smještaj</button>
+  <button mat-button routerLink="/putanja-univerziteti-pregled">Univerziteti</button>
+  <button mat-button routerLink="/putanja-fakulteti-pregled">Fakulteti</button>
 
     <mat-button-toggle  [matMenuTriggerFor]="upravljanje" style="font-size:medium;"  >Upravljanje podacima</mat-button-toggle>
     <mat-menu #upravljanje="matMenu">

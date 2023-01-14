@@ -9,7 +9,7 @@ import {MojConfig} from "../MojConfig";
   styleUrls: ['./firme.component.css']
 })
 export class FirmeComponent implements OnInit {
-
+  filter_gradovi:any;
   podaciFirme: any;
   title: string="FirmaComponent" ;
   displayedColumns: string[] = ['naziv','adresa', 'email', 'telefon', 'veza','grad','akcije'];
@@ -65,7 +65,13 @@ export class FirmeComponent implements OnInit {
       this.podaciFirme = x;
     }));
   }
-
+  getpodaci(){
+    if(this.podaciFirme==null)
+      return [];
+    return this.podaciFirme.filter((x:any)=>(
+      (this.filter_gradovi!=null?x.gradid==this.filter_gradovi:true)
+    ));
+  }
   ngOnInit(): void {
     this.preuzmiPodatke();
     this.getGradovi();

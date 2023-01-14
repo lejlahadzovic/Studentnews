@@ -39,11 +39,7 @@ export class FakultetiComponent implements OnInit {
     }
   }
 
-  urediFakultet(x:any) {
-    this.dialogtitle='Uredi fakultet';
-    this.fakultet=x;
 
-  }
   openDialog(templateRef:any) {
     this.dialog.open(templateRef, {
       width:'20%'
@@ -55,11 +51,7 @@ export class FakultetiComponent implements OnInit {
       this.preuzmiPodatke();
     });
   }
-  private getGradovi() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/F/GetGradovi").subscribe(((x: any) => {
-      this.gradoviPodaci = x;
-    }));
-  }
+
 
 
   snimi_dugme() {
@@ -77,7 +69,7 @@ export class FakultetiComponent implements OnInit {
 
   ngOnInit(): void {
     this.preuzmiPodatke();
-    this.getGradovi();
+
   }
 
 }

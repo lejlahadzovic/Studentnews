@@ -1,0 +1,13 @@
+img{
+  width: 300px;
+  margin-bottom: 8px;
+}
+mat-card {
+  margin:10px;
+}
+mat-card-subtitle{
+  float:right;
+}
+mat-drawer{
+  text-align: center;
+}
