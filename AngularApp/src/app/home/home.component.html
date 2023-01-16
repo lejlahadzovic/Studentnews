@@ -1,0 +1,68 @@
+
+  <h1 class="naslov">Prakse</h1>
+  <div  class=kartice *ngFor="let praksa of this.praksePodaci;let i=index">
+  <mat-card class="example-card"  *ngIf="i<3" >
+  <mat-card-header *ngIf="i<3">
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title *ngIf="i<3">{{praksa.ime_uposlenika}}</mat-card-title>
+    <mat-card-subtitle  *ngIf="i<3">{{praksa.naziv_firma}}</mat-card-subtitle>
+  </mat-card-header >
+  <img mat-card-image *ngIf="i<3" src="{{praksa.slika}}">
+  <mat-card-content>
+    <p *ngIf="i<3">
+      {{praksa.opis}}
+    </p>
+  </mat-card-content>
+  <mat-card-actions *ngIf="i<3">
+    <button mat-button>Detalji</button>
+  </mat-card-actions>
+</mat-card>
+
+</div>
+<button mat-button class="pogledaj-vise-button" routerLink="/putanja-prakse-pregled">POGLEDAJ VIŠE</button>
+
+
+  <h1  class="naslov">Stipendije</h1>
+  <div  class=kartice *ngFor="let praksa of this.praksePodaci;let i=index">
+    <mat-card class="example-card"  *ngIf="i<3" >
+      <mat-card-header *ngIf="i<3">
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title *ngIf="i<3">{{praksa.ime_uposlenika}}</mat-card-title>
+        <mat-card-subtitle  *ngIf="i<3">{{praksa.naziv_firma}}</mat-card-subtitle>
+      </mat-card-header >
+      <img mat-card-image *ngIf="i<3" src="{{praksa.slika}}">
+      <mat-card-content>
+        <p *ngIf="i<3">
+          {{praksa.opis}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions *ngIf="i<3">
+        <button mat-button>Detalji</button>
+      </mat-card-actions>
+    </mat-card>
+
+  </div>
+  <button mat-button class="pogledaj-vise-button" routerLink="/putanja-stipendije-pregled">POGLEDAJ VIŠE</button>
+
+  <h1  class="naslov">Smještaj</h1>
+  <div  class=kartice *ngFor="let s of this.smjestajiPodaci;let i=index">
+    <mat-card class="example-card"  *ngIf="i<3" >
+      <mat-card-header *ngIf="i<3">
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title *ngIf="i<3">{{s.izdavac}}</mat-card-title>
+        <mat-card-subtitle  *ngIf="i<3">{{s.naslov}}</mat-card-subtitle>
+      </mat-card-header >
+      <img mat-card-image *ngIf="i<3" src="{{s.slika}}">
+      <mat-card-content>
+        <p *ngIf="i<3">
+          {{s.opis}}
+          {{s.cijena}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions *ngIf="i<3">
+        <button mat-button>Detalji</button>
+      </mat-card-actions>
+    </mat-card>
+
+  </div>
+  <button mat-button class="pogledaj-vise-button" routerLink="/putanja-smjestaj-pregled">POGLEDAJ VIŠE</button>

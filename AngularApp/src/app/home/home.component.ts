@@ -13,12 +13,14 @@ export class HomeComponent implements OnInit {
   podaciFakulteti:any;
   smjestajiPodaci:any;
   stipendijePodaci:any;
-  podaciUniveziteti:any;
+  podaciUniverziteti:any;
 
   constructor(private httpKlijent:HttpClient) { }
 
   ngOnInit(): void {
     this.getPrakse();
+    this.getSmjestaji();
+    this.getStipendije();
   }
 
   getPrakse() {
@@ -47,7 +49,7 @@ export class HomeComponent implements OnInit {
 
   getUniverziteti() {
     this.httpKlijent.get(MojConfig.adresa_servera + "/Univerzitet/GetAll").subscribe(((x: any) => {
-      this.podaciUniveziteti = x;
+      this.podaciUniverziteti = x;
     }));
   }
 

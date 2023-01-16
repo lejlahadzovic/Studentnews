@@ -161,9 +161,15 @@ namespace StudentOglasi.Modul_TestniPodaci
                     Stipenditor = stipenditori[0]
                 });
             }
-            praksa.Add(new Praksa { Naslov = " Praksa", Slika = "00c19756-256e-4f70-bfd2-0caf3d18d747.png", RokPrijave = new DateTime(2023, 02, 25), Opis = "opis oglasa ", VrijemeObjave = DateTime.Now, PocetakPrakse= new DateTime(2023, 02, 25),KrajPrakse= new DateTime(2023, 03, 25),Kvalifikacije=" ",Benefiti=" ", Placena = true, Uposlenik = uposlenikF[1] });
-            praksa.Add(new Praksa { Naslov = " Praksa", Slika = "00c19756-256e-4f70-bfd2-0caf3d18d747.png", RokPrijave = new DateTime(2023, 10, 10), Opis = "opis oglasa ", VrijemeObjave = DateTime.Now, PocetakPrakse = new DateTime(2023,12, 05), KrajPrakse = new DateTime(2023, 06, 20), Kvalifikacije = " ", Benefiti = " ", Placena = false, Uposlenik = uposlenikF[2] });
 
+            for (int i = 0; i < 5; i++)
+            {
+                praksa.Add(new Praksa { Naslov = " Praksa" + i.ToString(), Slika = "00c19756-256e-4f70-bfd2-0caf3d18d747.png", RokPrijave = new DateTime(2023, 02, 25), Opis = "opis oglasa ", VrijemeObjave = DateTime.Now, PocetakPrakse = new DateTime(2023, 02, 25), KrajPrakse = new DateTime(2023, 03, 25), Kvalifikacije = " ", Benefiti = " ", Placena = true, Uposlenik = uposlenikF[1] });
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                praksa.Add(new Praksa { Naslov = " Praksa"+i.ToString(), Slika = "00c19756-256e-4f70-bfd2-0caf3d18d747.png", RokPrijave = new DateTime(2023, 10, 10), Opis = "opis oglasa ", VrijemeObjave = DateTime.Now, PocetakPrakse = new DateTime(2023, 12, 05), KrajPrakse = new DateTime(2023, 06, 20), Kvalifikacije = " ", Benefiti = " ", Placena = false, Uposlenik = uposlenikF[2] });
+            }
             for (int i = 0; i < 10; i++)
             {
                 referentF.Add(new ReferentFakulteta 

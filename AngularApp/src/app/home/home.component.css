@@ -1,0 +1,28 @@
+
+.example-card {
+  max-width: 400px;
+  min-width: 400px;
+  display: inline-block;
+  margin-left: 60px;
+}
+
+.example-header-image {
+  background-image: url('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png');
+  background-size: cover;
+}
+
+h1{
+  text-align: center;
+}
+
+.pogledaj-vise-button {
+margin-top: 30px;
+  margin-left: 45%;
+}
+.kartice{
+  margin-top: 100px;
+  display: inline-block;
+}
+.naslov{
+  margin-top: 30px;
+}

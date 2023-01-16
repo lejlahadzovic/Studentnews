@@ -15,5 +15,6 @@
         public string nacinGrijanja { get; set; }
         public int gradID { get; set; }
         public int izdavacID { get; set; }
+
     }
 }
