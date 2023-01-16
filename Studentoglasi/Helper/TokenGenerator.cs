@@ -45,5 +45,7 @@ namespace StudentOglasi.Helper
             var s = result.ToString();
             return "S" + result;
         }
-    }
+    } 
+   
+   
 }
