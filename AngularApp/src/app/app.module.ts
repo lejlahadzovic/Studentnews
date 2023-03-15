@@ -37,6 +37,8 @@ import { RegistracijaComponent } from './registracija/registracija.component';
 import { HomeComponent } from './home/home.component';
 import { FirmeComponent } from './firme/firme.component';
 import { StipenditoriComponent } from './stipenditori/stipenditori.component';
+import { ProfilComponent } from './profil/profil.component';
+import {MatChipsModule} from "@angular/material/chips";
 
 @NgModule({
   declarations: [
@@ -56,7 +58,8 @@ import { StipenditoriComponent } from './stipenditori/stipenditori.component';
     RegistracijaComponent,
     HomeComponent,
     FirmeComponent,
-    StipenditoriComponent
+    StipenditoriComponent,
+    ProfilComponent
   ],
   imports: [
     BrowserModule,
@@ -80,6 +83,7 @@ import { StipenditoriComponent } from './stipenditori/stipenditori.component';
       {path: '', component: HomeComponent},
       {path: 'putanja-firme', component: FirmeComponent},
       {path: 'putanja-stipenditori', component: StipenditoriComponent},
+      {path: 'profil', component: ProfilComponent}
     ]),
     FormsModule,
     MatToolbarModule,
@@ -96,7 +100,8 @@ import { StipenditoriComponent } from './stipenditori/stipenditori.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatCheckboxModule,
-    MatCardModule
+    MatCardModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

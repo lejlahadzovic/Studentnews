@@ -17,6 +17,8 @@ export class AppComponent{
   title: string="Upravljanje podacima";
   username: any;
   password:any;
+  slikaURL: string="";
+  poruka: string='';
 
   ngOnInit(): void {
   }
@@ -32,6 +34,7 @@ export class AppComponent{
 
     this.httpKlijent.post(MojConfig.adresa_servera + "/Autentifikacija/Logout/", null, MojConfig.http_opcije())
       .subscribe((x: any) => {
+        this.router.navigateByUrl("/");
       });
   }
 
@@ -43,6 +46,7 @@ export class AppComponent{
     this.dialog.open(templateRef, {
       width:'25%'
     });
+    this.poruka='';
   }
 
   btnLogin() {
@@ -53,19 +57,29 @@ export class AppComponent{
     this.httpKlijent.post<LoginInformacije>(MojConfig.adresa_servera+ "/Autentifikacija/Login/", saljemo)
       .subscribe((x:LoginInformacije) =>{
         if (x.isLogiran) {
-
           AutentifikacijaHelper.setLoginInfo(x)
-          this.router.navigateByUrl("/putanja-smjestaji");
-
+          this.dialog.closeAll();
+          this.router.navigateByUrl("/");
         }
         else
         {
           AutentifikacijaHelper.setLoginInfo(null);
+          this.username='';
+          this.password='';
+          this.poruka='Niste unijeli ispravno korisničko ime ili lozinku.';
         }
       });
   }
 
   registracija() {
     this.router.navigateByUrl("/registracija");
+  }
+
+  profil() {
+    this.router.navigateByUrl("/profil");
+  }
+
+  smjestaji() {
+    this.router.navigateByUrl("/putanja-smjestaji");
   }
 }
