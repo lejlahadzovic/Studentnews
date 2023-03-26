@@ -36,7 +36,7 @@ export class StudentiComponent implements OnInit {
   }
 
   getFakulteti() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/F/GetAll").subscribe(((x: any) => {
+    this.httpKlijent.get(MojConfig.adresa_servera + "/Fakultet/GetAll").subscribe(((x: any) => {
       this.fakultetiPodaci = x;
     }));
   }

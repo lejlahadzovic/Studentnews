@@ -1,0 +1,33 @@
+.image{
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
+  border: 1px solid black;
+}
+#slika{
+  height: 200px;
+  width: 200px;
+  margin-left: 25%;
+  float: left;
+}
+#prikaz{
+  margin-top: 70px;
+}
+#podaci{
+  margin-left: 25%;
+  width: 50%;
+  float: left;
+  margin-top: 40px;
+}
+.mat-form-field{
+  font-size: 14px;
+  width: 100%;
+}
+#opis{
+  padding: 20px;
+  margin-top: 60px;
+  position: absolute;
+  margin-left: 37%;
+}

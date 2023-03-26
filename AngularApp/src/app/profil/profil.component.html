@@ -1,0 +1,182 @@
+<div id="prikaz">
+  <div id="slika">
+    <img class="image" [src]="this.slikaURL">
+    <div *ngIf="disabled==false">
+      <input type="file" #file placeholder="Choose file" (change)="chooseFile(file.files)" style="display:none;">
+      <button mat-mini-fab style="display: block;position: relative;top: -50px;left: 150px;" (click)="file.click()"
+              color="primary" mat-icon-button>
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div id="opis">
+    <p style="font-size: 20px;margin-left: 30px">{{this.korisnik.ime}} {{this.korisnik.prezime}}</p>
+
+    <div *ngIf="this.korisnikInfo.isStudent || this.korisnikInfo.isReferentFakulteta">
+      <p style="font-size: 14px;margin-left: 30px; opacity: 0.7">{{this.korisnik.naziv_fakulteta}}</p>
+    </div>
+
+    <div *ngIf="this.korisnikInfo.isReferentUniverziteta">
+      <p style="font-size: 14px;margin-left: 30px; opacity: 0.7">{{this.korisnik.naziv_univerziteta}}</p>
+    </div>
+
+    <div *ngIf="this.korisnikInfo.isUposlenikStipenditora">
+      <p style="font-size: 14px;margin-left: 30px; opacity: 0.7">{{this.korisnik.naziv_stipenditora}}</p>
+    </div>
+
+    <div *ngIf="this.korisnikInfo.isUposlenikFirme">
+      <p style="font-size: 14px;margin-left: 30px; opacity: 0.7">{{this.korisnik.naziv_firme}}</p>
+    </div>
+
+    <div *ngIf="this.korisnikInfo.isAdmin">
+      <p style="font-size: 14px;margin-left: 30px; opacity: 0.7">Administrator</p>
+    </div>
+  </div>
+
+  <button mat-button style="display: block;position: absolute;margin-left: 65%;" color="primary" (click)="edit()">
+    <mat-icon>edit</mat-icon>
+    Uredi profil
+  </button>
+
+  <div id="podaci">
+    <mat-form-field style="width: 47%;margin-bottom: 15px;" appearance="outline">
+      <mat-label>Ime</mat-label>
+      <input [disabled]="disabled" matInput [(ngModel)]="this.korisnik.ime">
+    </mat-form-field>
+
+    <mat-form-field style="width: 47%;margin-left: 6%;" appearance="outline">
+      <mat-label>Prezime</mat-label>
+      <input [disabled]="disabled" matInput [(ngModel)]="this.korisnik.prezime">
+    </mat-form-field>
+
+    <div *ngIf="this.korisnikInfo.isStudent==true">
+      <mat-form-field style="width: 47%;margin-bottom: 15px;" appearance="outline">
+        <mat-label>Broj indeksa</mat-label>
+        <input [disabled]="disabled" matInput [(ngModel)]="this.korisnik.broj_indeksa">
+      </mat-form-field>
+
+      <mat-form-field style="width: 47%;margin-left: 6%;margin-bottom: 15px;" appearance="outline">
+        <mat-label>Fakultet</mat-label>
+        <mat-select [disabled]="disabled" [(ngModel)]="this.korisnik.fakultetID" name="food">
+          <mat-option  *ngFor="let fakultet of this.fakultetiPodaci" [value]="fakultet.id">
+            {{fakultet.naziv}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field style="width: 47%;margin-bottom: 15px;" appearance="outline">
+        <mat-label>Godina studija</mat-label>
+        <mat-select [disabled]="disabled" [(value)]="this.korisnik.godinaStudija" disableRipple>
+          <mat-option [value]="1">1. godina</mat-option>
+          <mat-option [value]="2">2. godina</mat-option>
+          <mat-option [value]="3">3. godina</mat-option>
+          <mat-option [value]="4">4. godina</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field style="width: 47%;margin-left: 6%;margin-bottom: 15px;" appearance="outline">
+        <mat-label>Način studiranja</mat-label>
+        <mat-select [disabled]="disabled" [(value)]="this.korisnik.nacin_studiranja" disableRipple>
+          <mat-option value="Redovan student">Redovan student</mat-option>
+          <mat-option value="DL student">DL student</mat-option>
+          <mat-option value="Vanredni studenti">Vanredni studenti</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="this.korisnikInfo.isIzdavacSmjestaja==true">
+      <mat-form-field style="width: 47%;margin-bottom: 15px;" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input [disabled]="disabled" matInput [(ngModel)]="this.korisnik.email">
+      </mat-form-field>
+
+      <mat-form-field style="width: 47%;margin-left: 6%;margin-bottom: 15px;" appearance="outline">
+        <mat-label>Broj telefona</mat-label>
+        <input [disabled]="disabled" matInput [(ngModel)]="this.korisnik.broj_telefona">
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="this.korisnikInfo.isReferentFakulteta==true">
+
+      <mat-form-field style="width: 47%;margin-bottom: 15px;" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input [disabled]="disabled" matInput [(ngModel)]="this.korisnik.email">
+      </mat-form-field>
+
+      <mat-form-field style="width: 47%;margin-left: 6%;margin-bottom: 15px;" appearance="outline">
+        <mat-label>Fakultet</mat-label>
+        <mat-select [disabled]="disabled" [(ngModel)]="this.korisnik.fakultetID" name="food">
+          <mat-option  *ngFor="let fakultet of this.fakultetiPodaci" [value]="fakultet.id">
+            {{fakultet.naziv}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="this.korisnikInfo.isReferentUniverziteta==true">
+      <mat-form-field style="width: 47%;margin-bottom: 15px;" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input [disabled]="disabled" matInput [(ngModel)]="this.korisnik.email">
+      </mat-form-field>
+
+      <mat-form-field style="width: 47%;margin-left: 6%;margin-bottom: 15px;" appearance="outline">
+        <mat-label>Univerzitet</mat-label>
+        <mat-select [disabled]="disabled" [(ngModel)]="this.korisnik.univerzitetID" name="food">
+          <mat-option  *ngFor="let univerzitet of this.univerzitetiPodaci" [value]="univerzitet.id">
+            {{univerzitet.naziv}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="this.korisnikInfo.isUposlenikStipenditora==true">
+      <mat-form-field style="width: 47%;margin-bottom: 15px;" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input [disabled]="disabled" matInput [(ngModel)]="this.korisnik.email">
+      </mat-form-field>
+
+      <mat-form-field style="width: 47%;margin-left: 6%;margin-bottom: 15px;" appearance="outline">
+        <mat-label>Stipenditor</mat-label>
+        <mat-select [disabled]="disabled" [(ngModel)]="this.korisnik.stipenditorID">
+          <mat-option *ngFor="let stipenditor of this.stipenditoriPodaci" [value]="stipenditor.id">
+            {{stipenditor.naziv}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="this.korisnikInfo.isUposlenikFirme==true">
+      <mat-form-field style="width: 47%;margin-bottom: 15px;" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input [disabled]="disabled" matInput [(ngModel)]="this.korisnik.email">
+      </mat-form-field>
+
+      <mat-form-field style="width: 47%;margin-left: 6%;margin-bottom: 15px;" appearance="outline"><mat-label>Firma</mat-label>
+        <mat-label>Firma</mat-label>
+        <mat-select [disabled]="disabled" [(ngModel)]="this.korisnik.firmaID" name="food">
+          <mat-option *ngFor="let firma of this.firmePodaci" [value]="firma.id">
+            {{firma.naziv}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field style="width: 47%;margin-bottom: 15px;" appearance="outline">
+        <mat-label>Pozicija</mat-label>
+        <input [disabled]="disabled" matInput [(ngModel)]="this.korisnik.pozicija">
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="this.korisnikInfo.isAdmin==true">
+      <mat-form-field style="width: 47%;margin-bottom: 15px;" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input [disabled]="disabled" matInput [(ngModel)]="this.korisnik.email">
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="disabled==false">
+      <button mat-raised-button style="display:block; margin-left: 75%; width: 20%" color="primary" (click)="snimi(); edit()">Sačuvaj</button>
+    </div>
+  </div>
+
+</div>

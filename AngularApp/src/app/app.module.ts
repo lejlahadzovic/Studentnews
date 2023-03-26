@@ -47,8 +47,8 @@ import { SmjestajPregledComponent } from './smjestaj-pregled/smjestaj-pregled.co
 import { UniverzitetiPregledComponent } from './univerziteti-pregled/univerziteti-pregled.component';
 import { FakultetiPregledComponent } from './fakulteti-pregled/fakulteti-pregled.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
-import { ProfilComponent } from './profil/profil.component';
 import {MatChipsModule} from "@angular/material/chips";
+import { ProfilComponent } from './profil/profil.component';
 
 @NgModule({
   declarations: [
@@ -103,6 +103,7 @@ import {MatChipsModule} from "@angular/material/chips";
             {path: 'putanja-smjestaj-pregled', component: SmjestajPregledComponent},
             {path: 'putanja-univerziteti-pregled', component: UniverzitetiPregledComponent},
             {path: 'putanja-fakulteti-pregled', component: FakultetiPregledComponent},
+            {path: 'profil', component: ProfilComponent}
         ]),
         FormsModule,
         MatToolbarModule,
@@ -120,6 +121,7 @@ import {MatChipsModule} from "@angular/material/chips";
         MatNativeDateModule,
         MatCheckboxModule,
         MatCardModule,
+        MatChipsModule,
         MatSidenavModule,
         MatTooltipModule,
         MatPaginatorModule

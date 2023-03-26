@@ -37,7 +37,7 @@ export class ObjaveComponent implements OnInit {
     }));
   }
   getKategorije() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/F/GetKategorije").subscribe(((x: any) => {
+    this.httpKlijent.get(MojConfig.adresa_servera + "/Kategorija/GetAll").subscribe(((x: any) => {
       this.kategorijePodaci = x;
     }));
   }

@@ -31,7 +31,7 @@ export class UposleniciStipenditoraComponent implements OnInit {
     }));
   }
   getStipenditori() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/F/GetStipenditori").subscribe(((x: any) => {
+    this.httpKlijent.get(MojConfig.adresa_servera + "/Stipenditor/GetAll").subscribe(((x: any) => {
       this.stipenditoriPodaci = x;
     }));
   }
