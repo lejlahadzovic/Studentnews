@@ -21,7 +21,7 @@
       <mat-card-actions>
 
         <button mat-button>POGLEDAJ VIŠE</button>
-        <button  mat-raised-button color="accent">PRIJAVI SE</button>
+        <button  mat-raised-button color="accent" (click)=" openDialog(dialogPrijavaStipendije); dodajPrijavu(i.id)">PRIJAVI SE</button>
       </mat-card-actions>
 
     </mat-card>
@@ -29,3 +29,34 @@
 
   </mat-drawer-content>
 </mat-drawer-container>
+
+<ng-template #dialogPrijavaStipendije >
+<h1 mat-dialog-title>Prijava na stipendiju</h1>
+<div mat-dialog-content>
+  <div class="cv" *ngIf="cvURL && cvURL !== ''">
+    <input hidden type="file" #file  (change)="chooseFileCV(file.files)"  >
+    <button style="display:block; position: relative;left: 8px;" mat-raised-button color="primary" (click)="file.click()">
+      Dodaj CV </button>  <p>{{this.imeFileCV}}</p>
+  </div>
+
+  <br>
+  <div class="prosjekOcjena" *ngIf="prosjekURL !== ''">
+    <input hidden type="file" #file  (change)="chooseFileProsjek(file.files)"  >
+    <button style="display:block; position: relative;left: 8px;" mat-raised-button color="primary" (click)="file.click()">
+      Dodaj prosjek ocjena</button></div>
+
+<p>{{imeFileProsjek}}</p>
+  <br>
+  <div class="dokumentacija" *ngIf=" dokumentacijaURL !== ''">
+    <input hidden type="file" #file  (change)="chooseFileDok(file.files)"  >
+    <button style="display:block; position: relative;left: 8px;" mat-raised-button color="primary" (click)="file.click()">
+      Dodaj ostalu dokumentaciju </button>
+    <p>{{imeFileDokumentacija}}</p>
+  <br>
+</div >
+</div >
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Odustani</button>
+  <button  mat-raised-button color="accent" (click)="snimiDugme()">Snimi</button>
+</div>
+  </ng-template>

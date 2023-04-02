@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {MatDialog} from "@angular/material/dialog";
 import {MojConfig} from "../MojConfig";
-
+import {LoginInformacije} from "../helper/login-informacije";
+import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
+import {formatDate} from "@angular/common";
 @Component({
   selector: 'app-stipendije-pregled',
   templateUrl: './stipendije-pregled.component.html',
@@ -12,19 +14,34 @@ export class StipendijePregledComponent implements OnInit {
 
   stipendijePodaci: any;
   dialogtitle: any;
-
+  cvURL:string="assets/CV/";
+  CV:any;
+  imeFileCV:string='';
+  imeFileDokumentacija:string='';
+  imeFileProsjek:string='';
+  dokumentacijaURL:string="assets/Dokumentacija/";
+  Dokumentacija:any;
+  prosjekURL:string="assets/ProsjekOcjena/";
+  ProsjekOcjena:any;
   filter_stipenditor:any;
   stipenditoriPodaci:any;
+  odabranastipendija: any;
+  prijavastipendije: any;
+  korisnik:any;
   constructor(private httpKlijent:HttpClient,private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.korisnik=this.loginInfo().autentifikacijaToken?.korisnik;
     this.getStipendije();
     this.getStipenditori()
   }
   openDialog(templateRef:any) {
     this.dialog.open(templateRef, {
-      width:'60%'
     });
+  }
+
+  loginInfo():LoginInformacije {
+    return AutentifikacijaHelper.getLoginInfo();
   }
 
   restart() {
@@ -38,15 +55,64 @@ export class StipendijePregledComponent implements OnInit {
     );
   }
   private getStipenditori() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/Stipenditor/GetAll").subscribe(((x: any) => {
+    this.httpKlijent.get(MojConfig.adresa_servera + "/F/GetStipenditori").subscribe(((x: any) => {
       this.stipenditoriPodaci = x;
     }));
   }
+  chooseFileCV(files: any) {
+    this.CV = files[0];
 
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.cvURL = reader.result as string;
+    }
+    reader.readAsDataURL( this.CV)
+    this.imeFileCV=this.CV.name;
+  }
+  chooseFileDok(files: any) {
+    this.Dokumentacija = files[0];
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.dokumentacijaURL = reader.result as string;
+    }
+    reader.readAsDataURL( this.Dokumentacija)
+    this.imeFileDokumentacija=this.Dokumentacija.name;
+  }
+  chooseFileProsjek(files: any) {
+    this.ProsjekOcjena = files[0];
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.prosjekURL = reader.result as string;
+    }
+    reader.readAsDataURL( this.ProsjekOcjena)
+this.imeFileProsjek=this.ProsjekOcjena.name;
+  }
   private getStipendije() {
     this.httpKlijent.get(MojConfig.adresa_servera + "/Stipendija/GetAll").subscribe(((x: any) => {
       this.stipendijePodaci = x;
     }));
   }
-
+  dodajPrijavu(id: number) {
+    this.prijavastipendije={
+      stipendijaId: id,
+      dokumentacija: '',
+      cv: '',
+      prosjekOcjena: '',
+      studentIme:this.korisnik.isStudent? this.korisnik.ime: 'Sqdzsc',
+      studentID:this.korisnik.isStudent? this.korisnik.id : 39}
+  }
+  snimiDugme() {
+    const formData=new FormData();
+    formData.append('stipendijaId',this.prijavastipendije.stipendijaId);
+    formData.append('studentID',this.prijavastipendije.studentID);
+    formData.append('studentIme',this.prijavastipendije.studentIme);
+    formData.append('dokumentacija',this.Dokumentacija);
+    formData.append('cv',this.CV);
+    formData.append('prosjekOcjena',this.ProsjekOcjena);
+    this.httpKlijent.post(MojConfig.adresa_servera+"/PrijavaStipendija/Snimi",formData).subscribe((s:any)=>{
+      this.dialog.closeAll();
+    })
+  }
 }

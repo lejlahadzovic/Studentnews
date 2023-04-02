@@ -35,6 +35,7 @@ import { StipendijeComponent } from './stipendije/stipendije.component';
 import { SmjestajiComponent } from './smjestaji/smjestaji.component';
 import {MatCardModule} from "@angular/material/card";
 import { RegistracijaComponent } from './registracija/registracija.component';
+
 import { HomeComponent } from './home/home.component';
 import { FirmeComponent } from './firme/firme.component';
 import { StipenditoriComponent } from './stipenditori/stipenditori.component';
@@ -47,8 +48,8 @@ import { SmjestajPregledComponent } from './smjestaj-pregled/smjestaj-pregled.co
 import { UniverzitetiPregledComponent } from './univerziteti-pregled/univerziteti-pregled.component';
 import { FakultetiPregledComponent } from './fakulteti-pregled/fakulteti-pregled.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
-import {MatChipsModule} from "@angular/material/chips";
 import { ProfilComponent } from './profil/profil.component';
+
 
 @NgModule({
   declarations: [
@@ -103,7 +104,6 @@ import { ProfilComponent } from './profil/profil.component';
             {path: 'putanja-smjestaj-pregled', component: SmjestajPregledComponent},
             {path: 'putanja-univerziteti-pregled', component: UniverzitetiPregledComponent},
             {path: 'putanja-fakulteti-pregled', component: FakultetiPregledComponent},
-            {path: 'profil', component: ProfilComponent}
         ]),
         FormsModule,
         MatToolbarModule,
@@ -121,7 +121,6 @@ import { ProfilComponent } from './profil/profil.component';
         MatNativeDateModule,
         MatCheckboxModule,
         MatCardModule,
-        MatChipsModule,
         MatSidenavModule,
         MatTooltipModule,
         MatPaginatorModule

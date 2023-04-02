@@ -22,6 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\CV\" />
+    <Folder Include="wwwroot\Dokumentacija\" />
+    <Folder Include="wwwroot\Certifikati\" />
+    <Folder Include="wwwroot\PropratnoPismo\" />
+    <Folder Include="wwwroot\ProsjekOcjena\" />
     <Folder Include="wwwroot\Slike\" />
     <Folder Include="wwwroot\Slike\" />
   </ItemGroup>

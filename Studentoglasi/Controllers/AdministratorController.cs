@@ -78,7 +78,7 @@ namespace StudentOglasi.Controllers
                 {
                     id = x.ID,
                     username = x.Username,
-                    password = x.Password,
+                    password=x.Password,
                     ime = x.Ime,
                     slika = x.Slika,
                     prezime = x.Prezime,

@@ -89,38 +89,10 @@ namespace StudentOglasi.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetAll()
-        {
-            var data = _dbContext.Smjestaj
-                .OrderBy(x => x.ID)
-                .Select(x => new
-                {
-                    id = x.ID,
-                    naslov = x.Naslov,
-                    rokPrijave = x.RokPrijave,
-                    opis = x.Opis,
-                    slika = Config.SlikePutanja + x.Slika,
-                    vrijemeObjave = x.VrijemeObjave.ToString("dd.MM.yyyy H:mm"),
-                    izdavacID = x.IzdavacID,
-                    izdavac = x.Izdavac.Ime + ' ' + x.Izdavac.Prezime,
-                    nacinGrijanja = x.NacinGrijanja,
-                    cijena = x.Cijena,
-                    kapacitet = x.Kapacitet,
-                    dodatneUsluge = x.DodatneUsluge,
-                    brojSoba = x.BrojSoba,
-                    parking = x.Parking,
-                    gradID = x.GradID,
-                    grad_naziv = x.Grad.Naziv
-                })
-                .AsQueryable();
-            return Ok(data);
-        }
-
-        [HttpGet]
         public ActionResult Get(int? izdavacID)
         {
-            var data = _dbContext.Smjestaj
-                .Where(x => izdavacID == null || x.IzdavacID == izdavacID)
+            var data = _dbContext.Smjestaj.
+                Where(x => izdavacID == null || x.IzdavacID == izdavacID)
                 .OrderBy(x => x.ID)
                 .Select(x => new
                 {
