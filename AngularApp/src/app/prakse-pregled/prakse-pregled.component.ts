@@ -35,7 +35,7 @@ export class PraksePregledComponent implements OnInit {
   }
   openDialog(templateRef:any) {
     this.dialog.open(templateRef, {
-      width:'60%'
+      width:'40%'
     });
   }
   loginInfo():LoginInformacije {

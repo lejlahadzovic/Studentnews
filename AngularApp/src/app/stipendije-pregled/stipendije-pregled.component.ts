@@ -37,6 +37,8 @@ export class StipendijePregledComponent implements OnInit {
   }
   openDialog(templateRef:any) {
     this.dialog.open(templateRef, {
+      width:'40%',
+
     });
   }
 
