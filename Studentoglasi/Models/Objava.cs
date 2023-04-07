@@ -14,5 +14,13 @@ namespace StudentOglasi.Models
         [ForeignKey("KategorijaID")]
         public Kategorija Kategorija { get; set; }
         public int KategorijaID { get; set; }
+        public ReferentFakulteta ReferentFakulteta { get; set; }
+        public int? ReferentFakultetaID { get; set; }
+        public ReferentUniverziteta ReferentUniverziteta { get; set; }
+        public int? ReferentUniverzitetaID { get; set; }
+        public UposlenikFirme UposlenikFirme { get; set; }
+        public int? UposlenikFirmeID { get; set; }
+        public UposlenikStipenditora UposlenikStipenditora { get; set; }
+        public int? UposlenikStipenditoraID { get; set; }
     }
 }

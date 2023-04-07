@@ -62,6 +62,60 @@ namespace StudentOglasi.Controllers
             .AsQueryable();
         return Ok(data.Take(100).ToList());
     }
+        [HttpGet]
+        public ActionResult GetById(int id)
+        {
+            var univerzitet = _dbContext.Univerzitet.Include(x=>x.Grad)
+     .Where(u => u.ID == id)
+     .FirstOrDefault();
+
+            if (univerzitet == null)
+            {
+                return NotFound();
+            }
+
+            var objave = _dbContext.ReferentUniverziteta
+                .Where(r => r.Univerzitet.ID == id)
+                .SelectMany(r => r.Objave)
+                .Include(x=>x.Kategorija)
+                .ToList();
+
+            var fakulteti = _dbContext.Fakultet
+                .Where(f => f.UniverzitetID == id)
+                .Select(f => new
+                {
+                    id=f.ID,
+                    naziv=f.Naziv,
+                    adresa=f.Adresa,
+                    email=f.Email,
+                    link=f.Link,
+                    logo=f.Logo
+                }).ToList();
+
+            var data = new
+            {
+                id = univerzitet.ID,
+                naziv = univerzitet.Naziv, 
+                email = univerzitet.Email,
+                telefon = univerzitet.Telefon,
+                link = univerzitet.Link,
+                grad = univerzitet.Grad.Naziv,
+                logo=univerzitet.Logo,
+                slika=univerzitet.Slika,
+                objave = objave.Select(o => new
+                {
+                    id=o.ID,
+                    naslov = o.Naslov,
+                    slikaObjave = o.Slika,
+                    sadrzaj = o.Sadrzaj,
+                    kategorija = o.Kategorija.Naziv,
+                    vrijemeObjave=o.VrijemeObjave.ToString("dd.MM.yyyy HH:mm")
+                }),
+                fakulteti=fakulteti
+            };
+
+            return Ok(data);
+        }
 
         [HttpPost("{id}")]
         public ActionResult Obrisi(int id)

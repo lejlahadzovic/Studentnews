@@ -114,6 +114,38 @@ namespace StudentOglasi.Controllers
             return Ok(data);
         }
 
+        [HttpGet]
+        public ActionResult GetById(int id)
+        {
+            var data = _dbContext.Praksa
+                .Where(x => x.ID == id)
+                .Select(x => new
+                {
+                    id = x.ID,
+                    naslov = x.Naslov,
+                    rokPrijave = x.RokPrijave,
+                    pocetakPrakse = x.PocetakPrakse,
+                    krajPrakse = x.KrajPrakse,
+                    opis = x.Opis,
+                    slika = Config.SlikePutanja + x.Slika,
+                    kvalifikacije = x.Kvalifikacije,
+                    benefiti = x.Benefiti,
+                    vrijemeObjave = x.VrijemeObjave.ToString("dd.MM.yyyy H:mm"),
+                    placena = x.Placena,
+                    uposlenik = x.Uposlenik.Ime + ' ' + x.Uposlenik.Prezime,
+                    naziv_firme = x.Uposlenik.Firma.Naziv,
+                    uposlenik_slika= x.Uposlenik.Slika
+                })
+                .FirstOrDefault();
+
+            if (data == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(data);
+        }
+
         [HttpPost]
         public ActionResult Obrisi([FromBody] int id)
         {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {MatDialog} from "@angular/material/dialog";
 import {MojConfig} from "../MojConfig";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-smjestaj-pregled',
@@ -16,7 +17,7 @@ export class SmjestajPregledComponent implements OnInit {
   filter_izdavaci:any
   filter_gradovi:any;
   gradoviPodaci:any;
-  constructor(private httpKlijent:HttpClient,private dialog: MatDialog) { }
+  constructor(private httpKlijent:HttpClient,private dialog: MatDialog, private router:Router) { }
 
   ngOnInit(): void {
     this.getSmjestaji();
@@ -44,7 +45,7 @@ export class SmjestajPregledComponent implements OnInit {
   }
 
   private getSmjestaji() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/Smjestaj/GetAll").subscribe(((x: any) => {
+    this.httpKlijent.get(MojConfig.adresa_servera + "/Smjestaj/Get").subscribe(((x: any) => {
       this.smjestajiPodaci = x;
     }));
   }
@@ -57,5 +58,9 @@ export class SmjestajPregledComponent implements OnInit {
     this.httpKlijent.get(MojConfig.adresa_servera + "/Grad/GetAll").subscribe(((x: any) => {
       this.gradoviPodaci = x;
     }));
+  }
+
+  pregledDetalja(smjestaj: any) {
+    this.router.navigate(["smjestaj-detalji",smjestaj.id]);
   }
 }

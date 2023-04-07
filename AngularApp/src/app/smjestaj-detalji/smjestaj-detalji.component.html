@@ -1,0 +1,40 @@
+<mat-card>
+  <mat-card-header style="margin-bottom: 15px">
+    <mat-card-title class="naslov">{{smjestaj?.naslov}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="user-info">
+      <div class="user-slika">
+        <img style="height: 100% ; width: 100%" [src]="smjestaj?.izdavacSlika==null?'assets/Images/User%20icon.png':slikaPutanja+smjestaj?.uposlenik_slika" alt="Avatar" />
+      </div>
+      <div class="user-info-detalji">
+        <p class="ime_uposlenika">{{ smjestaj?.izdavac }}</p>
+        <p class="grad">{{ smjestaj?.grad_naziv }}</p>
+        <p class="vrijemeObjave">{{ smjestaj?.vrijemeObjave }}</p>
+      </div>
+    </div>
+    <div class="smjestaj-slika-wrapper">
+      <img class="smjestaj-slika" [src]="smjestaj?.slika" alt="Praksa slika">
+    </div>
+    <p class="opis">{{smjestaj?.opis}}</p>
+    <div class="container">
+      <ul class="listaL">
+        <li><strong class="naziv-ob">Grad:</strong> <span class="vrijednostL">{{smjestaj?.grad_naziv}}</span></li>
+        <li><strong class="naziv-ob">Rok prijave:</strong> <span class="vrijednostL">{{smjestaj?.rokPrijave | date: 'dd.MM.yyyy'}}</span></li>
+        <li><strong class="naziv-ob">Broj soba:</strong> <span class="vrijednostL">{{smjestaj?.brojSoba}}</span></li>
+        <li><strong class="naziv-ob">Kapacitet:</strong> <span class="vrijednostL">{{smjestaj?.kapacitet}}</span></li>
+      </ul>
+
+      <ul class="listaD">
+        <li><strong class="naziv-ob">Način grijanja:</strong> <span class="vrijednostD">{{smjestaj?.nacinGrijanja}}</span></li>
+        <li><strong class="naziv-ob">Parking:</strong>
+          <span class="vrijednostD">
+        <mat-icon [ngClass]="{'green-icon': smjestaj?.parking, 'red-icon': !smjestaj?.parking}">
+          {{ smjestaj?.parking ? 'check_circle' : 'cancel' }}
+        </mat-icon>
+      </span>
+        <li><strong class="naziv-ob">Cijena:</strong> <span class="vrijednostD">{{smjestaj?.cijena}} KM</span></li>
+      </ul>
+    </div>
+  </mat-card-content>
+</mat-card>

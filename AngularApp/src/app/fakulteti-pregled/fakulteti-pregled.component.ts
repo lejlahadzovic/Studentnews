@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {MatDialog} from "@angular/material/dialog";
 import {MojConfig} from "../MojConfig";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-fakulteti-pregled',
@@ -13,7 +14,7 @@ export class FakultetiPregledComponent implements OnInit {
   podaciFakulteti: any;
   dialogtitle: any;
 
-  constructor(private httpKlijent:HttpClient,private dialog: MatDialog) { }
+  constructor(private httpKlijent:HttpClient,private dialog: MatDialog, private router:Router) { }
 
   ngOnInit(): void {
     this.getFakulteti();
@@ -32,4 +33,7 @@ export class FakultetiPregledComponent implements OnInit {
   }
 
 
+  pregledDetalja(fakultet: any) {
+    this.router.navigate(["fakultet-detalji",fakultet.id]);
+  }
 }

@@ -98,6 +98,34 @@ namespace StudentOglasi.Controllers
             return Ok(data);
         }
 
+        [HttpGet]
+        public ActionResult GetById(int id)
+        {
+            var data = _dbContext.Objava
+                .Where(x => x.ID == id)
+                .OrderBy(x => x.ID)
+                .Select(x => new
+                {
+                    id = x.ID,
+                    naslov = x.Naslov,
+                    sadrzaj = x.Sadrzaj,
+                    slika = Config.SlikePutanja + x.Slika,
+                    naziv_kategorije = x.Kategorija.Naziv,
+                    vrijemeObjave = x.VrijemeObjave.ToString("dd.MM.yyyy HH:mm"),
+                    korisnik = x.ReferentFakulteta != null ? new {ime = x.ReferentFakulteta.Ime, prezime = x.ReferentFakulteta.Prezime, naziv=x.ReferentFakulteta.Fakultet.Naziv, slika=x.ReferentFakulteta.Slika} : 
+                       x.ReferentUniverziteta!=null? new { ime = x.ReferentUniverziteta.Ime, prezime = x.ReferentUniverziteta.Prezime, naziv = x.ReferentUniverziteta.Univerzitet.Naziv, slika = x.ReferentUniverziteta.Slika } :
+                       x.UposlenikFirme != null ? new { ime = x.UposlenikFirme.Ime, prezime = x.UposlenikFirme.Prezime, naziv = x.UposlenikFirme.Firma.Naziv, slika = x.UposlenikFirme.Slika } :
+                       x.UposlenikStipenditora != null ? new { ime = x.UposlenikStipenditora.Ime, prezime = x.UposlenikStipenditora.Prezime, naziv = x.UposlenikStipenditora.Stipenditor.Naziv, slika = x.UposlenikStipenditora.Slika } :
+                       null
+                })
+                .FirstOrDefault();
+            if (data == null)
+            {
+                return NotFound();
+            }
+            return Ok(data);
+        }
+
         [HttpPost]
         public ActionResult Obrisi([FromBody] int id)
         {

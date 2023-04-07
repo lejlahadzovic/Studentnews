@@ -1,0 +1,21 @@
+<mat-card>
+  <mat-card-header style="margin-bottom: 15px">
+    <mat-card-title class="naslov">{{objava?.naslov}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="user-info">
+      <div class="user-slika">
+        <img style="height: 100% ; width: 100%" [src]="objava?.korisnik?.slika==null?'assets/Images/User%20icon.png':slikaPutanja+objava?.korisnik?.slika" alt="Avatar" />
+      </div>
+      <div class="user-info-detalji">
+        <p class="ime">{{ objava?.korisnik?.ime }} {{objava?.korisnik.prezime}}</p>
+        <p class="naziv">{{ objava?.korisnik?.naziv }}</p>
+        <p class="vrijemeObjave">{{ objava?.vrijemeObjave }}</p>
+      </div>
+    </div>
+    <div class="objava-slika-wrapper">
+      <img class="objava-slika" [src]="objava?.slika" alt="Praksa slika">
+    </div>
+    <p class="opis">{{objava?.sadrzaj}}</p>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,51 @@
+<mat-card>
+  <mat-card-header>
+    <div class="univerzitet-info">
+      <div class="univerzitet-logo">
+        <img [src]="univerzitet?.logo==null?'assets/Images/no-image.jpg':slikaPutanja+univerzitet?.logo" alt="Univerzitet logo" />
+      </div>
+      <div class="univerzitet-naziv-email">
+        <mat-card-title>{{univerzitet?.naziv}}</mat-card-title>
+        <mat-card-subtitle>{{univerzitet?.email}}</mat-card-subtitle>
+      </div>
+      <div class="univerzitet-ostali-podaci">
+        <p><strong>Telefon:</strong> {{univerzitet?.telefon}}</p>
+        <p><strong>Link:</strong> <a href="{{univerzitet?.link}}" target="_blank"> {{univerzitet?.link}}</a></p>
+      </div>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="univerzitet-fakulteti">
+      <h3>Fakulteti:</h3>
+      <div *ngFor="let fakultet of univerzitet?.fakulteti">
+        <div class="fakultet-card" (click)="fakultetDetalji(fakultet)">
+          <img [src]="fakultet?.logo==null?'assets/Images/no-image.jpg':slikaPutanja+fakultet?.logo" alt="Logo fakulteta" />
+          <div class="fakultet-info">
+            <h4>{{fakultet?.naziv}}</h4>
+            <p><strong>Adresa:</strong>{{fakultet?.adresa}}</p>
+            <p><strong>Email:</strong> {{fakultet?.email}}</p>
+            <p><strong>Link:</strong> <a href="{{fakultet?.link}}" target="_blank"> {{fakultet?.link}}</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="univerzitet-objave">
+      <h3>Objave:</h3>
+      <div *ngFor="let objava of univerzitet?.objave">
+        <div class="objava-card" (click)="objavaDetalji(objava)">
+          <img [src]="objava?.slikaObjave==null?'assets/Images/no-image.jpg':slikaPutanja+objava?.slikaObjave" alt="Slika objave" />
+          <div class="objava-info">
+            <div class="objava-kategorija">
+              <p>{{objava?.kategorija}}</p>
+            </div>
+            <h4>{{objava?.naslov}}</h4>
+            <p>{{objava?.objavesadrzaj}}</p>
+            <div class="objava-vrijeme">
+              <p>{{objava?.vrijemeObjave}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -49,6 +49,12 @@ import { FakultetiPregledComponent } from './fakulteti-pregled/fakulteti-pregled
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatChipsModule} from "@angular/material/chips";
 import { ProfilComponent } from './profil/profil.component';
+import { PraksaDetaljiComponent } from './praksa-detalji/praksa-detalji.component';
+import { SmjestajDetaljiComponent } from './smjestaj-detalji/smjestaj-detalji.component';
+import { StipendijaDetaljiComponent } from './stipendija-detalji/stipendija-detalji.component';
+import { UniverzitetDetaljiComponent } from './univerzitet-detalji/univerzitet-detalji.component';
+import { ObjavaDetaljiComponent } from './objava-detalji/objava-detalji.component';
+import { FakultetDetaljiComponent } from './fakultet-detalji/fakultet-detalji.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +80,13 @@ import { ProfilComponent } from './profil/profil.component';
     SmjestajPregledComponent,
     UniverzitetiPregledComponent,
     FakultetiPregledComponent,
-    ProfilComponent
+    ProfilComponent,
+    PraksaDetaljiComponent,
+    SmjestajDetaljiComponent,
+    StipendijaDetaljiComponent,
+    UniverzitetDetaljiComponent,
+    ObjavaDetaljiComponent,
+    FakultetDetaljiComponent
   ],
     imports: [
         BrowserModule,
@@ -103,7 +115,13 @@ import { ProfilComponent } from './profil/profil.component';
             {path: 'putanja-smjestaj-pregled', component: SmjestajPregledComponent},
             {path: 'putanja-univerziteti-pregled', component: UniverzitetiPregledComponent},
             {path: 'putanja-fakulteti-pregled', component: FakultetiPregledComponent},
-            {path: 'profil', component: ProfilComponent}
+            {path: 'profil', component: ProfilComponent},
+            {path: 'praksa-detalji/:id', component: PraksaDetaljiComponent},
+            {path: 'smjestaj-detalji/:id', component: SmjestajDetaljiComponent},
+            {path: 'stipendija-detalji/:id', component: StipendijaDetaljiComponent},
+            {path: 'univerzitet-detalji/:id', component: UniverzitetDetaljiComponent},
+            {path: 'objava/:id', component: ObjavaDetaljiComponent},
+            {path: 'fakultet-detalji/:id', component: FakultetDetaljiComponent},
         ]),
         FormsModule,
         MatToolbarModule,

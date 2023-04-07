@@ -118,6 +118,38 @@ namespace StudentOglasi.Controllers
             return Ok(data);
         }
 
+        [HttpGet]
+        public ActionResult GetById(int id)
+        {
+            var data = _dbContext.Stipendija
+                .Where(x => x.ID == id)
+                .OrderBy(x => x.ID)
+                .Select(x => new
+                {
+                    id = x.ID,
+                    naslov = x.Naslov,
+                    rokPrijave = x.RokPrijave,
+                    opis = x.Opis,
+                    slika = Config.SlikePutanja + x.Slika,
+                    vrijemeObjave = x.VrijemeObjave.ToString("dd.MM.yyyy H:mm"),
+                    uposlenik = x.Uposlenik.Ime + ' ' + x.Uposlenik.Prezime,
+                    uposlenik_slika = x.Uposlenik.Slika,
+                    uslovi = x.Uslovi,
+                    iznos = x.Iznos,
+                    kriterij = x.Kriterij,
+                    potrebnaDokumentacija = x.PotrebnaDokumentacija,
+                    nivoObrazovanja = x.NivoObrazovanja,
+                    brojStipendisata = x.BrojStipendisata,
+                    naziv_stipenditora = x.Uposlenik.Stipenditor.Naziv,
+                })
+                .FirstOrDefault();
+            if (data == null)
+            {
+                return NotFound();
+            }
+            return Ok(data);
+        }
+
         [HttpPost]
         public ActionResult Obrisi([FromBody] int id)
         {

@@ -1,6 +1,7 @@
 import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {MojConfig} from "../MojConfig";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,7 @@ export class HomeComponent implements OnInit {
   stipendijePodaci:any;
   podaciUniverziteti:any;
 
-  constructor(private httpKlijent:HttpClient) { }
+  constructor(private httpKlijent:HttpClient, private router:Router) { }
 
   ngOnInit(): void {
     this.getPrakse();
@@ -36,7 +37,7 @@ export class HomeComponent implements OnInit {
   }
 
   private getSmjestaji() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/Smjestaj/GetAll").subscribe(((x: any) => {
+    this.httpKlijent.get(MojConfig.adresa_servera + "/Smjestaj/Get").subscribe(((x: any) => {
       this.smjestajiPodaci = x;
     }));
   }
@@ -54,4 +55,15 @@ export class HomeComponent implements OnInit {
   }
 
 
+  praksaDetalji(praksa: any) {
+    this.router.navigate(["praksa-detalji",praksa.id]);
+  }
+
+  stipendijaDetlaji(stipendija: any) {
+    this.router.navigate(["stipendija-detalji",stipendija.id]);
+  }
+
+  smjestajDetlaji(smjestaj: any) {
+    this.router.navigate(["smjestaj-detalji",smjestaj.id]);
+  }
 }

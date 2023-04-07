@@ -1,0 +1,44 @@
+<mat-card>
+  <mat-card-header>
+    <div class="fakultet-info">
+      <div class="fakultet-logo">
+        <img [src]="fakultet?.logo==null?'assets/Images/no-image.jpg':slikaPutanja+fakultet?.logo" alt="Univerzitet logo" />
+      </div>
+      <div class="fakultet-naziv-email">
+        <mat-card-title>{{fakultet?.naziv}}</mat-card-title>
+        <mat-card-subtitle>{{fakultet?.univerzitet}}</mat-card-subtitle>
+        <mat-card-subtitle>{{fakultet?.email}}</mat-card-subtitle>
+      </div>
+      <div class="fakultet-ostali-podaci">
+        <p><strong>Grad:</strong> {{fakultet?.grad}}</p>
+        <p><strong>Telefon:</strong> {{fakultet?.telefon}}</p>
+        <p><strong>Link:</strong> <a href="{{fakultet?.link}}" target="_blank"> {{fakultet?.link}}</a></p>
+      </div>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="fakultet-opis">
+      <h3>O fakultetu</h3>
+      <p class="opis">{{fakultet?.opis}}</p>
+    </div>
+    <div class="fakultet-objave">
+      <h3>Objave</h3>
+      <div *ngFor="let objava of fakultet?.objave">
+        <div class="objava-card" (click)="objavaDetalji(objava)">
+          <img [src]="objava?.slikaObjave==null?'assets/Images/no-image.jpg':slikaPutanja+objava?.slikaObjave" alt="Slika objave" />
+          <div class="objava-info">
+            <div class="objava-kategorija">
+              <p>{{objava?.kategorija}}</p>
+            </div>
+            <h4>{{objava?.naslov}}</h4>
+            <p>{{objava?.objavesadrzaj}}</p>
+            <div class="objava-vrijeme">
+              <p>{{objava?.vrijemeObjave}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+

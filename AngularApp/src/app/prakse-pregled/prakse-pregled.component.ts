@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MojConfig} from "../MojConfig";
 import {HttpClient} from "@angular/common/http";
 import {MatDialog} from "@angular/material/dialog";
+import {Router} from "@angular/router";
 @Component({
   selector: 'app-prakse-pregled',
   templateUrl: './prakse-pregled.component.html',
@@ -13,7 +14,7 @@ export class PraksePregledComponent implements OnInit {
   filter_placena: any;
   filter_firme:any;
   firmePodaci:any;
-  constructor(private httpKlijent:HttpClient,private dialog: MatDialog) { }
+  constructor(private httpKlijent:HttpClient,private dialog: MatDialog, private router:Router) { }
 
   ngOnInit(): void {
     this.getPrakse();
@@ -49,5 +50,10 @@ export class PraksePregledComponent implements OnInit {
     this.httpKlijent.get(MojConfig.adresa_servera + "/Praksa/GetAll").subscribe(((x: any) => {
       this.praksePodaci = x;
     }));
+  }
+
+
+  pregledDetalja(praksa: any) {
+    this.router.navigate(["praksa-detalji",praksa.id]);
   }
 }

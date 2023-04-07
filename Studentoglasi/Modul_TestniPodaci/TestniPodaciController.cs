@@ -38,6 +38,8 @@ namespace StudentOglasi.Modul_TestniPodaci
             data.Add("Stipenditor", _dbContext.Stipenditor.Count());
             data.Add("UposlenikStipenditora", _dbContext.UposlenikStipenditora.Count());
             data.Add("Stipendija",_dbContext.Stipendija.Count());
+            data.Add("Kategorije", _dbContext.Kategorija.Count());
+            data.Add("Objave", _dbContext.Objava.Count());
             return Ok(data);
         }
 
@@ -61,6 +63,8 @@ namespace StudentOglasi.Modul_TestniPodaci
             var uposlenikS = new List<UposlenikStipenditora>();
             var stipenditori= new List<Stipenditor>();
             var stipendije=new List<Stipendija>();
+            var kategorije = new List<Kategorija>();
+            var objave = new List<Objava>();
 
             Random rng = new Random();
             int number = rng.Next(1, 1000000000);
@@ -99,11 +103,14 @@ namespace StudentOglasi.Modul_TestniPodaci
             //{
             //    ocjene.Add(new Ocjena { Student = studenti[i], Vrijednost=i});
             //}
-            univerzitet.Add(new Univerzitet { Naziv = "Univerzitet u Zenici", Email = "unze@unze.ba", Telefon = "032449126", Link = "http://unze.ba/", Grad = gradovi[1]});
-            univerzitet.Add(new Univerzitet { Naziv = "Univerzitet u Sarajevu", Email = "us@gmail.ba", Telefon = "0300000", Link = "http://ptf.us.ba/", Grad = gradovi[2]});
-            fakulteti.Add(new Fakultet { Naziv = "Politehnički fakultet", Email = "slemes@unze.ba",Adresa="adresaa 1", Telefon = "032449126", Link = "http://ptf.unze.ba/", Univerzitet = univerzitet[0]});
-            fakulteti.Add(new Fakultet { Naziv = "Fakultet političkih nauka", Email = "fpk@unze.ba", Adresa = "adresaa 1", Telefon = "032449126", Link = "http://ptf.unze.ba/", Univerzitet = univerzitet[0] });
+            univerzitet.Add(new Univerzitet { Naziv = "Univerzitet u Zenici", Email = "unze@unze.ba", Telefon = "032449126", Link = "http://unze.ba/", Grad = gradovi[4],Logo="unze-logo.png"});
+            univerzitet.Add(new Univerzitet { Naziv = "Univerzitet u Sarajevu", Email = "us@gmail.ba", Telefon = "0300000", Link = "https://www.unsa.ba/", Grad = gradovi[1], Logo = "unsa-logo.png" });
+            
+            fakulteti.Add(new Fakultet { Naziv = "Politehnički fakultet", Email = "slemes@unze.ba",Adresa="adresaa 1", Telefon = "032449126", Link = "http://ptf.unze.ba/", Univerzitet = univerzitet[0], Logo="Logo-PTF.jpg", Opis="Neke informacije o fakultetu"});
+            fakulteti.Add(new Fakultet { Naziv = "Fakultet političkih nauka", Email = "fpk@unze.ba", Adresa = "adresaa 1", Telefon = "032449126", Link = "https://fpn.unsa.ba/", Univerzitet = univerzitet[1], Logo = "fpn-logo.jpg", Opis = "Neke informacije o fakultetu" });
 
+            kategorije.Add(new Kategorija { Naziv = "Novosti" });
+            kategorije.Add(new Kategorija { Naziv = "Edukacija" });
             for (int i = 0; i < 10; i++)
             {
                 stipenditori.Add(new Stipenditor
@@ -204,7 +211,16 @@ namespace StudentOglasi.Modul_TestniPodaci
                     RokPrijave = new DateTime(2023, 02, 25), Opis = "opis oglasa ", VrijemeObjave = DateTime.Now,
                     Cijena =i+100,BrojSoba=2,DodatneUsluge="... ",NacinGrijanja="centralno grijanje",
                     Grad = gradovi[1], Izdavac = izdavaci[1] });
-            }   
+            }
+            referentU[1].Univerzitet = univerzitet[1];
+            referentF[1].Fakultet = fakulteti[1];
+            for (int i = 0; i < 3; i++)
+            {
+                objave.Add(new Objava { Naslov = " Naslov", Slika = "slika1.png",Sadrzaj="Neki text", Kategorija = kategorije[0], ReferentUniverziteta = referentU[0],VrijemeObjave=DateTime.Now });
+                objave.Add(new Objava { Naslov = " Naslov", Slika = "slika1.png", Sadrzaj = "Neki text", Kategorija = kategorije[0], ReferentUniverziteta = referentU[1], VrijemeObjave = DateTime.Now });
+                objave.Add(new Objava { Naslov = " Naslov", Slika = "slika1.png", Sadrzaj = "Neki text", Kategorija = kategorije[0], ReferentFakulteta = referentF[0], VrijemeObjave = DateTime.Now });
+                objave.Add(new Objava { Naslov = " Naslov", Slika = "slika1.png", Sadrzaj = "Neki text", Kategorija = kategorije[0], ReferentFakulteta = referentF[1], VrijemeObjave = DateTime.Now });
+            }
 
             _dbContext.AddRange(firme);
             _dbContext.AddRange(gradovi);
@@ -222,6 +238,8 @@ namespace StudentOglasi.Modul_TestniPodaci
             _dbContext.AddRange(referentF);
             _dbContext.AddRange(smjestaj);
             _dbContext.AddRange(stipendije);
+            _dbContext.AddRange(kategorije);
+            _dbContext.AddRange(objave);
 
             _dbContext.SaveChanges();
 

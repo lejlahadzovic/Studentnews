@@ -11,6 +11,9 @@ namespace StudentOglasi.Models
         public string Adresa { get; set; }
         public string Email { get; set; }
         public string Telefon { get; set; }
+        public string? Opis { get; set; }
+        public string? Logo { get; set; }
+        public string? Slika { get; set; }
         public string Link { get; set; }
         [ForeignKey("UniverzitetID")]
         public Univerzitet Univerzitet { get; set; }

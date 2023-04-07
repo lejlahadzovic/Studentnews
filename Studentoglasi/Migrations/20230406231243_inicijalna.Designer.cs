@@ -12,8 +12,8 @@ using StudentOglasi.Data;
 namespace StudentOglasi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230110170546_init")]
-    partial class init
+    [Migration("20230406231243_inicijalna")]
+    partial class inicijalna
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,8 +70,14 @@ namespace StudentOglasi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Logo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Naziv")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Slika")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Telefon")
@@ -482,8 +488,14 @@ namespace StudentOglasi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Logo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Naziv")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Slika")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Telefon")
@@ -834,23 +846,31 @@ namespace StudentOglasi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("StudentOglasi.Models.ReferentFakulteta", null)
+                    b.HasOne("StudentOglasi.Models.ReferentFakulteta", "ReferentFakulteta")
                         .WithMany("Objave")
                         .HasForeignKey("ReferentFakultetaID");
 
-                    b.HasOne("StudentOglasi.Models.ReferentUniverziteta", null)
+                    b.HasOne("StudentOglasi.Models.ReferentUniverziteta", "ReferentUniverziteta")
                         .WithMany("Objave")
                         .HasForeignKey("ReferentUniverzitetaID");
 
-                    b.HasOne("StudentOglasi.Models.UposlenikFirme", null)
+                    b.HasOne("StudentOglasi.Models.UposlenikFirme", "UposlenikFirme")
                         .WithMany("Objave")
                         .HasForeignKey("UposlenikFirmeID");
 
-                    b.HasOne("StudentOglasi.Models.UposlenikStipenditora", null)
+                    b.HasOne("StudentOglasi.Models.UposlenikStipenditora", "UposlenikStipenditora")
                         .WithMany("Objave")
                         .HasForeignKey("UposlenikStipenditoraID");
 
                     b.Navigation("Kategorija");
+
+                    b.Navigation("ReferentFakulteta");
+
+                    b.Navigation("ReferentUniverziteta");
+
+                    b.Navigation("UposlenikFirme");
+
+                    b.Navigation("UposlenikStipenditora");
                 });
 
             modelBuilder.Entity("StudentOglasi.Models.Ocjena", b =>

@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {MatDialog} from "@angular/material/dialog";
 import {MojConfig} from "../MojConfig";
 import {Observable} from "rxjs";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -21,7 +22,7 @@ export class UniverzitetiPregledComponent implements OnInit {
 
 
 
-  constructor(private httpKlijent: HttpClient, private dialog: MatDialog) {
+  constructor(private httpKlijent: HttpClient, private dialog: MatDialog, private router:Router) {
   }
 
   ngOnInit(): void {
@@ -62,4 +63,7 @@ export class UniverzitetiPregledComponent implements OnInit {
   }
 
 
+  pregledDetalja(univerzitet: any) {
+    this.router.navigate(["univerzitet-detalji",univerzitet.id]);
+  }
 }

@@ -14,7 +14,7 @@
     </p>
   </mat-card-content>
   <mat-card-actions *ngIf="i<3">
-    <button mat-button>Detalji</button>
+    <button mat-button (click)="praksaDetalji(praksa)">Detalji</button>
   </mat-card-actions>
 </mat-card>
 
@@ -23,21 +23,21 @@
 
 
   <h1  class="naslov">Stipendije</h1>
-  <div  class=kartice *ngFor="let praksa of this.praksePodaci;let i=index">
+  <div  class=kartice *ngFor="let stipendija of this.stipendijePodaci;let i=index">
     <mat-card class="example-card"  *ngIf="i<3" >
       <mat-card-header *ngIf="i<3">
         <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title *ngIf="i<3">{{praksa.ime_uposlenika}}</mat-card-title>
-        <mat-card-subtitle  *ngIf="i<3">{{praksa.naziv_firma}}</mat-card-subtitle>
+        <mat-card-title *ngIf="i<3">{{stipendija.ime_uposlenika}}</mat-card-title>
+        <mat-card-subtitle  *ngIf="i<3">{{stipendija.naziv_stipenditora}}</mat-card-subtitle>
       </mat-card-header >
-      <img mat-card-image *ngIf="i<3" src="{{praksa.slika}}">
+      <img mat-card-image *ngIf="i<3" src="{{stipendija.slika}}">
       <mat-card-content>
         <p *ngIf="i<3">
-          {{praksa.opis}}
+          {{stipendija.opis}}
         </p>
       </mat-card-content>
       <mat-card-actions *ngIf="i<3">
-        <button mat-button>Detalji</button>
+        <button mat-button (click)="stipendijaDetlaji(stipendija)">Detalji</button>
       </mat-card-actions>
     </mat-card>
 
@@ -60,7 +60,7 @@
         </p>
       </mat-card-content>
       <mat-card-actions *ngIf="i<3">
-        <button mat-button>Detalji</button>
+        <button mat-button (click)="smjestajDetlaji(s)">Detalji</button>
       </mat-card-actions>
     </mat-card>
 

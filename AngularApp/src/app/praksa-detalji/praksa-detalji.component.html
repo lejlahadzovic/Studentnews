@@ -1,0 +1,27 @@
+<mat-card>
+  <mat-card-header style="margin-bottom: 15px">
+    <mat-card-title class="naslov">{{praksa?.naslov}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="user-info">
+    <div class="user-slika">
+      <img style="height: 100% ; width: 100%" [src]="praksa?.uposlenik_slika==null?'assets/Images/User%20icon.png':slikaPutanja+praksa?.uposlenik_slika" alt="Avatar" />
+    </div>
+    <div class="user-info-detalji">
+      <p class="ime_uposlenika">{{ praksa?.ime_uposlenika }}</p>
+      <p class="naziv_firme">{{ praksa?.naziv_firme }}</p>
+      <p class="vrijemeObjave">{{ praksa?.vrijemeObjave }}</p>
+    </div>
+    </div>
+    <div class="praksa-slika-wrapper">
+      <img class="praksa-slika" [src]="praksa?.slika" alt="Praksa slika">
+    </div>
+    <p class="opis">{{praksa?.opis}}</p>
+    <ul class="lista">
+      <li><strong class="naziv-ob">Rok prijave:</strong> <span class="vrijednost-ob">{{praksa?.rokPrijave | date: 'dd.MM.yyyy'}}</span></li>
+      <li><strong class="naziv-ob">Trajanje prakse:</strong> <span class="vrijednost-ob">{{praksa?.pocetakPrakse | date: 'dd.MM.yyyy'}} - {{praksa?.krajPrakse | date: 'dd.MM.yyyy'}}</span></li>
+      <li><strong class="naziv-ob">Naziv firme:</strong> <span class="vrijednost-ob">{{praksa?.naziv_firme}}</span></li>
+      <!-- <li><strong class="naziv-ob">Benefiti:</strong> <span class="vrijednost-ob">{{praksa?.benefiti}}</span></li> -->
+    </ul>
+  </mat-card-content>
+</mat-card>

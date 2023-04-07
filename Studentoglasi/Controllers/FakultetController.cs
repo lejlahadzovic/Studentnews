@@ -67,8 +67,53 @@ namespace StudentOglasi.Controllers
                     .AsQueryable();
                 return Ok(data.Take(100).ToList());
             }
+        [HttpGet]
+        public ActionResult GetById(int id)
+        {
+            var fakultet = _dbContext.Fakultet
+                .Include(x => x.Univerzitet)
+                .Include(x=>x.Univerzitet.Grad)
+                .Where(x => x.ID == id)
+                .FirstOrDefault();
 
-            [HttpPost("{id}")]
+            if (fakultet == null)
+            {
+                return NotFound();
+            }
+
+            var objave = _dbContext.ReferentFakulteta
+                .Where(r => r.Fakultet.ID == id)
+                .SelectMany(r => r.Objave)
+                .Include(x => x.Kategorija)
+                .ToList();
+
+            var data = new
+            {
+                id = fakultet.ID,
+                naziv = fakultet.Naziv,
+                email = fakultet.Email,
+                telefon = fakultet.Telefon,
+                link = fakultet.Link,
+                grad = fakultet.Univerzitet.Grad.Naziv,
+                univerzitet=fakultet.Univerzitet.Naziv,
+                logo = fakultet.Logo,
+                slika = fakultet.Slika,
+                opis=fakultet.Opis,
+                objave = objave.Select(o => new
+                {
+                    id = o.ID,
+                    naslov = o.Naslov,
+                    slikaObjave = o.Slika,
+                    sadrzaj = o.Sadrzaj,
+                    kategorija = o.Kategorija.Naziv,
+                    vrijemeObjave = o.VrijemeObjave.ToString("dd.MM.yyyy HH:mm")
+                })
+            };
+
+            return Ok(data);
+        }
+
+        [HttpPost("{id}")]
             public ActionResult Obrisi(int id)
             {
                 Fakultet? fakultet = _dbContext.Fakultet.Find(id);

@@ -1,0 +1,35 @@
+<mat-card>
+  <mat-card-header style="margin-bottom: 15px">
+    <mat-card-title class="naslov">{{stipendija?.naslov}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="user-info">
+      <div class="user-slika">
+        <img style="height: 100% ; width: 100%" [src]="stipendija?.uposlenik_slika==null?'assets/Images/User%20icon.png':slikaPutanja+stipendija?.uposlenik_slika" alt="Avatar" />
+      </div>
+      <div class="user-info-detalji">
+        <p class="ime_uposlenika">{{ stipendija?.uposlenik }}</p>
+        <p class="naziv_stipenditora">{{ stipendija?.naziv_stipenditora }}</p>
+        <p class="vrijemeObjave">{{ stipendija?.vrijemeObjave }}</p>
+      </div>
+    </div>
+    <div class="stipendija-slika-wrapper">
+      <img class="stipendija-slika" [src]="stipendija?.slika" alt="Praksa slika">
+    </div>
+    <p class="opis">{{stipendija?.opis}}</p>
+    <div class="container">
+      <ul class="listaL">
+        <li><strong class="naziv-ob">Rok prijave:</strong> <span class="vrijednostL">{{stipendija?.rokPrijave | date: 'dd.MM.yyyy'}}</span></li>
+        <li><strong class="naziv-ob">Broj stipendista:</strong> <span class="vrijednostL">{{stipendija?.brojStipendisata}}</span></li>
+        <li><strong class="naziv-ob">Nivo obrazovanja:</strong> <span class="vrijednostL">{{stipendija?.nivoObrazovanja}}</span></li>
+        <li><strong class="naziv-ob">Kriterij:</strong> <span class="vrijednostL">{{stipendija?.kriterij}}</span></li>
+      </ul>
+
+      <ul class="listaD">
+        <li><strong class="naziv-ob">Potrebna dokumentacija:</strong> <span class="vrijednostD">{{stipendija?.potrebnaDokumentacija}}</span></li>
+        <li><strong class="naziv-ob">Uslovi:</strong> <span class="vrijednostD">{{stipendija?.uslovi}}</span></li>
+        <li><strong class="naziv-ob">Iznos:</strong> <span class="vrijednostD">{{stipendija?.iznos}} KM</span></li>
+      </ul>
+    </div>
+  </mat-card-content>
+</mat-card>

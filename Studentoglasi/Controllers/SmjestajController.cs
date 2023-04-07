@@ -89,9 +89,10 @@ namespace StudentOglasi.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetAll()
+        public ActionResult GetById(int id)
         {
             var data = _dbContext.Smjestaj
+                .Where(x => x.ID == id)
                 .OrderBy(x => x.ID)
                 .Select(x => new
                 {
@@ -101,18 +102,22 @@ namespace StudentOglasi.Controllers
                     opis = x.Opis,
                     slika = Config.SlikePutanja + x.Slika,
                     vrijemeObjave = x.VrijemeObjave.ToString("dd.MM.yyyy H:mm"),
-                    izdavacID = x.IzdavacID,
                     izdavac = x.Izdavac.Ime + ' ' + x.Izdavac.Prezime,
+                    izdavacSlika= x.Izdavac.Slika,
                     nacinGrijanja = x.NacinGrijanja,
                     cijena = x.Cijena,
                     kapacitet = x.Kapacitet,
                     dodatneUsluge = x.DodatneUsluge,
                     brojSoba = x.BrojSoba,
                     parking = x.Parking,
-                    gradID = x.GradID,
                     grad_naziv = x.Grad.Naziv
                 })
-                .AsQueryable();
+                .FirstOrDefault();
+
+            if (data == null)
+            {
+                return NotFound();
+            }
             return Ok(data);
         }
 
