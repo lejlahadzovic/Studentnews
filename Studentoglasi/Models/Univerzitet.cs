@@ -16,6 +16,6 @@ namespace StudentOglasi.Models
         [ForeignKey("GradID")]
         public Grad Grad { get; set; }
         public int GradID { get; set; }
-        public List<Ocjena> Ocjene { get; set; }
+        public ICollection<Ocjena> Ocjene { get; set; } = new List<Ocjena>();
     }
 }

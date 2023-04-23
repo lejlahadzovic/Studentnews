@@ -1,6 +1,7 @@
 <mat-card>
-  <mat-card-header style="margin-bottom: 15px">
+  <mat-card-header style="margin-bottom: 15px;justify-content: space-between;">
     <mat-card-title class="naslov">{{smjestaj?.naslov}}</mat-card-title>
+    <app-star-rating style="margin-right: 20px;z-index: 2;" [naziv]="this.smjestaj?.naslov" [prosjecnaOcjena]="this.smjestaj?.prosjecnaOcjena" (ocjenaPodaci)="snimiOcjenu($event)"></app-star-rating>
   </mat-card-header>
   <mat-card-content>
     <div class="user-info">

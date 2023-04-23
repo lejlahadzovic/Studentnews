@@ -35,4 +35,15 @@ export class UniverzitetDetaljiComponent implements OnInit {
   objavaDetalji(objava: any) {
     this.router.navigate(["objava",objava.id]);
   }
+
+
+  snimiOcjenu(data: any) {
+    const newData= {
+      ...data,
+      univerzitetId: this.univerzitetID
+    }
+    this.httpKlijent.post(MojConfig.adresa_servera+"/Univerzitet/OcijeniUniverzitet",newData).subscribe((s:any)=>{
+      location.reload();
+    })
+  }
 }

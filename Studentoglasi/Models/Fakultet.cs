@@ -18,6 +18,6 @@ namespace StudentOglasi.Models
         [ForeignKey("UniverzitetID")]
         public Univerzitet Univerzitet { get; set; }
         public int UniverzitetID { get; set; }
-        public List<Ocjena> Ocjene { get; set; }
+        public ICollection<Ocjena> Ocjene { get; set; } = new List<Ocjena>();
     }
 }

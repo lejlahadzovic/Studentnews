@@ -12,7 +12,6 @@ export class FakultetDetaljiComponent implements OnInit {
   fakultetID:number=0;
   fakultet: any;
   slikaPutanja=MojConfig.SlikePutanja;
-
   constructor(private httpKlijent: HttpClient, private route: ActivatedRoute,  private router:Router) { }
 
   ngOnInit(): void {
@@ -27,8 +26,17 @@ export class FakultetDetaljiComponent implements OnInit {
       this.fakultet=x
     });
   }
-
   objavaDetalji(objava: any) {
     this.router.navigate(["objava",objava.id]);
+  }
+
+  snimiOcjenu(data: any) {
+    const newData= {
+      ...data,
+      fakultetID: this.fakultetID
+    }
+    this.httpKlijent.post(MojConfig.adresa_servera+"/Fakultet/OcijeniFakultet",newData).subscribe((s:any)=>{
+      location.reload();
+    })
   }
 }

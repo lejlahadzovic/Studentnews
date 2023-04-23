@@ -27,4 +27,14 @@ export class SmjestajDetaljiComponent implements OnInit {
       this.smjestaj=x
     });
   }
+
+  snimiOcjenu(data: any) {
+    const newData= {
+      ...data,
+      smjestajID: this.smjestajId
+    }
+    this.httpKlijent.post(MojConfig.adresa_servera+"/Smjestaj/OcijeniSmjestaj",newData).subscribe((s:any)=>{
+      location.reload();
+    })
+  }
 }

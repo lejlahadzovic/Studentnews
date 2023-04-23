@@ -11,5 +11,6 @@ namespace StudentOglasi.Models
         public Student Student { get; set; }
         public int StudentId { get; set; }
         public int Vrijednost { get; set; }
+        public string? Komentar { get; set; }
     }
 }

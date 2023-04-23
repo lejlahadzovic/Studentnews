@@ -65,9 +65,11 @@ namespace StudentOglasi.Controllers
         [HttpGet]
         public ActionResult GetById(int id)
         {
-            var univerzitet = _dbContext.Univerzitet.Include(x=>x.Grad)
-     .Where(u => u.ID == id)
-     .FirstOrDefault();
+            var univerzitet = _dbContext.Univerzitet
+                .Include(x=>x.Grad)
+                .Include(x => x.Ocjene)
+                .Where(u => u.ID == id)
+                .FirstOrDefault();
 
             if (univerzitet == null)
             {
@@ -111,7 +113,8 @@ namespace StudentOglasi.Controllers
                     kategorija = o.Kategorija.Naziv,
                     vrijemeObjave=o.VrijemeObjave.ToString("dd.MM.yyyy HH:mm")
                 }),
-                fakulteti=fakulteti
+                fakulteti=fakulteti,
+                prosjecnaOcjena = univerzitet.Ocjene.Any() ? Math.Round(univerzitet.Ocjene.Average(o => o.Vrijednost),2) : 0
             };
 
             return Ok(data);
@@ -129,6 +132,43 @@ namespace StudentOglasi.Controllers
 
             _dbContext.SaveChanges();
             return Ok(univerzitet);
+        }
+
+        [HttpPost]
+        public ActionResult OcijeniUniverzitet([FromBody] OcjenaVM x)
+        {
+            var univerzitet = _dbContext.Univerzitet
+                .Include(u => u.Ocjene)
+                .FirstOrDefault(f => f.ID == x.univerzitetId);
+            var student = _dbContext.Student.FirstOrDefault(s => s.ID == x.studentId);
+
+            if (univerzitet == null)
+                return BadRequest("Univerzitet ne postoji");
+            if (student == null)
+                return BadRequest("Pograsan ID studenta");
+
+            if (x.ocjena < 1 || x.ocjena > 5)
+                return BadRequest("Ocjena mora biti između 1 i 5");
+
+            var ocjena = univerzitet.Ocjene?.FirstOrDefault(o => o.StudentId == x.studentId);
+
+            if (ocjena != null)
+            {
+                ocjena.Vrijednost = x.ocjena;
+                ocjena.Komentar = x.komentar;
+            }
+            else
+            {
+                ocjena = new Ocjena
+                {
+                    StudentId = x.studentId,
+                    Vrijednost = x.ocjena,
+                    Komentar = x.komentar
+                };
+                univerzitet.Ocjene.Add(ocjena);
+            }
+            _dbContext.SaveChanges();
+            return Ok();
         }
     }
 }

@@ -5,7 +5,7 @@
         <img [src]="univerzitet?.logo==null?'assets/Images/no-image.jpg':slikaPutanja+univerzitet?.logo" alt="Univerzitet logo" />
       </div>
       <div class="univerzitet-naziv-email">
-        <mat-card-title>{{univerzitet?.naziv}}</mat-card-title>
+        <mat-card-title>{{univerzitet?.naziv}} <app-star-rating [naziv]="this.univerzitet?.naziv" [prosjecnaOcjena]="this.univerzitet?.prosjecnaOcjena" (ocjenaPodaci)="snimiOcjenu($event)"></app-star-rating></mat-card-title>
         <mat-card-subtitle>{{univerzitet?.email}}</mat-card-subtitle>
       </div>
       <div class="univerzitet-ostali-podaci">

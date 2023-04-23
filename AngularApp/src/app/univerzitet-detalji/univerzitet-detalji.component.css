@@ -33,9 +33,11 @@ mat-card {
 }
 
 .mat-card-title {
+  display: flex;
+  align-items: center;
   font-size: 24px;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .mat-card-subtitle {

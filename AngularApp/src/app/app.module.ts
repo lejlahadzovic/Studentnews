@@ -55,6 +55,7 @@ import { StipendijaDetaljiComponent } from './stipendija-detalji/stipendija-deta
 import { UniverzitetDetaljiComponent } from './univerzitet-detalji/univerzitet-detalji.component';
 import { ObjavaDetaljiComponent } from './objava-detalji/objava-detalji.component';
 import { FakultetDetaljiComponent } from './fakultet-detalji/fakultet-detalji.component';
+import { StarRatingComponent } from './star-rating/star-rating.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { FakultetDetaljiComponent } from './fakultet-detalji/fakultet-detalji.co
     StipendijaDetaljiComponent,
     UniverzitetDetaljiComponent,
     ObjavaDetaljiComponent,
-    FakultetDetaljiComponent
+    FakultetDetaljiComponent,
+    StarRatingComponent
   ],
     imports: [
         BrowserModule,

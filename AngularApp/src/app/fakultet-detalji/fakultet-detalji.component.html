@@ -5,7 +5,8 @@
         <img [src]="fakultet?.logo==null?'assets/Images/no-image.jpg':slikaPutanja+fakultet?.logo" alt="Univerzitet logo" />
       </div>
       <div class="fakultet-naziv-email">
-        <mat-card-title>{{fakultet?.naziv}}</mat-card-title>
+        <mat-card-title>{{fakultet?.naziv}} <app-star-rating [naziv]="this.fakultet?.naziv" [prosjecnaOcjena]="this.fakultet?.prosjecnaOcjena" (ocjenaPodaci)="snimiOcjenu($event)"></app-star-rating></mat-card-title>
+
         <mat-card-subtitle>{{fakultet?.univerzitet}}</mat-card-subtitle>
         <mat-card-subtitle>{{fakultet?.email}}</mat-card-subtitle>
       </div>
@@ -41,4 +42,3 @@
     </div>
   </mat-card-content>
 </mat-card>
-

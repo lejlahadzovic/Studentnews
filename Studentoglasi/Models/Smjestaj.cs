@@ -18,6 +18,6 @@ namespace StudentOglasi.Models
         public IzdavacSmjestaja Izdavac { get; set; }
         public int IzdavacID { get; set; }
         public List<Rezervacija> Rezervacije { get; set; }
-        public List<Ocjena> Ocjene { get; set; }
+        public ICollection<Ocjena> Ocjene { get; set; } = new List<Ocjena>();
     }
 }

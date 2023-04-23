@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StudentOglasi.Data;
 using StudentOglasi.Helper;
 using StudentOglasi.Models;
@@ -92,6 +93,7 @@ namespace StudentOglasi.Controllers
         public ActionResult GetById(int id)
         {
             var data = _dbContext.Smjestaj
+                .Include(x=>x.Ocjene)
                 .Where(x => x.ID == id)
                 .OrderBy(x => x.ID)
                 .Select(x => new
@@ -110,13 +112,14 @@ namespace StudentOglasi.Controllers
                     dodatneUsluge = x.DodatneUsluge,
                     brojSoba = x.BrojSoba,
                     parking = x.Parking,
-                    grad_naziv = x.Grad.Naziv
+                    grad_naziv = x.Grad.Naziv,
+                    prosjecnaOcjena = x.Ocjene.Any() ? Math.Round(x.Ocjene.Average(o => o.Vrijednost),2) : 0
                 })
                 .FirstOrDefault();
 
             if (data == null)
             {
-                return NotFound();
+                return BadRequest("Smještaj ne postoji");
             }
             return Ok(data);
         }
@@ -168,5 +171,41 @@ namespace StudentOglasi.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        public ActionResult OcijeniSmjestaj([FromBody] OcjenaVM x)
+        {
+            var smjestaj = _dbContext.Smjestaj
+                .Include(s=>s.Ocjene)
+                .FirstOrDefault(s => s.ID == x.smjestajId);
+            var student = _dbContext.Student.FirstOrDefault(s => s.ID == x.studentId);
+
+            if (smjestaj == null)
+                return BadRequest("Smještaj ne postoji");
+            if (student == null)
+                return BadRequest("Pograsan ID studenta");
+
+            if (x.ocjena < 1 || x.ocjena > 5)
+                return BadRequest("Ocjena mora biti između 1 i 5");
+
+            var ocjena = smjestaj.Ocjene?.FirstOrDefault(o => o.StudentId == x.studentId);
+
+            if (ocjena != null)
+            {
+                ocjena.Vrijednost = x.ocjena;
+                ocjena.Komentar = x.komentar;
+            }
+            else
+            {
+                ocjena = new Ocjena
+                {
+                    StudentId = x.studentId,
+                    Vrijednost = x.ocjena,
+                    Komentar = x.komentar
+                };
+                smjestaj.Ocjene.Add(ocjena);
+            }
+            _dbContext.SaveChanges();
+            return Ok();
+        }
     }
 }
