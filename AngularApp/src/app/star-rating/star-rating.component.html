@@ -3,7 +3,7 @@
 <svg style="width: 26.73px; height: 25.77px; margin: 0 4px">
   <path fill="#FFD700" d="M 18.5 28.5 l -11.168 5.872 l 2.132 -12.436 L 0.93 13.128 l 12.486 -1.814 L 18.5 0 l 5.584 11.314 l 12.486 1.814 l -9.033 8.808 l 2.132 12.436" transform="scale(0.75)"/>
 </svg>
-<button class="btnDodajOcjenu" mat-button (click)="showRatingForm()"> <mat-icon style="font-size: 33px;margin-right: 10px;margin-bottom: 9px;">add</mat-icon></button>
+<button  *ngIf="loginInfo().autentifikacijaToken?.korisnik?.isStudent" class="btnDodajOcjenu" mat-button (click)="showRatingForm()"> <mat-icon style="font-size: 33px;margin-right: 10px;margin-bottom: 9px;">add</mat-icon></button>
 </div>
 <div class="overlay" *ngIf="showForm">
   <mat-card class="rating-form">

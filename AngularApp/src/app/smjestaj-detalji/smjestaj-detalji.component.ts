@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {MojConfig} from "../MojConfig";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
+import {LoginInformacije} from "../helper/login-informacije";
+import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
 
 @Component({
   selector: 'app-smjestaj-detalji',
@@ -27,7 +29,9 @@ export class SmjestajDetaljiComponent implements OnInit {
       this.smjestaj=x
     });
   }
-
+  loginInfo():LoginInformacije {
+    return AutentifikacijaHelper.getLoginInfo();
+  }
   snimiOcjenu(data: any) {
     const newData= {
       ...data,
