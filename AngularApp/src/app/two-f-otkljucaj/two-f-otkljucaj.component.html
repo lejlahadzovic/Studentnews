@@ -2,7 +2,8 @@
   <h1>Unesite svoj kod za autentifikaciju</h1>
   <br>
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="Kod za autentifikaciju" [(ngModel)]="code">
+    <input matInput placeholder="Kod za autentifikaciju" [(ngModel)]="code" name="kod">
+
   </mat-form-field>
   <br>
   <button mat-raised-button color="primary" (click)="otkljucaj()">Otključaj</button>
