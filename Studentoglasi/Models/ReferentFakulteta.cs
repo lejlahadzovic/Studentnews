@@ -7,7 +7,6 @@ namespace StudentOglasi.Models
     {
         public string Ime { get; set; }
         public string Prezime { get; set; }
-        public string Email { get; set; }
         [ForeignKey("FakultetID")]
         public Fakultet Fakultet { get; set; }
         public int FakultetID { get; set; }

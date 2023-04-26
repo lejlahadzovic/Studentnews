@@ -55,8 +55,7 @@ export class AppComponent{
         if (x.isLogiran) {
 
           AutentifikacijaHelper.setLoginInfo(x)
-          this.router.navigateByUrl("/putanja-smjestaji");
-
+          this.router.navigateByUrl("/two-f-otkljucaj");
         }
         else
         {

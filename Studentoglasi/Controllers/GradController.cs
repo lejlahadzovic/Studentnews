@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentOglasi.Models;
 using StudentOglasi.ViewModels;
+using StudentOglasi.Helper.AutentifikacijaAutorizacija;
 
 namespace StudentOglasi.Controllers
 {

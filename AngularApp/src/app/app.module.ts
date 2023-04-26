@@ -49,6 +49,7 @@ import { UniverzitetiPregledComponent } from './univerziteti-pregled/univerzitet
 import { FakultetiPregledComponent } from './fakulteti-pregled/fakulteti-pregled.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { ProfilComponent } from './profil/profil.component';
+import { TwoFOtkljucajComponent } from './two-f-otkljucaj/two-f-otkljucaj.component';
 
 
 @NgModule({
@@ -75,7 +76,8 @@ import { ProfilComponent } from './profil/profil.component';
     SmjestajPregledComponent,
     UniverzitetiPregledComponent,
     FakultetiPregledComponent,
-    ProfilComponent
+    ProfilComponent,
+    TwoFOtkljucajComponent
   ],
     imports: [
         BrowserModule,
@@ -104,6 +106,7 @@ import { ProfilComponent } from './profil/profil.component';
             {path: 'putanja-smjestaj-pregled', component: SmjestajPregledComponent},
             {path: 'putanja-univerziteti-pregled', component: UniverzitetiPregledComponent},
             {path: 'putanja-fakulteti-pregled', component: FakultetiPregledComponent},
+            {path: 'two-f-otkljucaj', component: TwoFOtkljucajComponent},
         ]),
         FormsModule,
         MatToolbarModule,

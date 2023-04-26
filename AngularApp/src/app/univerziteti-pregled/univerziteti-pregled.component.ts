@@ -46,7 +46,6 @@ export class UniverzitetiPregledComponent implements OnInit {
       (this.filter_grad != null ? x.gradid == this.filter_grad : true))
     );
 
-    return this.filtrirano;
   }
 
   getUniverziteti() {

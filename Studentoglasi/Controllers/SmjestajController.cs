@@ -22,6 +22,7 @@ namespace StudentOglasi.Controllers
         }
 
         [HttpPost]
+        
         public ActionResult Snimi([FromForm] SmjestajVM x)
         {
             try
