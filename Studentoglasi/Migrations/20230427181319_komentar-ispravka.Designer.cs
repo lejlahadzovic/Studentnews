@@ -12,8 +12,8 @@ using StudentOglasi.Data;
 namespace StudentOglasi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230407143851_fakultet-opis")]
-    partial class fakultetopis
+    [Migration("20230427181319_komentar-ispravka")]
+    partial class komentarispravka
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -177,10 +177,16 @@ namespace StudentOglasi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
+                    b.Property<int?>("KomentarID")
+                        .HasColumnType("int");
+
                     b.Property<int>("KorisnikID")
                         .HasColumnType("int");
 
-                    b.Property<int>("ObajvaID")
+                    b.Property<int?>("ObjavaID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OglasID")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
@@ -192,9 +198,13 @@ namespace StudentOglasi.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("KomentarID");
+
                     b.HasIndex("KorisnikID");
 
-                    b.HasIndex("ObajvaID");
+                    b.HasIndex("ObjavaID");
+
+                    b.HasIndex("OglasID");
 
                     b.ToTable("Komentar");
                 });
@@ -291,6 +301,9 @@ namespace StudentOglasi.Migrations
 
                     b.Property<int?>("FirmaID")
                         .HasColumnType("int");
+
+                    b.Property<string>("Komentar")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("SmjestajID")
                         .HasColumnType("int");
@@ -824,6 +837,10 @@ namespace StudentOglasi.Migrations
 
             modelBuilder.Entity("StudentOglasi.Models.Komentar", b =>
                 {
+                    b.HasOne("StudentOglasi.Models.Komentar", "komentar")
+                        .WithMany()
+                        .HasForeignKey("KomentarID");
+
                     b.HasOne("StudentOglasi.Models.Korisnik", "Korisnik")
                         .WithMany()
                         .HasForeignKey("KorisnikID")
@@ -832,13 +849,19 @@ namespace StudentOglasi.Migrations
 
                     b.HasOne("StudentOglasi.Models.Objava", "Objava")
                         .WithMany()
-                        .HasForeignKey("ObajvaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ObjavaID");
+
+                    b.HasOne("StudentOglasi.Models.Oglas", "Oglas")
+                        .WithMany()
+                        .HasForeignKey("OglasID");
 
                     b.Navigation("Korisnik");
 
                     b.Navigation("Objava");
+
+                    b.Navigation("Oglas");
+
+                    b.Navigation("komentar");
                 });
 
             modelBuilder.Entity("StudentOglasi.Models.Objava", b =>

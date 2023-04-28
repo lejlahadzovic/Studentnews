@@ -23,5 +23,53 @@
       <li><strong class="naziv-ob">Naziv firme:</strong> <span class="vrijednost-ob">{{praksa?.naziv_firme}}</span></li>
       <!-- <li><strong class="naziv-ob">Benefiti:</strong> <span class="vrijednost-ob">{{praksa?.benefiti}}</span></li> -->
     </ul>
+
+    <div class="komentari">
+      <p class="naslov-komentari">Komentari</p>
+      <div *ngFor="let komentar of komentari; let i=index" class="komentar-wrapper">
+        <div class="user-info-com">
+          <div>
+            <img style="height: 50px;width: 50px" [src]="komentar?.korisnik?.slika==null?'assets/Images/User%20icon.png':slikaPutanja+komentar?.korisnik?.slika" alt="Avatar" />
+          </div>
+          <div class="user-info-detalji-com">
+            <p class="ime-korisnika">{{ komentar?.korisnik?.ime }} {{komentar?.korisnik.prezime}}</p>
+            <p class="vrijeme-objave">{{ komentar?.vrijemeObjave }}</p>
+            <p class="komentar">{{ komentar.komentar }}</p>
+            <div *ngFor="let odgovor of komentar?.odgovori" class="odgovor-wrapper">
+              <div class="user-info-com">
+                <div>
+                  <img style="height: 50px;width: 50px; margin-top: 8px" [src]="odgovor?.korisnik?.slika==null?'assets/Images/User%20icon.png':slikaPutanja+odgovor?.korisnik?.slika" alt="Avatar" />
+                </div>
+                <div class="user-info-detalji-com">
+                  <p class="ime-korisnika">{{ odgovor?.korisnik?.ime }} {{komentar?.korisnik.prezime}}</p>
+                  <p class="vrijeme-objave">{{ odgovor?.vrijemeObjave }}</p>
+                  <p class="komentar">{{ odgovor.komentar }}</p>
+                </div>
+              </div>
+            </div>
+            <button mat-button color="basic" class="odgovori-dugme" (click)="prikaziCommentInput(i)">Odgovori</button>
+            <div *ngIf="showCommentInput[i]">
+              <mat-form-field style="width: 100%" appearance="fill">
+                <mat-label>Napiši komentar</mat-label>
+                <textarea matInput [(ngModel)]="this.odgovor" ></textarea>
+                <button mat-icon-button color="basic" matSuffix (click)="snimiOdgovor(komentar); showCommentInput[i]=!showCommentInput[i]">
+                  <mat-icon>send</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dodaj-komentar">
+        <mat-form-field appearance="fill">
+          <mat-label>Napiši komentar</mat-label>
+          <textarea matInput [(ngModel)]="this.komentar"></textarea>
+          <button mat-icon-button color="basic" matSuffix (click)="snimiKomentar()">
+            <mat-icon>send</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </div>
+
   </mat-card-content>
 </mat-card>

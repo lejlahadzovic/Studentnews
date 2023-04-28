@@ -129,3 +129,92 @@ li {
 .red-icon {
   color: red;
 }
+.komentari {
+  margin-left: 16px;
+  margin-top: 30px;
+  padding: 20px;
+}
+
+.komentari p {
+  margin: 0;
+}
+
+.naslov-komentari {
+  font-size: 22px;
+  font-weight: 600;
+  padding-bottom: 15px;
+}
+
+.komentar-wrapper {
+  display: flex;
+  margin-top: 5px;
+  padding-top: 12px;
+  border-top: 1px solid #cccccc;
+}
+
+.user-info-com {
+  display: flex;
+  margin-right: 20px;
+  width: 100%;
+}
+
+.user-info-detalji-com {
+  margin-left: 15px;
+  padding-top: 6px;
+  width: 100%;
+}
+
+.ime-korisnika {
+  font-weight: 600;
+  margin-right: 10px;
+  display: inline;
+  padding-right: 12px;
+}
+
+.vrijeme-objave {
+  font-size: 14px;
+  color: #888888;
+  margin-right: 10px;
+  display: inline;
+}
+
+.komentar {
+  padding-top: 3px;
+}
+.odgovori-dugme {
+  height: 30px;
+  padding: 5px 15px;
+  cursor: pointer;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  border-radius: 30px;
+  font-weight: bold;
+}
+.dodaj-komentar {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+mat-form-field {
+  flex-grow: 1;
+  margin-right: 10px;
+  width: 100%;
+}
+mat-form-field textarea {
+  width: 100%;
+}
+mat-icon-button {
+  margin-left: 10px;
+  width: 40px;
+}
+.dodaj-komentar-btn {
+  margin-left: 10px;
+}
+textarea.mat-input-element {
+  width: 100%;
+}
+.odgovor-wrapper{
+  margin-top: 10px;
+}

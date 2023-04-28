@@ -269,6 +269,7 @@ namespace StudentOglasi.Migrations
                     Adresa = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Telefon = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Opis = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Slika = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Link = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -520,6 +521,7 @@ namespace StudentOglasi.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StudentId = table.Column<int>(type: "int", nullable: false),
                     Vrijednost = table.Column<int>(type: "int", nullable: false),
+                    Komentar = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FakultetID = table.Column<int>(type: "int", nullable: true),
                     FirmaID = table.Column<int>(type: "int", nullable: true),
                     SmjestajID = table.Column<int>(type: "int", nullable: true),
@@ -643,7 +645,8 @@ namespace StudentOglasi.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ObajvaID = table.Column<int>(type: "int", nullable: false),
+                    ObjavaID = table.Column<int>(type: "int", nullable: true),
+                    OglasID = table.Column<int>(type: "int", nullable: true),
                     KorisnikID = table.Column<int>(type: "int", nullable: false),
                     VrijemeObjave = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -658,11 +661,15 @@ namespace StudentOglasi.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Komentar_Objava_ObajvaID",
-                        column: x => x.ObajvaID,
+                        name: "FK_Komentar_Objava_ObjavaID",
+                        column: x => x.ObjavaID,
                         principalTable: "Objava",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_Komentar_Oglas_OglasID",
+                        column: x => x.OglasID,
+                        principalTable: "Oglas",
+                        principalColumn: "ID");
                 });
 
             migrationBuilder.CreateIndex(
@@ -686,9 +693,14 @@ namespace StudentOglasi.Migrations
                 column: "KorisnikID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Komentar_ObajvaID",
+                name: "IX_Komentar_ObjavaID",
                 table: "Komentar",
-                column: "ObajvaID");
+                column: "ObjavaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Komentar_OglasID",
+                table: "Komentar",
+                column: "OglasID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Objava_KategorijaID",

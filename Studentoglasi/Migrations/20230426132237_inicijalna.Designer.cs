@@ -12,8 +12,8 @@ using StudentOglasi.Data;
 namespace StudentOglasi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230417220011_ocjena-komentar")]
-    partial class ocjenakomentar
+    [Migration("20230426132237_inicijalna")]
+    partial class inicijalna
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -180,7 +180,10 @@ namespace StudentOglasi.Migrations
                     b.Property<int>("KorisnikID")
                         .HasColumnType("int");
 
-                    b.Property<int>("ObajvaID")
+                    b.Property<int?>("ObjavaID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OglasID")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
@@ -194,7 +197,9 @@ namespace StudentOglasi.Migrations
 
                     b.HasIndex("KorisnikID");
 
-                    b.HasIndex("ObajvaID");
+                    b.HasIndex("ObjavaID");
+
+                    b.HasIndex("OglasID");
 
                     b.ToTable("Komentar");
                 });
@@ -835,13 +840,17 @@ namespace StudentOglasi.Migrations
 
                     b.HasOne("StudentOglasi.Models.Objava", "Objava")
                         .WithMany()
-                        .HasForeignKey("ObajvaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ObjavaID");
+
+                    b.HasOne("StudentOglasi.Models.Oglas", "Oglas")
+                        .WithMany()
+                        .HasForeignKey("OglasID");
 
                     b.Navigation("Korisnik");
 
                     b.Navigation("Objava");
+
+                    b.Navigation("Oglas");
                 });
 
             modelBuilder.Entity("StudentOglasi.Models.Objava", b =>

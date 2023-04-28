@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Injectable, TemplateRef, ViewChild} from '@angular/core';
 import {MojConfig} from "./MojConfig";
 import {HttpClient} from "@angular/common/http";
 import {LoginInformacije} from "./helper/login-informacije";
@@ -19,6 +19,8 @@ export class AppComponent{
   password:any;
   poruka: string='';
 
+  @ViewChild('dialogLogin') dialogLogin!: TemplateRef<any>;
+
   ngOnInit(): void {
   }
   constructor(private httpKlijent: HttpClient, private router: Router, private dialog: MatDialog) {
@@ -33,7 +35,6 @@ export class AppComponent{
 
     this.httpKlijent.post(MojConfig.adresa_servera + "/Autentifikacija/Logout/", null, MojConfig.http_opcije())
       .subscribe((x: any) => {
-        this.router.navigateByUrl("/");
       });
   }
 
@@ -41,8 +42,8 @@ export class AppComponent{
     this.router.navigateByUrl("/login");
   }
 
-  openDialog(templateRef:any) {
-    this.dialog.open(templateRef, {
+  openDialog() {
+    this.dialog.open(this.dialogLogin, {
       width:'25%'
     });
     this.poruka='';
@@ -58,7 +59,6 @@ export class AppComponent{
         if (x.isLogiran) {
           AutentifikacijaHelper.setLoginInfo(x)
           this.dialog.closeAll();
-          this.router.navigateByUrl("/");
         }
         else
         {
