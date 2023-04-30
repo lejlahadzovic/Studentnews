@@ -56,6 +56,7 @@ import { UniverzitetDetaljiComponent } from './univerzitet-detalji/univerzitet-d
 import { ObjavaDetaljiComponent } from './objava-detalji/objava-detalji.component';
 import { FakultetDetaljiComponent } from './fakultet-detalji/fakultet-detalji.component';
 import { StarRatingComponent } from './star-rating/star-rating.component';
+import { KomentariComponent } from './komentari/komentari.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { StarRatingComponent } from './star-rating/star-rating.component';
     UniverzitetDetaljiComponent,
     ObjavaDetaljiComponent,
     FakultetDetaljiComponent,
-    StarRatingComponent
+    StarRatingComponent,
+    KomentariComponent
   ],
     imports: [
         BrowserModule,

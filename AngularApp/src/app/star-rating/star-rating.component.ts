@@ -17,7 +17,6 @@ export class StarRatingComponent implements OnInit {
   @Input() prosjecnaOcjena:any;
   @Output() ocjenaPodaci = new EventEmitter<any>();
   komentar: any;
-  studentID:number=this.loginInfo().autentifikacijaToken?.korisnik.id||0;
 
   constructor(private httpKlijent:HttpClient) { }
 
@@ -46,7 +45,7 @@ export class StarRatingComponent implements OnInit {
 
   snimi() {
     const data = {
-      studentId: this.studentID,
+      studentId: this.loginInfo().autentifikacijaToken?.korisnik.id,
       ocjena: this.rating,
       komentar: this.komentar
     };
