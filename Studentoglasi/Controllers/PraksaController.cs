@@ -88,7 +88,7 @@ namespace StudentOglasi.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetAll()
+        public ActionResult GetAll(int? pageNumber, int pageSize=10)
         {
             var data = _dbContext.Praksa
                 .OrderBy(x => x.ID)
@@ -111,6 +111,11 @@ namespace StudentOglasi.Controllers
                     firmaid = x.Uposlenik.Firma.ID
                 })
                 .AsQueryable();
+            if (pageNumber != null)
+            {
+                var pagedList = PagedList<object>.Create(data, pageNumber.Value, pageSize);
+                return Ok(pagedList);
+            }
             return Ok(data);
         }
 

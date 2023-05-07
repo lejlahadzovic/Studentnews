@@ -17,7 +17,7 @@
   <mat-card-content>
     <div class="univerzitet-fakulteti">
       <h3>Fakulteti:</h3>
-      <div *ngFor="let fakultet of univerzitet?.fakulteti">
+      <div *ngFor="let fakultet of univerzitet?.fakulteti?.dataItems">
         <div class="fakultet-card" (click)="fakultetDetalji(fakultet)">
           <img [src]="fakultet?.logo==null?'assets/Images/no-image.jpg':slikaPutanja+fakultet?.logo" alt="Logo fakulteta" />
           <div class="fakultet-info">
@@ -28,10 +28,15 @@
           </div>
         </div>
       </div>
+      <mat-paginator
+        [length]="univerzitet?.fakulteti?.totalCount"
+        [pageSize]="univerzitet?.fakulteti?.pageSize"
+        (page)="fakultetiPageChanged($event)">
+      </mat-paginator>
     </div>
     <div class="univerzitet-objave">
       <h3>Objave:</h3>
-      <div *ngFor="let objava of univerzitet?.objave">
+      <div *ngFor="let objava of univerzitet?.objave?.dataItems">
         <div class="objava-card" (click)="objavaDetalji(objava)">
           <img [src]="objava?.slikaObjave==null?'assets/Images/no-image.jpg':slikaPutanja+objava?.slikaObjave" alt="Slika objave" />
           <div class="objava-info">
@@ -46,6 +51,11 @@
           </div>
         </div>
       </div>
+      <mat-paginator
+        [length]="univerzitet?.objave?.totalCount"
+        [pageSize]="univerzitet?.objave?.pageSize"
+        (page)="objavePageChanged($event)">
+      </mat-paginator>
     </div>
   </mat-card-content>
 </mat-card>

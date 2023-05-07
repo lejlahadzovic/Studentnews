@@ -39,6 +39,11 @@
           </div>
         </div>
       </div>
+      <mat-paginator
+        [length]="fakultet?.objaveTotalCount"
+        [pageSize]="fakultet?.objavePageSize"
+        (page)="objavePageChanged($event)">
+      </mat-paginator>
     </div>
   </mat-card-content>
 </mat-card>

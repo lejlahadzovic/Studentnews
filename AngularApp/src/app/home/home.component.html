@@ -1,6 +1,9 @@
 
   <h1 class="naslov">Prakse</h1>
-  <div  class=kartice *ngFor="let praksa of this.praksePodaci;let i=index">
+  <button mat-fab color="primary" class="btnPrev" (click)="prevPagePrakse()" [disabled]="this.praksePageNumber==1">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  <div  class=kartice *ngFor="let praksa of this.praksePodaci?.dataItems;let i=index">
   <mat-card class="example-card"  *ngIf="i<3" >
   <mat-card-header *ngIf="i<3">
     <div mat-card-avatar class="example-header-image"></div>
@@ -19,11 +22,17 @@
 </mat-card>
 
 </div>
+  <button mat-fab color="primary" class="btnNext" (click)="nextPagePrakse()" [disabled]="this.praksePageNumber==this.praksePodaci?.totalPages">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
 <button mat-button class="pogledaj-vise-button" routerLink="/putanja-prakse-pregled">POGLEDAJ VIŠE</button>
 
 
   <h1  class="naslov">Stipendije</h1>
-  <div  class=kartice *ngFor="let stipendija of this.stipendijePodaci;let i=index">
+  <button mat-fab color="primary" class="btnPrev" (click)="prevPageStipendije()" [disabled]="this.stipendijePageNumber==1">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  <div  class=kartice *ngFor="let stipendija of this.stipendijePodaci?.dataItems;let i=index">
     <mat-card class="example-card"  *ngIf="i<3" >
       <mat-card-header *ngIf="i<3">
         <div mat-card-avatar class="example-header-image"></div>
@@ -40,12 +49,17 @@
         <button mat-button (click)="stipendijaDetlaji(stipendija)">Detalji</button>
       </mat-card-actions>
     </mat-card>
-
   </div>
+  <button mat-fab color="primary" class="btnNext" (click)="nextPageStipendije()" [disabled]="this.stipendijePageNumber==this.stipendijePodaci?.totalPages">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
   <button mat-button class="pogledaj-vise-button" routerLink="/putanja-stipendije-pregled">POGLEDAJ VIŠE</button>
 
   <h1  class="naslov">Smještaj</h1>
-  <div  class=kartice *ngFor="let s of this.smjestajiPodaci;let i=index">
+  <button mat-fab color="primary" class="btnPrev" (click)="prevPageSmjestaji()" [disabled]="this.smjestajiPageNumber==1">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  <div  class=kartice *ngFor="let s of this.smjestajiPodaci?.dataItems;let i=index">
     <mat-card class="example-card"  *ngIf="i<3" >
       <mat-card-header *ngIf="i<3">
         <div mat-card-avatar class="example-header-image"></div>
@@ -65,4 +79,7 @@
     </mat-card>
 
   </div>
+  <button mat-fab color="primary" class="btnNext"  (click)="nextPageSmjestaji()" [disabled]="this.smjestajiPageNumber==this.smjestajiPodaci?.totalPages">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
   <button mat-button class="pogledaj-vise-button" routerLink="/putanja-smjestaj-pregled">POGLEDAJ VIŠE</button>

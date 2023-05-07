@@ -23,5 +23,12 @@
         <button (click)="pregledDetalja(i)" mat-button>POGLEDAJ VIŠE</button>
       </mat-card-actions>
     </mat-card>
+    <mat-paginator
+      [length]="univerzitetiPodaci?.totalCount"
+      [pageSizeOptions]="[5,10, 20]"
+      [showFirstLastButtons]="true"
+      (page)="handlePageEvent($event)"
+      aria-label="Select page">
+    </mat-paginator>
   </mat-drawer-content>
 </mat-drawer-container>

@@ -125,7 +125,7 @@ namespace StudentOglasi.Controllers
         }
 
         [HttpGet]
-        public ActionResult Get(int? izdavacID)
+        public ActionResult Get(int? izdavacID, int? pageNumber, int pageSize = 10)
         {
             var data = _dbContext.Smjestaj
                 .Where(x => izdavacID == null || x.IzdavacID == izdavacID)
@@ -150,6 +150,15 @@ namespace StudentOglasi.Controllers
                     grad_naziv=x.Grad.Naziv
                 })
                 .AsQueryable();
+
+            if (izdavacID != null)
+                return Ok(data);
+
+            else if (pageNumber != null)
+            {
+                var pagedList = PagedList<object>.Create(data, pageNumber.Value, pageSize);
+                return Ok(pagedList);
+            }
             return Ok(data);
         }
 

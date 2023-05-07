@@ -26,3 +26,8 @@ margin-top: 30px;
 .naslov{
   margin-top: 30px;
 }
+.btnPrev, .btnNext {
+  position: relative;
+  top: -240px;
+  left: 30px;
+}

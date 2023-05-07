@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentOglasi.Models;
 using StudentOglasi.ViewModels;
-
+using StudentOglasi.Helper;
 
 namespace StudentOglasi.Controllers
 { 
@@ -47,7 +47,7 @@ namespace StudentOglasi.Controllers
             }
 
             [HttpGet]
-            public ActionResult GetAll()
+            public ActionResult GetAll(int? pageNumber, int pageSize = 10)
             {
                 var data = _dbContext.Fakultet
                     .OrderBy(s => s.Naziv)
@@ -65,10 +65,15 @@ namespace StudentOglasi.Controllers
 
                     })
                     .AsQueryable();
-                return Ok(data.Take(100).ToList());
+            if (pageNumber != null)
+            {
+                var pagedList = PagedList<object>.Create(data, pageNumber.Value, pageSize);
+                return Ok(pagedList);
             }
+            return Ok(data);
+        }
         [HttpGet]
-        public ActionResult GetById(int id)
+        public ActionResult GetById(int id, int objavePageNumber=1)
         {
             var fakultet = _dbContext.Fakultet
                 .Include(x => x.Univerzitet)
@@ -80,11 +85,25 @@ namespace StudentOglasi.Controllers
             if (fakultet == null)
                 return BadRequest("Fakultet ne postoji");
 
-            var objave = _dbContext.ReferentFakulteta
+            var objaveQuery = _dbContext.ReferentFakulteta
                 .Where(r => r.Fakultet.ID == id)
                 .SelectMany(r => r.Objave)
                 .Include(x => x.Kategorija)
-                .ToList();
+                .OrderByDescending(x=>x.VrijemeObjave);
+
+            var pagedObjave = PagedList<Objava>.Create(objaveQuery, objavePageNumber, 4);
+
+            var objave = PagedList<Objava>.Create(objaveQuery, objavePageNumber, 4)
+                .DataItems
+                .Select(o => new
+                {
+                    id = o.ID,
+                    naslov = o.Naslov,
+                    slikaObjave = o.Slika,
+                    sadrzaj = o.Sadrzaj,
+                    kategorija = o.Kategorija.Naziv,
+                    vrijemeObjave = o.VrijemeObjave.ToString("dd.MM.yyyy HH:mm")
+                });
 
             var data = new
             {
@@ -98,16 +117,10 @@ namespace StudentOglasi.Controllers
                 logo = fakultet.Logo,
                 slika = fakultet.Slika,
                 opis=fakultet.Opis,
-                objave = objave.Select(o => new
-                {
-                    id = o.ID,
-                    naslov = o.Naslov,
-                    slikaObjave = o.Slika,
-                    sadrzaj = o.Sadrzaj,
-                    kategorija = o.Kategorija.Naziv,
-                    vrijemeObjave = o.VrijemeObjave.ToString("dd.MM.yyyy HH:mm")
-                }),
-                prosjecnaOcjena= fakultet.Ocjene.Any() ? Math.Round(fakultet.Ocjene.Average(o => o.Vrijednost),2) : 0
+                objave = objave,
+                prosjecnaOcjena= fakultet.Ocjene.Any() ? Math.Round(fakultet.Ocjene.Average(o => o.Vrijednost),2) : 0,
+                objaveTotalCount = pagedObjave.TotalCount,
+                objavePageSize = pagedObjave.PageSize
             };
 
             return Ok(data);

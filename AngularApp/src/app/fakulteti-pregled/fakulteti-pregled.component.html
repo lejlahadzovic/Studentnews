@@ -3,7 +3,7 @@
 
   </mat-drawer>
   <mat-drawer-content>
-    <mat-card  *ngFor="let i of podaciFakulteti" >
+    <mat-card  *ngFor="let i of podaciFakulteti?.dataItems" >
       <mat-card-header>
         <mat-card-title>{{i.naziv}}</mat-card-title>
       </mat-card-header>
@@ -13,6 +13,12 @@
       </mat-card-actions>
 
     </mat-card>
-
+    <mat-paginator
+      [length]="podaciFakulteti?.totalCount"
+      [pageSizeOptions]="[5,10, 20]"
+      [showFirstLastButtons]="true"
+      (page)="handlePageEvent($event)"
+      aria-label="Select page">
+    </mat-paginator>
   </mat-drawer-content>
 </mat-drawer-container>

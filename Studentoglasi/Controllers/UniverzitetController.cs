@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentOglasi.Models;
 using StudentOglasi.ViewModels;
+using StudentOglasi.Helper;
 
 namespace StudentOglasi.Controllers
 {
@@ -44,7 +45,7 @@ namespace StudentOglasi.Controllers
     }
 
     [HttpGet]
-    public ActionResult GetAll()
+    public ActionResult GetAll(int? pageNumber, int pageSize = 10)
     {
         var data = _dbContext.Univerzitet
             .OrderBy(s => s.Naziv)
@@ -56,14 +57,19 @@ namespace StudentOglasi.Controllers
                 telefon = s.Telefon,
                 Veza = s.Link,
                 grad = s.Grad.Naziv,
-
+                gradid=s.GradID
 
             })
             .AsQueryable();
-        return Ok(data.Take(100).ToList());
-    }
+            if (pageNumber != null)
+            {
+                var pagedList = PagedList<object>.Create(data, pageNumber.Value, pageSize);
+                return Ok(pagedList);
+            }
+            return Ok(data);
+        }
         [HttpGet]
-        public ActionResult GetById(int id)
+        public ActionResult GetById(int id, int objavePageNumber = 1, int fakultetiPageNumber = 1)
         {
             var univerzitet = _dbContext.Univerzitet
                 .Include(x=>x.Grad)
@@ -79,20 +85,14 @@ namespace StudentOglasi.Controllers
             var objave = _dbContext.ReferentUniverziteta
                 .Where(r => r.Univerzitet.ID == id)
                 .SelectMany(r => r.Objave)
-                .Include(x=>x.Kategorija)
-                .ToList();
+                .Include(x => x.Kategorija);
+
+            var objavePagedList = PagedList<Objava>.Create(objave, objavePageNumber, 4);
 
             var fakulteti = _dbContext.Fakultet
-                .Where(f => f.UniverzitetID == id)
-                .Select(f => new
-                {
-                    id=f.ID,
-                    naziv=f.Naziv,
-                    adresa=f.Adresa,
-                    email=f.Email,
-                    link=f.Link,
-                    logo=f.Logo
-                }).ToList();
+                .Where(f => f.UniverzitetID == id);
+
+            var fakultetiPagedList = PagedList<Fakultet>.Create(fakulteti, fakultetiPageNumber, 5);
 
             var data = new
             {
@@ -104,16 +104,34 @@ namespace StudentOglasi.Controllers
                 grad = univerzitet.Grad.Naziv,
                 logo=univerzitet.Logo,
                 slika=univerzitet.Slika,
-                objave = objave.Select(o => new
+                objave = new
                 {
-                    id=o.ID,
-                    naslov = o.Naslov,
-                    slikaObjave = o.Slika,
-                    sadrzaj = o.Sadrzaj,
-                    kategorija = o.Kategorija.Naziv,
-                    vrijemeObjave=o.VrijemeObjave.ToString("dd.MM.yyyy HH:mm")
-                }),
-                fakulteti=fakulteti,
+                    TotalCount = objavePagedList.TotalCount,
+                    PageSize = objavePagedList.PageSize,
+                    DataItems = objavePagedList.DataItems.Select(o => new
+                    {
+                        id = o.ID,
+                        naslov = o.Naslov,
+                        slikaObjave = o.Slika,
+                        sadrzaj = o.Sadrzaj,
+                        kategorija = o.Kategorija.Naziv,
+                        vrijemeObjave = o.VrijemeObjave.ToString("dd.MM.yyyy HH:mm")
+                    })
+                },
+                fakulteti= new
+                {
+                    TotalCount = fakultetiPagedList.TotalCount,
+                    PageSize = fakultetiPagedList.PageSize,
+                    DataItems = fakultetiPagedList.DataItems.Select(f => new
+                    {
+                        id = f.ID,
+                        naziv = f.Naziv,
+                        adresa = f.Adresa,
+                        email = f.Email,
+                        link = f.Link,
+                        logo = f.Logo
+                    })
+                },
                 prosjecnaOcjena = univerzitet.Ocjene.Any() ? Math.Round(univerzitet.Ocjene.Average(o => o.Vrijednost),2) : 0
             };
 

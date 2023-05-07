@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {MojConfig} from "../MojConfig";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-univerzitet-detalji',
@@ -9,6 +10,8 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./univerzitet-detalji.component.css']
 })
 export class UniverzitetDetaljiComponent implements OnInit {
+  objavePageNumber: number=1;
+  fakultetiPageNumber: number=1;
   univerzitetID:number=0;
   univerzitet: any;
   slikaPutanja=MojConfig.SlikePutanja;
@@ -23,7 +26,12 @@ export class UniverzitetDetaljiComponent implements OnInit {
   }
 
   private getUniverzitetDetalji() {
-    this.httpKlijent.get(MojConfig.adresa_servera+"/Univerzitet/GetById?id="+this.univerzitetID).subscribe((x:any)=>{
+    const params=new HttpParams()
+      .set('id', this.univerzitetID.toString())
+      .set('objavePageNumber', this.objavePageNumber.toString())
+      .set('fakultetiPageNumber', this.fakultetiPageNumber.toString());
+
+    this.httpKlijent.get(MojConfig.adresa_servera+"/Univerzitet/GetById",{params}).subscribe((x:any)=>{
       this.univerzitet=x
     });
   }
@@ -45,5 +53,15 @@ export class UniverzitetDetaljiComponent implements OnInit {
     this.httpKlijent.post(MojConfig.adresa_servera+"/Univerzitet/OcijeniUniverzitet",newData).subscribe((s:any)=>{
       location.reload();
     })
+  }
+
+  objavePageChanged($event: PageEvent) {
+    this.objavePageNumber=$event.pageIndex+1;
+    this.getUniverzitetDetalji();
+  }
+
+  fakultetiPageChanged($event: PageEvent) {
+    this.fakultetiPageNumber=$event.pageIndex+1;
+    this.getUniverzitetDetalji();
   }
 }

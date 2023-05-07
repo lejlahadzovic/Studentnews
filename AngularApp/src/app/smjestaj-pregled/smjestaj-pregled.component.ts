@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {MatDialog} from "@angular/material/dialog";
 import {MojConfig} from "../MojConfig";
 import {Router} from "@angular/router";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-smjestaj-pregled',
@@ -17,6 +18,8 @@ export class SmjestajPregledComponent implements OnInit {
   filter_izdavaci:any
   filter_gradovi:any;
   gradoviPodaci:any;
+  pageNumber: number=1;
+  pageSize: number=5;
   constructor(private httpKlijent:HttpClient,private dialog: MatDialog, private router:Router) { }
 
   ngOnInit(): void {
@@ -33,7 +36,7 @@ export class SmjestajPregledComponent implements OnInit {
   getPodaci() {
     if(this.smjestajiPodaci==null)
       return [];
-    return this.smjestajiPodaci.filter((x:any)=>(
+    return this.smjestajiPodaci.dataItems.filter((x:any)=>(
       (this.filter_gradovi!=null?x.gradID==this.filter_gradovi:true)&&
       (this.filter_izdavaci!=null?x.izdavacID==this.filter_izdavaci:true)
     ));
@@ -45,7 +48,11 @@ export class SmjestajPregledComponent implements OnInit {
   }
 
   private getSmjestaji() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/Smjestaj/Get").subscribe(((x: any) => {
+    const params=new HttpParams()
+      .set('pageNumber', this.pageNumber.toString())
+      .set('pageSize', this.pageSize.toString());
+
+    this.httpKlijent.get(MojConfig.adresa_servera + "/Smjestaj/Get",{params}).subscribe(((x: any) => {
       this.smjestajiPodaci = x;
     }));
   }
@@ -62,5 +69,11 @@ export class SmjestajPregledComponent implements OnInit {
 
   pregledDetalja(smjestaj: any) {
     this.router.navigate(["smjestaj-detalji",smjestaj.id]);
+  }
+
+  handlePageEvent($event: PageEvent) {
+    this.pageNumber=$event.pageIndex+1;
+    this.pageSize=$event.pageSize;
+    this.getSmjestaji();
   }
 }

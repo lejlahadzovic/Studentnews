@@ -91,7 +91,7 @@ namespace StudentOglasi.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetAll()
+        public ActionResult GetAll(int? pageNumber, int pageSize = 10)
         {
             var data = _dbContext.Stipendija
                 .OrderBy(x => x.ID)
@@ -115,6 +115,12 @@ namespace StudentOglasi.Controllers
                     stipenditorid = x.Uposlenik.Stipenditor.ID
                 })
                 .AsQueryable();
+
+            if (pageNumber != null)
+            {
+                var pagedList = PagedList<object>.Create(data, pageNumber.Value, pageSize);
+                return Ok(pagedList);
+            }
             return Ok(data);
         }
 
