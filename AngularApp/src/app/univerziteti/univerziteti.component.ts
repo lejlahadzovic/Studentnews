@@ -47,7 +47,7 @@ export class UniverzitetiComponent implements OnInit {
     });
   }
   private getGradovi() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/Grad/GetAll").subscribe(((x: any) => {
+    this.httpKlijent.get(MojConfig.adresa_servera + "/F/GetGradovi").subscribe(((x: any) => {
       this.gradoviPodaci = x;
     }));
   }

@@ -21,6 +21,28 @@ namespace StudentOglasi.Autentifikacija
             this._dbContext = dbContext;
 
         }
+        [HttpGet("{code}")]
+        public ActionResult Otkljucaj(string code)
+        {
+            var korisnik = HttpContext.GetLoginInfo().korisnik;
+
+            if (korisnik == null)
+            {
+                return BadRequest("Korisnik nije logiran");
+            }
+
+            var token = _dbContext.AutentifikacijaToken.FirstOrDefault(s => s.twoFactorCode == code && s.KorisnikId == korisnik.ID);
+
+            if (token != null)
+            {
+                token.twoFactorOtkljucano = true;
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            return BadRequest("pogresan URL");
+
+        }
+
 
         [HttpPost]
         public ActionResult<LoginInformacije> Login([FromBody] LoginVM x)
@@ -38,17 +60,22 @@ namespace StudentOglasi.Autentifikacija
 
             //2- generisati random string
             string randomString = TokenGenerator.Generate(10);
+            string twoFactorCode = TokenGenerator.Generate(4);
 
             //3- dodati novi zapis u tabelu AutentifikacijaToken za logiraniKorisnikId i randomString
             var noviToken = new AutentifikacijaToken()
             {
                 vrijednost = randomString,
                 korisnik = logiraniKorisnik,
-                vrijemeEvidentiranja = DateTime.Now
+                vrijemeEvidentiranja = DateTime.Now,
+                twoFactorCode=twoFactorCode,
+
             };
 
             _dbContext.Add(noviToken);
             _dbContext.SaveChanges();
+
+            EmailLog.uspjesnoLogiranKorisnik(noviToken, Request.HttpContext);
 
             //4- vratiti token string
             return new LoginInformacije(noviToken);

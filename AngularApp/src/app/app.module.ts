@@ -35,6 +35,7 @@ import { StipendijeComponent } from './stipendije/stipendije.component';
 import { SmjestajiComponent } from './smjestaji/smjestaji.component';
 import {MatCardModule} from "@angular/material/card";
 import { RegistracijaComponent } from './registracija/registracija.component';
+
 import { HomeComponent } from './home/home.component';
 import { FirmeComponent } from './firme/firme.component';
 import { StipenditoriComponent } from './stipenditori/stipenditori.component';
@@ -47,16 +48,9 @@ import { SmjestajPregledComponent } from './smjestaj-pregled/smjestaj-pregled.co
 import { UniverzitetiPregledComponent } from './univerziteti-pregled/univerziteti-pregled.component';
 import { FakultetiPregledComponent } from './fakulteti-pregled/fakulteti-pregled.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
-import {MatChipsModule} from "@angular/material/chips";
 import { ProfilComponent } from './profil/profil.component';
-import { PraksaDetaljiComponent } from './praksa-detalji/praksa-detalji.component';
-import { SmjestajDetaljiComponent } from './smjestaj-detalji/smjestaj-detalji.component';
-import { StipendijaDetaljiComponent } from './stipendija-detalji/stipendija-detalji.component';
-import { UniverzitetDetaljiComponent } from './univerzitet-detalji/univerzitet-detalji.component';
-import { ObjavaDetaljiComponent } from './objava-detalji/objava-detalji.component';
-import { FakultetDetaljiComponent } from './fakultet-detalji/fakultet-detalji.component';
-import { StarRatingComponent } from './star-rating/star-rating.component';
-import { KomentariComponent } from './komentari/komentari.component';
+import { TwoFOtkljucajComponent } from './two-f-otkljucaj/two-f-otkljucaj.component';
+
 
 @NgModule({
   declarations: [
@@ -83,14 +77,7 @@ import { KomentariComponent } from './komentari/komentari.component';
     UniverzitetiPregledComponent,
     FakultetiPregledComponent,
     ProfilComponent,
-    PraksaDetaljiComponent,
-    SmjestajDetaljiComponent,
-    StipendijaDetaljiComponent,
-    UniverzitetDetaljiComponent,
-    ObjavaDetaljiComponent,
-    FakultetDetaljiComponent,
-    StarRatingComponent,
-    KomentariComponent
+    TwoFOtkljucajComponent
   ],
     imports: [
         BrowserModule,
@@ -119,13 +106,7 @@ import { KomentariComponent } from './komentari/komentari.component';
             {path: 'putanja-smjestaj-pregled', component: SmjestajPregledComponent},
             {path: 'putanja-univerziteti-pregled', component: UniverzitetiPregledComponent},
             {path: 'putanja-fakulteti-pregled', component: FakultetiPregledComponent},
-            {path: 'profil', component: ProfilComponent},
-            {path: 'praksa-detalji/:id', component: PraksaDetaljiComponent},
-            {path: 'smjestaj-detalji/:id', component: SmjestajDetaljiComponent},
-            {path: 'stipendija-detalji/:id', component: StipendijaDetaljiComponent},
-            {path: 'univerzitet-detalji/:id', component: UniverzitetDetaljiComponent},
-            {path: 'objava/:id', component: ObjavaDetaljiComponent},
-            {path: 'fakultet-detalji/:id', component: FakultetDetaljiComponent},
+            {path: 'two-f-otkljucaj', component: TwoFOtkljucajComponent},
         ]),
         FormsModule,
         MatToolbarModule,
@@ -143,7 +124,6 @@ import { KomentariComponent } from './komentari/komentari.component';
         MatNativeDateModule,
         MatCheckboxModule,
         MatCardModule,
-        MatChipsModule,
         MatSidenavModule,
         MatTooltipModule,
         MatPaginatorModule

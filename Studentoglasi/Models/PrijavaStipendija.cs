@@ -8,6 +8,6 @@
         public int StipendijaID { get; set; }
         public string Dokumentacija { get; set; }
         public string CV { get; set; }
-        public double ProsjekOcjena { get; set; }
+        public string ProsjekOcjena { get; set; }
     }
 }

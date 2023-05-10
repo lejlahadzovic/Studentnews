@@ -100,6 +100,7 @@ namespace StudentOglasi.Controllers
             return Ok(data);
         }
 
+
         [HttpGet]
         public ActionResult GetByID(int id)
         {
@@ -120,6 +121,7 @@ namespace StudentOglasi.Controllers
                 };
                 return Ok(referent);
             }
+
             else return BadRequest();
         }
 

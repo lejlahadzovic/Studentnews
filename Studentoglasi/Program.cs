@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using StudentOglasi.Data;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +13,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>{
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+builder.Services.AddSwaggerGen(c =>
+{
+    c.OperationFilter<AutorizacijaSwaggerHeader>();
+}
+);
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,6 +30,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 app.UseCors(
     options => options

@@ -125,6 +125,7 @@ namespace StudentOglasi.Controllers
                 };
                 return Ok(uposlenik);
             }
+
             else return BadRequest();
         }
 

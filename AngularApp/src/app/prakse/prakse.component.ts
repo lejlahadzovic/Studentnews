@@ -41,7 +41,7 @@ export class PrakseComponent implements OnInit {
   }
 
   getFirme() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/Firma/GetAll").subscribe(((x: any) => {
+    this.httpKlijent.get(MojConfig.adresa_servera + "/F/GetFirme").subscribe(((x: any) => {
       this.firmePodaci = x;
     }));
   }
