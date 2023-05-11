@@ -44,6 +44,7 @@ namespace StudentOglasi.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Slika = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -148,8 +149,7 @@ namespace StudentOglasi.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false),
                     Ime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Prezime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Prezime = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -170,7 +170,9 @@ namespace StudentOglasi.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     vrijednost = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     KorisnikId = table.Column<int>(type: "int", nullable: false),
-                    vrijemeEvidentiranja = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    vrijemeEvidentiranja = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    twoFactorCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    twoFactorOtkljucano = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -190,7 +192,6 @@ namespace StudentOglasi.Migrations
                     ID = table.Column<int>(type: "int", nullable: false),
                     Ime = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Prezime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Telefon = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -205,6 +206,30 @@ namespace StudentOglasi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "LogKretanjePoSistemu",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    korisnikID = table.Column<int>(type: "int", nullable: true),
+                    queryPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    postData = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    vrijeme = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ipAdresa = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    exceptionMessage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    isException = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LogKretanjePoSistemu", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_LogKretanjePoSistemu_Korisnik_korisnikID",
+                        column: x => x.korisnikID,
+                        principalTable: "Korisnik",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UposlenikFirme",
                 columns: table => new
                 {
@@ -212,7 +237,6 @@ namespace StudentOglasi.Migrations
                     Ime = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Prezime = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Pozicija = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirmaID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -239,7 +263,6 @@ namespace StudentOglasi.Migrations
                     ID = table.Column<int>(type: "int", nullable: false),
                     Ime = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Prezime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StipenditorID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -293,7 +316,6 @@ namespace StudentOglasi.Migrations
                     ID = table.Column<int>(type: "int", nullable: false),
                     Ime = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Prezime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UnivetzitetID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -417,7 +439,6 @@ namespace StudentOglasi.Migrations
                     ID = table.Column<int>(type: "int", nullable: false),
                     Ime = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Prezime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FakultetID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -597,7 +618,7 @@ namespace StudentOglasi.Migrations
                     StipendijaID = table.Column<int>(type: "int", nullable: false),
                     Dokumentacija = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CV = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProsjekOcjena = table.Column<double>(type: "float", nullable: false)
+                    ProsjekOcjena = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -647,6 +668,7 @@ namespace StudentOglasi.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ObjavaID = table.Column<int>(type: "int", nullable: true),
                     OglasID = table.Column<int>(type: "int", nullable: true),
+                    KomentarID = table.Column<int>(type: "int", nullable: true),
                     KorisnikID = table.Column<int>(type: "int", nullable: false),
                     VrijemeObjave = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -654,6 +676,11 @@ namespace StudentOglasi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Komentar", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Komentar_Komentar_KomentarID",
+                        column: x => x.KomentarID,
+                        principalTable: "Komentar",
+                        principalColumn: "ID");
                     table.ForeignKey(
                         name: "FK_Komentar_Korisnik_KorisnikID",
                         column: x => x.KorisnikID,
@@ -688,6 +715,11 @@ namespace StudentOglasi.Migrations
                 column: "GradID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Komentar_KomentarID",
+                table: "Komentar",
+                column: "KomentarID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Komentar_KorisnikID",
                 table: "Komentar",
                 column: "KorisnikID");
@@ -701,6 +733,11 @@ namespace StudentOglasi.Migrations
                 name: "IX_Komentar_OglasID",
                 table: "Komentar",
                 column: "OglasID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LogKretanjePoSistemu_korisnikID",
+                table: "LogKretanjePoSistemu",
+                column: "korisnikID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Objava_KategorijaID",
@@ -839,6 +876,9 @@ namespace StudentOglasi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Komentar");
+
+            migrationBuilder.DropTable(
+                name: "LogKretanjePoSistemu");
 
             migrationBuilder.DropTable(
                 name: "Ocjena");

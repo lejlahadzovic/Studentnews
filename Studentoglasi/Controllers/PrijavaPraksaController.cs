@@ -8,6 +8,8 @@ using StudentOglasi.Helper;
 using StudentOglasi.Models;
 using StudentOglasi.ViewModels;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace StudentOglasi.Controllers
 {
@@ -42,9 +44,16 @@ namespace StudentOglasi.Controllers
                 prijava_praksa.CV = DodajFile.AddFilePraksa(Config.CVFolder, prijava_praksa, x.CV);
                 prijava_praksa.Certifikati = DodajFile.AddFilePraksa(Config.ProsjekOcjenaFolder, prijava_praksa, x.certifikati);
 
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    WriteIndented = true
+                };
+
+                string json = JsonSerializer.Serialize(prijava_praksa, options);
 
                 _dbContext.SaveChanges();
-                    return Ok(prijava_praksa);
+                    return Ok(json);
                 }
                 catch (Exception ex)
                 {

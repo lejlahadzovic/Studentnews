@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injectable, TemplateRef, ViewChild } from '@angular/core';
 import {MojConfig} from "./MojConfig";
 import {HttpClient} from "@angular/common/http";
 import {LoginInformacije} from "./helper/login-informacije";
@@ -17,6 +17,9 @@ export class AppComponent{
   title: string="Upravljanje podacima";
   username: any;
   password:any;
+  poruka: string='';
+
+  @ViewChild('dialogLogin') dialogLogin!: TemplateRef<any>;
 
   ngOnInit(): void {
   }
@@ -39,10 +42,11 @@ export class AppComponent{
     this.router.navigateByUrl("/login");
   }
 
-  openDialog(templateRef:any) {
-    this.dialog.open(templateRef, {
+  openDialog() {
+    this.dialog.open(this.dialogLogin, {
       width:'25%'
     });
+    this.poruka='';
   }
 
   btnLogin() {
@@ -56,15 +60,26 @@ export class AppComponent{
 
           AutentifikacijaHelper.setLoginInfo(x)
           this.router.navigateByUrl("/two-f-otkljucaj");
+          this.dialog.closeAll();
         }
         else
         {
           AutentifikacijaHelper.setLoginInfo(null);
+          this.username='';
+          this.password='';
+          this.poruka='Niste unijeli ispravno korisničko ime ili lozinku.';
         }
       });
   }
 
   registracija() {
     this.router.navigateByUrl("/registracija");
+  }
+  profil() {
+    this.router.navigateByUrl("/profil");
+  }
+
+  smjestaji() {
+    this.router.navigateByUrl("/putanja-smjestaji");
   }
 }

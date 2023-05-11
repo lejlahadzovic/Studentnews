@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {MatDialog} from "@angular/material/dialog";
 import {MojConfig} from "../MojConfig";
+import {Router} from "@angular/router";
+import {PageEvent} from "@angular/material/paginator";
 import {LoginInformacije} from "../helper/login-informacije";
 import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
 
@@ -20,7 +22,9 @@ export class SmjestajPregledComponent implements OnInit {
   gradoviPodaci:any;
    smjestaj: any;
    korisnik:any;
-  constructor(private httpKlijent:HttpClient,private dialog: MatDialog) { }
+  pageNumber: number=1;
+  pageSize: number=5;
+  constructor(private httpKlijent:HttpClient,private dialog: MatDialog, private router:Router) { }
 
   ngOnInit(): void {
     this.korisnik=this.loginInfo().autentifikacijaToken?.korisnik;
@@ -41,7 +45,7 @@ export class SmjestajPregledComponent implements OnInit {
   getPodaci() {
     if(this.smjestajiPodaci==null)
       return [];
-    return this.smjestajiPodaci.filter((x:any)=>(
+    return this.smjestajiPodaci.dataItems.filter((x:any)=>(
       (this.filter_gradovi!=null?x.gradID==this.filter_gradovi:true)&&
       (this.filter_izdavaci!=null?x.izdavacID==this.filter_izdavaci:true)
     ));
@@ -53,7 +57,11 @@ export class SmjestajPregledComponent implements OnInit {
   }
 
   private getSmjestaji() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/Smjestaj/Get").subscribe(((x: any) => {
+    const params=new HttpParams()
+      .set('pageNumber', this.pageNumber.toString())
+      .set('pageSize', this.pageSize.toString());
+
+    this.httpKlijent.get(MojConfig.adresa_servera + "/Smjestaj/Get",{params}).subscribe(((x: any) => {
       this.smjestajiPodaci = x;
     }));
   }
@@ -86,5 +94,13 @@ export class SmjestajPregledComponent implements OnInit {
     this.httpKlijent.post(MojConfig.adresa_servera + "/RezervacijaSmjestaja/Snimi", this.smjestaj).subscribe(((x: any) => {
      this.dialog.closeAll();
     }));
+  }
+  pregledDetalja(smjestaj: any) {
+    this.router.navigate(["smjestaj-detalji",smjestaj.id]);
+  }
+  handlePageEvent($event: PageEvent) {
+    this.pageNumber=$event.pageIndex+1;
+    this.pageSize=$event.pageSize;
+    this.getSmjestaji();
   }
 }

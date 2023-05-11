@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using StudentOglasi.Data;
 using StudentOglasi.Models;
 using StudentOglasi.ViewModels;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace StudentOglasi.Controllers
 {
@@ -39,9 +41,17 @@ namespace StudentOglasi.Controllers
             rezervacija.DatumPrijave = x.DatumPrijave;
             rezervacija.DatumOdjave = x.DatumOdjave;
             rezervacija.BrojOsoba = x.BrojOsoba;
-        
+
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                WriteIndented = true
+            };
+
+            string json = JsonSerializer.Serialize(rezervacija, options);
+
             _dbContext.SaveChanges(); 
-            return Ok(rezervacija);
+            return Ok(json);
         }
 
 

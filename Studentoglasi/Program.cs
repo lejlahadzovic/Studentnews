@@ -18,10 +18,6 @@ builder.Services.AddSwaggerGen(c =>
     c.OperationFilter<AutorizacijaSwaggerHeader>();
 }
 );
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

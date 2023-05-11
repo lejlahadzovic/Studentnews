@@ -135,7 +135,8 @@ namespace StudentOglasi.Modul_TestniPodaci
                     NacinStudiranja="DL",
                     Username = TokenGenerator.GenerisiIme(5),
                     Password = "test",
-                    Fakultet = fakulteti[0]
+                    Fakultet = fakulteti[0],
+                    Email = TokenGenerator.GenerisiIme(5) + "@gmail.com"
                 });
             }
 

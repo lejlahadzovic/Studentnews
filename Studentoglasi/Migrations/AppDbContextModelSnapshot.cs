@@ -272,12 +272,6 @@ namespace StudentOglasi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("aktivacijaGUID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isAktiviran")
-                        .HasColumnType("bit");
-
                     b.HasKey("ID");
 
                     b.ToTable("Korisnik");

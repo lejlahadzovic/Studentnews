@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {MatDialog} from "@angular/material/dialog";
 import {MojConfig} from "../MojConfig";
 import {LoginInformacije} from "../helper/login-informacije";
 import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
 import {formatDate} from "@angular/common";
+import {Router} from "@angular/router";
+import {PageEvent} from "@angular/material/paginator";
+
 @Component({
   selector: 'app-stipendije-pregled',
   templateUrl: './stipendije-pregled.component.html',
@@ -28,7 +31,9 @@ export class StipendijePregledComponent implements OnInit {
   odabranastipendija: any;
   prijavastipendije: any;
   korisnik:any;
-  constructor(private httpKlijent:HttpClient,private dialog: MatDialog) { }
+  pageNumber: number=1;
+  pageSize: number=5;
+  constructor(private httpKlijent:HttpClient,private dialog: MatDialog, private router:Router) { }
 
   ngOnInit(): void {
     this.korisnik=this.loginInfo().autentifikacijaToken?.korisnik;
@@ -52,12 +57,12 @@ export class StipendijePregledComponent implements OnInit {
   getpodaci(){
     if(this.stipendijePodaci==null)
       return [];
-    return this.stipendijePodaci.filter((x:any)=>(
+    return this.stipendijePodaci.dataItems.filter((x:any)=>(
       (this.filter_stipenditor!=null?x.stipenditorid==this.filter_stipenditor:true))
     );
   }
   private getStipenditori() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/F/GetStipenditori").subscribe(((x: any) => {
+    this.httpKlijent.get(MojConfig.adresa_servera + "/Stipenditor/GetAll").subscribe(((x: any) => {
       this.stipenditoriPodaci = x;
     }));
   }
@@ -92,7 +97,11 @@ export class StipendijePregledComponent implements OnInit {
 this.imeFileProsjek=this.ProsjekOcjena.name;
   }
   private getStipendije() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/Stipendija/GetAll").subscribe(((x: any) => {
+    const params=new HttpParams()
+      .set('pageNumber', this.pageNumber.toString())
+      .set('pageSize', this.pageSize.toString());
+
+    this.httpKlijent.get(MojConfig.adresa_servera + "/Stipendija/GetAll", {params}).subscribe(((x: any) => {
       this.stipendijePodaci = x;
     }));
   }
@@ -116,5 +125,14 @@ this.imeFileProsjek=this.ProsjekOcjena.name;
     this.httpKlijent.post(MojConfig.adresa_servera+"/PrijavaStipendija/Snimi",formData).subscribe((s:any)=>{
       this.dialog.closeAll();
     })
+  }
+  pregledDetalja(stipendija: any) {
+    this.router.navigate(["stipendija-detalji",stipendija.id]);
+  }
+
+  handlePageEvent($event: PageEvent) {
+    this.pageNumber=$event.pageIndex+1;
+    this.pageSize=$event.pageSize;
+    this.getStipendije();
   }
 }

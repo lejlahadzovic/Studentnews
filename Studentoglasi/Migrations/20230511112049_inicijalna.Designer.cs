@@ -12,8 +12,8 @@ using StudentOglasi.Data;
 namespace StudentOglasi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230411093011_autentifikacija_autorizacija")]
-    partial class autentifikacijaautorizacija
+    [Migration("20230511112049_inicijalna")]
+    partial class inicijalna
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,6 +57,42 @@ namespace StudentOglasi.Migrations
                     b.ToTable("AutentifikacijaToken");
                 });
 
+            modelBuilder.Entity("StudentOglasi.Autentifikacija.Models.LogKretanjePoSistemu", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("exceptionMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ipAdresa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isException")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("korisnikID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("postData")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("queryPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("vrijeme")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("korisnikID");
+
+                    b.ToTable("LogKretanjePoSistemu");
+                });
+
             modelBuilder.Entity("StudentOglasi.Models.Fakultet", b =>
                 {
                     b.Property<int>("ID")
@@ -77,8 +113,17 @@ namespace StudentOglasi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Logo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Naziv")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Opis")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Slika")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Telefon")
@@ -175,10 +220,16 @@ namespace StudentOglasi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
+                    b.Property<int?>("KomentarID")
+                        .HasColumnType("int");
+
                     b.Property<int>("KorisnikID")
                         .HasColumnType("int");
 
-                    b.Property<int>("ObajvaID")
+                    b.Property<int?>("ObjavaID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OglasID")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
@@ -190,9 +241,13 @@ namespace StudentOglasi.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("KomentarID");
+
                     b.HasIndex("KorisnikID");
 
-                    b.HasIndex("ObajvaID");
+                    b.HasIndex("ObjavaID");
+
+                    b.HasIndex("OglasID");
 
                     b.ToTable("Komentar");
                 });
@@ -219,12 +274,6 @@ namespace StudentOglasi.Migrations
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("aktivacijaGUID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isAktiviran")
-                        .HasColumnType("bit");
 
                     b.HasKey("ID");
 
@@ -299,6 +348,9 @@ namespace StudentOglasi.Migrations
 
                     b.Property<int?>("FirmaID")
                         .HasColumnType("int");
+
+                    b.Property<string>("Komentar")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("SmjestajID")
                         .HasColumnType("int");
@@ -500,8 +552,14 @@ namespace StudentOglasi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Logo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Naziv")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Slika")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Telefon")
@@ -779,6 +837,15 @@ namespace StudentOglasi.Migrations
                     b.Navigation("korisnik");
                 });
 
+            modelBuilder.Entity("StudentOglasi.Autentifikacija.Models.LogKretanjePoSistemu", b =>
+                {
+                    b.HasOne("StudentOglasi.Models.Korisnik", "korisnik")
+                        .WithMany()
+                        .HasForeignKey("korisnikID");
+
+                    b.Navigation("korisnik");
+                });
+
             modelBuilder.Entity("StudentOglasi.Models.Fakultet", b =>
                 {
                     b.HasOne("StudentOglasi.Models.Univerzitet", "Univerzitet")
@@ -803,6 +870,10 @@ namespace StudentOglasi.Migrations
 
             modelBuilder.Entity("StudentOglasi.Models.Komentar", b =>
                 {
+                    b.HasOne("StudentOglasi.Models.Komentar", "komentar")
+                        .WithMany()
+                        .HasForeignKey("KomentarID");
+
                     b.HasOne("StudentOglasi.Models.Korisnik", "Korisnik")
                         .WithMany()
                         .HasForeignKey("KorisnikID")
@@ -811,13 +882,19 @@ namespace StudentOglasi.Migrations
 
                     b.HasOne("StudentOglasi.Models.Objava", "Objava")
                         .WithMany()
-                        .HasForeignKey("ObajvaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ObjavaID");
+
+                    b.HasOne("StudentOglasi.Models.Oglas", "Oglas")
+                        .WithMany()
+                        .HasForeignKey("OglasID");
 
                     b.Navigation("Korisnik");
 
                     b.Navigation("Objava");
+
+                    b.Navigation("Oglas");
+
+                    b.Navigation("komentar");
                 });
 
             modelBuilder.Entity("StudentOglasi.Models.Objava", b =>
@@ -828,23 +905,31 @@ namespace StudentOglasi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("StudentOglasi.Models.ReferentFakulteta", null)
+                    b.HasOne("StudentOglasi.Models.ReferentFakulteta", "ReferentFakulteta")
                         .WithMany("Objave")
                         .HasForeignKey("ReferentFakultetaID");
 
-                    b.HasOne("StudentOglasi.Models.ReferentUniverziteta", null)
+                    b.HasOne("StudentOglasi.Models.ReferentUniverziteta", "ReferentUniverziteta")
                         .WithMany("Objave")
                         .HasForeignKey("ReferentUniverzitetaID");
 
-                    b.HasOne("StudentOglasi.Models.UposlenikFirme", null)
+                    b.HasOne("StudentOglasi.Models.UposlenikFirme", "UposlenikFirme")
                         .WithMany("Objave")
                         .HasForeignKey("UposlenikFirmeID");
 
-                    b.HasOne("StudentOglasi.Models.UposlenikStipenditora", null)
+                    b.HasOne("StudentOglasi.Models.UposlenikStipenditora", "UposlenikStipenditora")
                         .WithMany("Objave")
                         .HasForeignKey("UposlenikStipenditoraID");
 
                     b.Navigation("Kategorija");
+
+                    b.Navigation("ReferentFakulteta");
+
+                    b.Navigation("ReferentUniverziteta");
+
+                    b.Navigation("UposlenikFirme");
+
+                    b.Navigation("UposlenikStipenditora");
                 });
 
             modelBuilder.Entity("StudentOglasi.Models.Ocjena", b =>

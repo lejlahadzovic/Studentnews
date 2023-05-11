@@ -6,6 +6,8 @@ using StudentOglasi.Helper;
 using StudentOglasi.Models;
 using StudentOglasi.ViewModels;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace StudentOglasi.Controllers
 {
@@ -43,9 +45,16 @@ namespace StudentOglasi.Controllers
                 prijava_stipendija.CV= DodajFile.AddFileStipendija( Config.CVFolder, prijava_stipendija, x.CV);
                 prijava_stipendija.ProsjekOcjena= DodajFile.AddFileStipendija(Config.ProsjekOcjenaFolder, prijava_stipendija, x.ProsjekOcjena);
 
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    WriteIndented = true
+                };
+
+                string json = JsonSerializer.Serialize(prijava_stipendija, options);
 
                 _dbContext.SaveChanges();
-                return Ok(prijava_stipendija);
+                return Ok(json);
             }
             catch (Exception ex)
             {

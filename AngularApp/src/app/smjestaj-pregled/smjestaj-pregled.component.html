@@ -30,13 +30,19 @@
       <img  src="{{i.slika}}" >
       <mat-card-actions>
 
-        <button mat-button>POGLEDAJ VIŠE</button>
+        <button (click)="pregledDetalja(i)" mat-button>POGLEDAJ VIŠE</button>
         <button  mat-raised-button color="accent" (click)="openDialog(dialogRezervacijaSmjestaja); dodajSmjestaj(i.id)" >REZERVIŠI</button>
       </mat-card-actions>
 
     </mat-card>
 
-
+    <mat-paginator
+      [length]="smjestajiPodaci?.totalCount"
+      [pageSizeOptions]="[5,10, 20]"
+      [showFirstLastButtons]="true"
+      (page)="handlePageEvent($event)"
+      aria-label="Select page">
+    </mat-paginator>
   </mat-drawer-content>
 </mat-drawer-container>
 

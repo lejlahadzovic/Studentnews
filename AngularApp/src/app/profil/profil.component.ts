@@ -61,7 +61,7 @@ export class ProfilComponent implements OnInit {
   }
 
   getFakulteti() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/F/GetAll").subscribe(((x: any) => {
+    this.httpKlijent.get(MojConfig.adresa_servera + "/Fakultet/GetAll").subscribe(((x: any) => {
       this.fakultetiPodaci = x;
     }));
   }
@@ -219,13 +219,13 @@ export class ProfilComponent implements OnInit {
   }
 
   private getFirme() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/F/GetFirme").subscribe(((x: any) => {
+    this.httpKlijent.get(MojConfig.adresa_servera + "/Firma/GetAll").subscribe(((x: any) => {
       this.firmePodaci = x;
     }));
   }
 
   private getStipenditori() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/F/GetStipenditori").subscribe(((x: any) => {
+    this.httpKlijent.get(MojConfig.adresa_servera + "/Stipenditor/GetAll").subscribe(((x: any) => {
       this.stipenditoriPodaci = x;
     }));
   }
