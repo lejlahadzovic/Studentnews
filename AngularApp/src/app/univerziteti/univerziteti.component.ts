@@ -4,6 +4,8 @@ import {MojConfig} from "../MojConfig";
 import {MatDialog} from "@angular/material/dialog";
 import {formatDate} from "@angular/common";
 
+declare var google: any;
+
 @Component({
   selector: 'app-univerziteti',
   templateUrl: './univerziteti.component.html',
@@ -17,6 +19,8 @@ export class UniverzitetiComponent implements OnInit {
   dialogtitle: any;
   univerzitet:any;
   gradoviPodaci:any;
+  map:any;
+  marker: any;
   constructor(private httpKlijent: HttpClient,private dialog: MatDialog) {
 
   }
@@ -29,20 +33,19 @@ export class UniverzitetiComponent implements OnInit {
       email:'',
       telefon:'',
       veza:'',
-      gradID:0,
-
+      gradID:1
     }
   }
 
 
   openDialog(templateRef:any) {
     this.dialog.open(templateRef, {
-     width:'20%'
+     width:'60%'
     });
   }
   obrisiUniverzitet(s: any) {
 
-    this.httpKlijent.post(`${MojConfig.adresa_servera}/Student/Obrisi2/${s.id}`, MojConfig.http_opcije()).subscribe(x=>{
+    this.httpKlijent.post(`${MojConfig.adresa_servera}/Univerzitet/Obrisi/${s.id}`, MojConfig.http_opcije()).subscribe(x=>{
       this.preuzmiPodatke();
     });
   }
@@ -72,4 +75,30 @@ export class UniverzitetiComponent implements OnInit {
   }
 
 
+  ucitajMapu() {
+
+      this.map = new google.maps.Map(document.getElementById('map'), {
+        center: this.univerzitet.lokacija!=null ? {lat: this.univerzitet.lokacija.lat, lng: this.univerzitet.lokacija.lng}
+        :{ lat: 43.85, lng: 18.41 },
+        zoom: 8
+      });
+
+      this.marker= new google.maps.Marker({
+        position: this.univerzitet.lokacija!=null ? {lat: this.univerzitet.lokacija.lat, lng: this.univerzitet.lokacija.lng}
+        :{lat: 0, lng: 0},
+        map: this.map,
+        visible:this.univerzitet.lokacija!=null
+      });
+
+    this.map.addListener('click',(event:any)=>{
+      this.onMapClick(event);
+    });
+  }
+
+  private onMapClick(event: any) {
+    this.marker.setPosition(event.latLng);
+    this.marker.setVisible(true);
+    this.univerzitet.lat=event.latLng.lat();
+    this.univerzitet.lng=event.latLng.lng();
+  }
 }

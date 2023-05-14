@@ -206,3 +206,7 @@ mat-card-content {
 .fakultet-info {
   width: 100%;
 }
+#map {
+  margin: auto;
+  height: 400px;
+}

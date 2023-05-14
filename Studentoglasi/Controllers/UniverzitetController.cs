@@ -22,20 +22,29 @@ namespace StudentOglasi.Controllers
     [HttpPost]
     public Univerzitet Snimi([FromBody] UniverzitetVM x)
     {
-        Univerzitet? objekat;
+            Univerzitet? objekat;
 
-        if (x.ID == 0)
-        {
-            objekat = new Univerzitet();
-            _dbContext.Add(objekat);
-        }
-        else
-        {
-            objekat = _dbContext.Univerzitet.Find(x.ID);
-        }
+            if (x.ID == 0)
+            {
+                objekat = new Univerzitet();
+                _dbContext.Add(objekat);
+            }
+            else
+            {
+                objekat = _dbContext.Univerzitet.Find(x.ID);
+            }
 
-        objekat.Naziv = x.Naziv;
-        objekat.GradID = x.GradID;
+            if (x.Lat!=null && x.Lng!=null)
+            {
+                if (objekat.Lokacija == null)
+                {
+                    objekat.Lokacija = new Lokacija();
+                }
+                objekat.Lokacija.Lat = x.Lat.Value;
+                objekat.Lokacija.Lng = x.Lng.Value;
+            }
+            objekat.Naziv = x.Naziv;
+            objekat.GradID = x.GradID;
             objekat.Email = x.Email;
             objekat.Telefon = x.Telefon;
             objekat.Link = x.Veza;
@@ -57,8 +66,8 @@ namespace StudentOglasi.Controllers
                 telefon = s.Telefon,
                 Veza = s.Link,
                 grad = s.Grad.Naziv,
-                gradid=s.GradID
-
+                gradid=s.GradID,
+                lokacija = s.Lokacija!=null? new {lat = s.Lokacija.Lat,lng = s.Lokacija.Lng } : null
             })
             .AsQueryable();
             if (pageNumber != null)
@@ -74,6 +83,7 @@ namespace StudentOglasi.Controllers
             var univerzitet = _dbContext.Univerzitet
                 .Include(x=>x.Grad)
                 .Include(x => x.Ocjene)
+                .Include(x=>x.Lokacija)
                 .Where(u => u.ID == id)
                 .FirstOrDefault();
 
@@ -132,7 +142,8 @@ namespace StudentOglasi.Controllers
                         logo = f.Logo
                     })
                 },
-                prosjecnaOcjena = univerzitet.Ocjene.Any() ? Math.Round(univerzitet.Ocjene.Average(o => o.Vrijednost),2) : 0
+                prosjecnaOcjena = univerzitet.Ocjene.Any() ? Math.Round(univerzitet.Ocjene.Average(o => o.Vrijednost),2) : 0,
+                lokacija = univerzitet.Lokacija != null ? new { lat = univerzitet.Lokacija.Lat, lng = univerzitet.Lokacija.Lng } : null
             };
 
             return Ok(data);

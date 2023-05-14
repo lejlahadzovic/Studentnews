@@ -159,3 +159,7 @@ mat-card-content {
 .opis{
   font-size: 16px;
 }
+#map {
+  margin: auto;
+  height: 400px;
+}

@@ -41,7 +41,17 @@ namespace StudentOglasi.Controllers
                 objekat.Telefon = x.Telefon;
                 objekat.Link = x.Veza;
                 objekat.UniverzitetID = x.UniverzitetID;
-               // objekat.Ocjene=x.Ocjene;
+                // objekat.Ocjene=x.Ocjene;
+
+                if (x.Lat != null && x.Lng != null)
+                {
+                    if (objekat.Lokacija == null)
+                    {
+                        objekat.Lokacija = new Lokacija();
+                    }
+                    objekat.Lokacija.Lat = x.Lat.Value;
+                    objekat.Lokacija.Lng = x.Lng.Value;
+                }
             _dbContext.SaveChanges(); //exceute sql -- update Predmet set ... where...
                 return objekat;
             }
@@ -60,8 +70,9 @@ namespace StudentOglasi.Controllers
                         telefon = s.Telefon,
                         Veza = s.Link,
                         univerzitet = s.Univerzitet.Naziv,
+                        univerzitetID=s.UniverzitetID,
                         //ocjene=s.Ocjene,
-
+                        lokacija = s.Lokacija != null ? new { lat = s.Lokacija.Lat, lng = s.Lokacija.Lng } : null
 
                     })
                     .AsQueryable();
@@ -79,6 +90,7 @@ namespace StudentOglasi.Controllers
                 .Include(x => x.Univerzitet)
                 .Include(x=>x.Univerzitet.Grad)
                 .Include(x=>x.Ocjene)
+                .Include(x => x.Lokacija)
                 .Where(x => x.ID == id)
                 .FirstOrDefault();
 
@@ -120,7 +132,8 @@ namespace StudentOglasi.Controllers
                 objave = objave,
                 prosjecnaOcjena= fakultet.Ocjene.Any() ? Math.Round(fakultet.Ocjene.Average(o => o.Vrijednost),2) : 0,
                 objaveTotalCount = pagedObjave.TotalCount,
-                objavePageSize = pagedObjave.PageSize
+                objavePageSize = pagedObjave.PageSize,
+                lokacija = fakultet.Lokacija != null ? new { lat = fakultet.Lokacija.Lat, lng = fakultet.Lokacija.Lng } : null
             };
 
             return Ok(data);

@@ -1,6 +1,6 @@
 <h1> Univerziteti</h1>
 
-<button mat-raised-button color="primary" (click)="dodajUniverzitet();  openDialog(dialogUniverzitet)">
+<button mat-raised-button color="primary" (click)="dodajUniverzitet();  openDialog(dialogUniverzitet);ucitajMapu()">
   <mat-icon>add</mat-icon> Dodaj univerzitet
 </button>
 <br>
@@ -44,7 +44,7 @@
   <ng-container matColumnDef="akcije">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
-      <button (click)="univerzitet=element; openDialog(dialogUniverzitet)" color="primary" mat-icon-button>
+      <button (click)="univerzitet=element; openDialog(dialogUniverzitet);ucitajMapu()" color="primary" mat-icon-button>
         <mat-icon>edit</mat-icon>
       </button>
       <button (click)="obrisiUniverzitet(element)" mat-icon-button color="warn">
@@ -58,9 +58,7 @@
 
 <ng-template #dialogUniverzitet>
   <h1>{{this.dialogtitle}}</h1>
-
   <mat-dialog-content>
-
 
     <mat-form-field appearance="fill" id="naziv">
       <mat-label>Naziv</mat-label>
@@ -74,7 +72,7 @@
 
     </mat-form-field>
 
-    <mat-form-field appearance="fill"  id="telefon">
+    <mat-form-field appearance="fill"  id="telefon" style="margin: 0">
       <mat-label>Telefon</mat-label>
       <input matInput  [(ngModel)]="this.univerzitet.telefon">
     </mat-form-field>
@@ -86,19 +84,19 @@
 
 
 
-    <mat-form-field  id="grad">
+    <mat-form-field  id="grad" appearance="fill">
       <mat-label>Grad</mat-label>
-      <mat-select  [(ngModel)]="this.univerzitet.gradID">
+      <mat-select  [(ngModel)]="this.univerzitet.gradid">
         <mat-option *ngFor="let grad of this.gradoviPodaci" [value]="grad.id">
           {{grad.naziv}}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-
+    <h2>Odaberi lokaciju</h2>
+    <div id="map"></div>
 
   </mat-dialog-content>
-
   <mat-dialog-actions align="end">
     <button mat-raised-button mat-dialog-close color="warn">Odustani</button>
     <button mat-raised-button mat-dialog-close color="primary"  (click)="snimi_dugme()" >Snimi</button>

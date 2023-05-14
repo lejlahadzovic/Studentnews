@@ -19,5 +19,8 @@ namespace StudentOglasi.Models
         public Univerzitet Univerzitet { get; set; }
         public int UniverzitetID { get; set; }
         public ICollection<Ocjena> Ocjene { get; set; } = new List<Ocjena>();
+        
+        public Lokacija Lokacija { get; set; }
+        public int? LokacijaID { get; set; }
     }
 }

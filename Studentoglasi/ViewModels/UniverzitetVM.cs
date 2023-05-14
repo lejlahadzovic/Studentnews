@@ -11,6 +11,8 @@ namespace StudentOglasi.ViewModels
         public string Telefon { get; set; }
         public string Veza { get; set; }
         public int GradID { get; set; }
+        public double? Lat { get; set; }
+        public double? Lng { get; set; }
 
     }
 }

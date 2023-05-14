@@ -17,5 +17,8 @@ namespace StudentOglasi.Models
         public Grad Grad { get; set; }
         public int GradID { get; set; }
         public ICollection<Ocjena> Ocjene { get; set; } = new List<Ocjena>();
+        
+        public Lokacija Lokacija { get; set; }
+        public int? LokacijaID { get; set; }
     }
 }
