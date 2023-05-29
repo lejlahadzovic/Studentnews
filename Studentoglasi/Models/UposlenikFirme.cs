@@ -8,7 +8,6 @@ namespace StudentOglasi.Models
         public string Ime { get; set; }
         public string Prezime { get; set; }
         public string Pozicija { get; set; }
-        public string Email { get; set; }
         [ForeignKey("FirmaID")]
         public Firma Firma { get; set; }
         public int FirmaID { get; set; }

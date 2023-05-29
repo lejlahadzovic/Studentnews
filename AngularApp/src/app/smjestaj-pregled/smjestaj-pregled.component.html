@@ -31,7 +31,7 @@
       <mat-card-actions>
 
         <button (click)="pregledDetalja(i)" mat-button>POGLEDAJ VIŠE</button>
-        <button  mat-raised-button color="accent">REZERVIŠI</button>
+        <button  mat-raised-button color="accent" (click)="openDialog(dialogRezervacijaSmjestaja); dodajSmjestaj(i.id)" >REZERVIŠI</button>
       </mat-card-actions>
 
     </mat-card>
@@ -46,3 +46,29 @@
   </mat-drawer-content>
 </mat-drawer-container>
 
+
+<ng-template #dialogRezervacijaSmjestaja >
+  <mat-dialog-content >
+
+    <mat-form-field appearance="fill" id="brojOsoba">
+      <mat-label>Broj osoba</mat-label>
+      <input matInput [(ngModel)]="this.smjestaj.brojOsoba">
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill"  id="datumPrijave">
+      <mat-label>Datum prijave</mat-label>
+      <input matInput type="date" [(ngModel)]="this.smjestaj.datumPrijave" >
+
+    </mat-form-field>
+    <mat-form-field appearance="fill"  id="datumOdjave">
+      <mat-label>Datum odjave</mat-label>
+      <input matInput type="date" [(ngModel)]="this.smjestaj.datumOdjave" >
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close color="warn">Odustani</button>
+    <button mat-raised-button mat-dialog-close color="primary"  (click)="snimi_dugme()" >Snimi</button>
+  </mat-dialog-actions>
+</ng-template>

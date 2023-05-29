@@ -11,6 +11,7 @@ namespace StudentOglasi.Helper.AutentifikacijaAutorizacija
             this.autentifikacijaToken = autentifikacijaToken;
         }
 
+
         [JsonIgnore]
         public Korisnik korisnickiNalog => autentifikacijaToken?.korisnik;
         public AutentifikacijaToken autentifikacijaToken { get; set; }

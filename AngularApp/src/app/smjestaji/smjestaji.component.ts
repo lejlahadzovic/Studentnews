@@ -31,6 +31,7 @@ export class SmjestajiComponent implements OnInit {
     this.korisnik=this.loginInfo().autentifikacijaToken?.korisnik;
     this.getSmjestaji();
     this.getGradovi();
+
     if(this.korisnik.isAdmin)
       this.getIzdavaci();
   }
@@ -46,11 +47,13 @@ export class SmjestajiComponent implements OnInit {
   }
 
   private getSmjestaji() {
+
     if(this.korisnik.isIzdavacSmjestaja) {
       this.httpKlijent.get(MojConfig.adresa_servera + "/Smjestaj/Get?izdavacID=" + this.korisnik.id).subscribe(((x: any) => {
         this.smjestajiPodaci = x;
       }));
     }
+
     else {
       this.httpKlijent.get(MojConfig.adresa_servera + "/Smjestaj/Get").subscribe(((x: any) => {
         this.smjestajiPodaci = x;

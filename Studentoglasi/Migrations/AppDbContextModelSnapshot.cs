@@ -33,6 +33,13 @@ namespace StudentOglasi.Migrations
                     b.Property<int>("KorisnikId")
                         .HasColumnType("int");
 
+                    b.Property<string>("twoFactorCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("twoFactorOtkljucano")
+                        .HasColumnType("bit");
+
                     b.Property<string>("vrijednost")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -45,6 +52,42 @@ namespace StudentOglasi.Migrations
                     b.HasIndex("KorisnikId");
 
                     b.ToTable("AutentifikacijaToken");
+                });
+
+            modelBuilder.Entity("StudentOglasi.Autentifikacija.Models.LogKretanjePoSistemu", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("exceptionMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ipAdresa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isException")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("korisnikID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("postData")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("queryPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("vrijeme")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("korisnikID");
+
+                    b.ToTable("LogKretanjePoSistemu");
                 });
 
             modelBuilder.Entity("StudentOglasi.Models.Fakultet", b =>
@@ -218,6 +261,10 @@ namespace StudentOglasi.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -434,8 +481,9 @@ namespace StudentOglasi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("ProsjekOcjena")
-                        .HasColumnType("float");
+                    b.Property<string>("ProsjekOcjena")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("StudentId", "StipendijaID");
 
@@ -555,10 +603,6 @@ namespace StudentOglasi.Migrations
                 {
                     b.HasBaseType("StudentOglasi.Models.Korisnik");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Ime")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -573,10 +617,6 @@ namespace StudentOglasi.Migrations
             modelBuilder.Entity("StudentOglasi.Models.IzdavacSmjestaja", b =>
                 {
                     b.HasBaseType("StudentOglasi.Models.Korisnik");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Ime")
                         .IsRequired()
@@ -597,10 +637,6 @@ namespace StudentOglasi.Migrations
                 {
                     b.HasBaseType("StudentOglasi.Models.Korisnik");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("FakultetID")
                         .HasColumnType("int");
 
@@ -620,10 +656,6 @@ namespace StudentOglasi.Migrations
             modelBuilder.Entity("StudentOglasi.Models.ReferentUniverziteta", b =>
                 {
                     b.HasBaseType("StudentOglasi.Models.Korisnik");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Ime")
                         .IsRequired()
@@ -676,10 +708,6 @@ namespace StudentOglasi.Migrations
                 {
                     b.HasBaseType("StudentOglasi.Models.Korisnik");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("FirmaID")
                         .HasColumnType("int");
 
@@ -703,10 +731,6 @@ namespace StudentOglasi.Migrations
             modelBuilder.Entity("StudentOglasi.Models.UposlenikStipenditora", b =>
                 {
                     b.HasBaseType("StudentOglasi.Models.Korisnik");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Ime")
                         .IsRequired()
@@ -835,6 +859,15 @@ namespace StudentOglasi.Migrations
                         .HasForeignKey("KorisnikId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("korisnik");
+                });
+
+            modelBuilder.Entity("StudentOglasi.Autentifikacija.Models.LogKretanjePoSistemu", b =>
+                {
+                    b.HasOne("StudentOglasi.Models.Korisnik", "korisnik")
+                        .WithMany()
+                        .HasForeignKey("korisnikID");
 
                     b.Navigation("korisnik");
                 });

@@ -1,4 +1,4 @@
-import {Component, Injectable, TemplateRef, ViewChild} from '@angular/core';
+import { Component, Injectable, TemplateRef, ViewChild } from '@angular/core';
 import {MojConfig} from "./MojConfig";
 import {HttpClient} from "@angular/common/http";
 import {LoginInformacije} from "./helper/login-informacije";
@@ -59,7 +59,8 @@ export class AppComponent{
     this.httpKlijent.post<LoginInformacije>(MojConfig.adresa_servera+ "/Autentifikacija/Login/", saljemo)
       .subscribe((x:LoginInformacije) =>{
         if (x.isLogiran) {
-          AutentifikacijaHelper.setLoginInfo(x);
+          AutentifikacijaHelper.setLoginInfo(x)
+          this.router.navigateByUrl("/two-f-otkljucaj");
           this.dialog.closeAll();
           this.korisnik=this.loginInfo().autentifikacijaToken?.korisnik;
         }
@@ -77,7 +78,6 @@ export class AppComponent{
   registracija() {
     this.router.navigateByUrl("/registracija");
   }
-
   profil() {
     this.router.navigateByUrl("/profil");
   }

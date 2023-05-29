@@ -8,7 +8,6 @@ namespace StudentOglasi.Models
     {
         public string Ime { get; set; }
         public string Prezime { get; set; }
-        public string Email { get; set; }
         [ForeignKey("StipenditorID")]
         public Stipenditor Stipenditor { get; set; }
         public int StipenditorID { get; set; }

@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-
 import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -49,6 +47,7 @@ import { FakultetiPregledComponent } from './fakulteti-pregled/fakulteti-pregled
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatChipsModule} from "@angular/material/chips";
 import { ProfilComponent } from './profil/profil.component';
+import { TwoFOtkljucajComponent } from './two-f-otkljucaj/two-f-otkljucaj.component';
 import { PraksaDetaljiComponent } from './praksa-detalji/praksa-detalji.component';
 import { SmjestajDetaljiComponent } from './smjestaj-detalji/smjestaj-detalji.component';
 import { StipendijaDetaljiComponent } from './stipendija-detalji/stipendija-detalji.component';
@@ -84,6 +83,7 @@ import { PregledRezervacijaComponent } from './pregled-rezervacija/pregled-rezer
     UniverzitetiPregledComponent,
     FakultetiPregledComponent,
     ProfilComponent,
+    TwoFOtkljucajComponent,
     PraksaDetaljiComponent,
     SmjestajDetaljiComponent,
     StipendijaDetaljiComponent,
@@ -121,6 +121,7 @@ import { PregledRezervacijaComponent } from './pregled-rezervacija/pregled-rezer
             {path: 'putanja-smjestaj-pregled', component: SmjestajPregledComponent},
             {path: 'putanja-univerziteti-pregled', component: UniverzitetiPregledComponent},
             {path: 'putanja-fakulteti-pregled', component: FakultetiPregledComponent},
+            {path: 'two-f-otkljucaj', component: TwoFOtkljucajComponent},
             {path: 'profil', component: ProfilComponent},
             {path: 'praksa-detalji/:id', component: PraksaDetaljiComponent},
             {path: 'smjestaj-detalji/:id', component: SmjestajDetaljiComponent},

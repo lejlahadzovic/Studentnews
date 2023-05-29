@@ -7,6 +7,7 @@ import {Observable} from "rxjs";
 import {Router} from "@angular/router";
 
 
+
 @Component({
   selector: 'app-univerziteti-pregled',
   templateUrl: './univerziteti-pregled.component.html',
@@ -47,6 +48,7 @@ export class UniverzitetiPregledComponent implements OnInit {
     return this.univerzitetiPodaci.dataItems.filter((x: any) => (
       (this.filter_grad != null ? x.gradid == this.filter_grad : true))
     );
+
   }
 
   getUniverziteti() {
@@ -64,8 +66,6 @@ export class UniverzitetiPregledComponent implements OnInit {
       this.gradoviPodaci = x;
     }));
   }
-
-
   pregledDetalja(univerzitet: any) {
     this.router.navigate(["univerzitet-detalji",univerzitet.id]);
   }

@@ -70,7 +70,6 @@ export class HomeComponent implements OnInit {
     }));
   }
 
-
   praksaDetalji(praksa: any) {
     this.router.navigate(["praksa-detalji",praksa.id]);
   }
@@ -84,10 +83,10 @@ export class HomeComponent implements OnInit {
   }
 
   prevPagePrakse() {
-      if(this.praksePageNumber>1){
-        this.praksePageNumber--;
-        this.getPrakse();
-      }
+    if(this.praksePageNumber>1){
+      this.praksePageNumber--;
+      this.getPrakse();
+    }
   }
 
   nextPagePrakse() {

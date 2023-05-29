@@ -70,7 +70,7 @@ export class ProfilComponent implements OnInit {
     this.httpKlijent.get(MojConfig.adresa_servera + "/Student/GetById?id=" + this.korisnikInfo.id).subscribe((x: any) => {
       this.korisnik=x;
       this.setSlika();
-    });
+      });
   }
   private getIzdavac() {
     this.httpKlijent.get(MojConfig.adresa_servera + "/IzdavacSmjestaja/GetById?id=" + this.korisnikInfo.id).subscribe(((x: any) => {

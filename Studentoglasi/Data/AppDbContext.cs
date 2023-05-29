@@ -35,6 +35,7 @@ namespace StudentOglasi.Data
         public DbSet<PrijavaStipendija> PrijavaStipendija { get; set; }
         public DbSet<AutentifikacijaToken> AutentifikacijaToken { get; set; }
         public DbSet<Lokacija> Lokacija { get; set; }
+        public DbSet<LogKretanjePoSistemu> LogKretanjePoSistemu { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Rezervacija>()

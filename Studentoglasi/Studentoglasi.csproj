@@ -21,4 +21,14 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\CV\" />
+    <Folder Include="wwwroot\Dokumentacija\" />
+    <Folder Include="wwwroot\Certifikati\" />
+    <Folder Include="wwwroot\PropratnoPismo\" />
+    <Folder Include="wwwroot\ProsjekOcjena\" />
+    <Folder Include="wwwroot\Slike\" />
+    <Folder Include="wwwroot\Slike\" />
+  </ItemGroup>
+
 </Project>
