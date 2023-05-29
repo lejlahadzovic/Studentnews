@@ -53,7 +53,8 @@ namespace StudentOglasi.Controllers
                 string json = JsonSerializer.Serialize(prijava_praksa, options);
 
                 _dbContext.SaveChanges();
-                    return Ok(json);
+                FirebaseCloudMessaging.SendNotification("Prijava ", "Vaša prijava je uspješno zabilježena", "success");
+                return Ok(json);
                 }
                 catch (Exception ex)
                 {

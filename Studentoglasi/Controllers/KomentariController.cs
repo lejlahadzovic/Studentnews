@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentOglasi.Data;
+using StudentOglasi.Helper;
 using StudentOglasi.Models;
 using StudentOglasi.ViewModels;
 
@@ -41,6 +42,7 @@ namespace StudentOglasi.Controllers
             objekat.VrijemeObjave = DateTime.Now;
 
             _dbContext.SaveChanges();
+            FirebaseCloudMessaging.SendNotification("Komentar", "Vaš komentar je uspješno zabilježen", "success");
             return Ok(objekat);
         }
 

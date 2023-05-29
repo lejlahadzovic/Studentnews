@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { environment } from "../environments/environment";
+import { initializeApp } from "firebase/app";
+import {ToastrModule} from "ngx-toastr";
 import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -56,6 +59,7 @@ import { ObjavaDetaljiComponent } from './objava-detalji/objava-detalji.componen
 import { FakultetDetaljiComponent } from './fakultet-detalji/fakultet-detalji.component';
 import { StarRatingComponent } from './star-rating/star-rating.component';
 import { KomentariComponent } from './komentari/komentari.component';
+initializeApp(environment.firebase);
 
 @NgModule({
   declarations: [
@@ -97,6 +101,12 @@ import { KomentariComponent } from './komentari/komentari.component';
         HttpClientModule,
         BrowserAnimationsModule,
         MatTableModule,
+      ToastrModule.forRoot({
+        timeOut:5000,
+        positionClass:'toast-top-right',
+        closeButton:true,
+        progressBar:true
+      }),
         RouterModule.forRoot([
             {path: 'putanja-univerziteti', component: UniverzitetiComponent},
             {path: 'putanja-fakulteti', component: FakultetiComponent},

@@ -174,6 +174,7 @@ namespace StudentOglasi.Controllers
                 fakultet.Ocjene.Add(ocjena);
             }
             _dbContext.SaveChanges();
+            FirebaseCloudMessaging.SendNotification("Ocjena", "Vaša ocjena je uspješno zabilježena", "success");
             return Ok();
         }
 

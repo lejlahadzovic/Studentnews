@@ -37,6 +37,7 @@ namespace StudentOglasi.Autentifikacija
             {
                 token.twoFactorOtkljucano = true;
                 _dbContext.SaveChanges();
+                FirebaseCloudMessaging.SendNotification("Prijava ", "Uspješno ste se prijavili", "success");
                 return Ok();
             }
             return BadRequest("pogresan URL");
@@ -91,6 +92,7 @@ namespace StudentOglasi.Autentifikacija
 
             _dbContext.Remove(autentifikacijaToken);
             _dbContext.SaveChanges();
+            FirebaseCloudMessaging.SendNotification("Odjava ", "Uspješno ste se odjavili", "success");
             return Ok();
         }
 
