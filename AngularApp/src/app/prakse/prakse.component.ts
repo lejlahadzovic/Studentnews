@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {MatDialog} from "@angular/material/dialog";
 import {MojConfig} from "../MojConfig";
 import {formatDate} from "@angular/common";
+import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
 
 @Component({
   selector: 'app-prakse',
@@ -20,9 +21,11 @@ export class PrakseComponent implements OnInit {
   firmePodaci: any;
   filter_firme: any;
   filter_placena: any;
+  logiraniKorisnik:any;
   constructor(private httpKlijent:HttpClient,private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.logiraniKorisnik=AutentifikacijaHelper.getLoginInfo().autentifikacijaToken?.korisnik;
     this.getUposlenici();
     this.getPrakse();
     this.getFirme();
@@ -35,9 +38,16 @@ export class PrakseComponent implements OnInit {
   }
 
   getPrakse() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/Praksa/GetAll").subscribe(((x: any) => {
-      this.praksePodaci = x;
-    }));
+    if(this.logiraniKorisnik.isUposlenikFirme) {
+      this.httpKlijent.get(MojConfig.adresa_servera + "/Praksa/GetAll?uposlenikID="+this.logiraniKorisnik.id).subscribe(((x: any) => {
+        this.praksePodaci = x;
+      }));
+    }
+    else{
+      this.httpKlijent.get(MojConfig.adresa_servera + "/Praksa/GetAll").subscribe(((x: any) => {
+        this.praksePodaci = x;
+      }));
+    }
   }
 
   getFirme() {
@@ -66,7 +76,7 @@ export class PrakseComponent implements OnInit {
       kvalifikacije:'',
       benefiti:'',
       placena:false,
-      uposlenikID:1
+      uposlenikID:this.logiraniKorisnik.isUposlenikFirme? this.logiraniKorisnik.id : 0
     }
   }
 

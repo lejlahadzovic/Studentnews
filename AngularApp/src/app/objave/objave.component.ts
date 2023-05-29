@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {MatDialog} from "@angular/material/dialog";
 import {MojConfig} from "../MojConfig";
+import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
 
 @Component({
   selector: 'app-objave',
@@ -18,10 +19,12 @@ export class ObjaveComponent implements OnInit {
   kategorijePodaci: any;
   filter_naziv= '';
   filter_kategorija: any;
+  logiraniKorisnik:any;
 
   constructor(private httpKlijent:HttpClient,private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.logiraniKorisnik=AutentifikacijaHelper.getLoginInfo().autentifikacijaToken?.korisnik;
     this.getObjave();
     this.getKategorije();
   }
@@ -32,9 +35,21 @@ export class ObjaveComponent implements OnInit {
     });
   }
   getObjave() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/Objava/GetAll").subscribe(((x: any) => {
-      this.objavePodaci = x;
-    }));
+    if(this.logiraniKorisnik.isAdmin) {
+      this.httpKlijent.get(MojConfig.adresa_servera + "/Objava/GetAll").subscribe(((x: any) => {
+        this.objavePodaci = x;
+      }));
+    }
+    else if(this.logiraniKorisnik.isReferentFakulteta){
+      this.httpKlijent.get(MojConfig.adresa_servera + "/Objava/GetAll?referentFakultetaID="+this.logiraniKorisnik.id).subscribe(((x: any) => {
+        this.objavePodaci = x;
+      }));
+    }
+    else if(this.logiraniKorisnik.isReferentUniverziteta){
+      this.httpKlijent.get(MojConfig.adresa_servera + "/Objava/GetAll?referentUniverzitetaID="+this.logiraniKorisnik.id).subscribe(((x: any) => {
+        this.objavePodaci = x;
+      }));
+    }
   }
   getKategorije() {
     this.httpKlijent.get(MojConfig.adresa_servera + "/Kategorija/GetAll").subscribe(((x: any) => {
@@ -77,7 +92,7 @@ export class ObjaveComponent implements OnInit {
     formData.append('sadrzaj',this.objava.sadrzaj);
     formData.append('slika',this.slika);
     formData.append('kategorijaID',this.objava.kategorijaID);
-    this.httpKlijent.post(MojConfig.adresa_servera+"/Objava/Snimi",formData).subscribe((s:any)=>{
+    this.httpKlijent.post(MojConfig.adresa_servera+"/Objava/Snimi",formData,MojConfig.http_opcije()).subscribe((s:any)=>{
       this.getObjave();
     })
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MojConfig} from "../MojConfig";
 import {HttpClient} from "@angular/common/http";
 import {MatDialog} from '@angular/material/dialog';
+import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
 
 
 @Component({
@@ -19,18 +20,18 @@ export class StudentiComponent implements OnInit {
   fakultetiPodaci: any;
   slika:any;
   slikaURL:string="assets/Images/User%20icon.png";
-
+  logiraniKorisnik:any;
 
   constructor(private httpKlijent:HttpClient,private dialog: MatDialog) {
-
   }
 
   ngOnInit(): void {
+    this.logiraniKorisnik=AutentifikacijaHelper.getLoginInfo().autentifikacijaToken?.korisnik;
     this.getStudenti();
     this.getFakulteti();
   }
   getStudenti() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/Student/GetAll").subscribe(((x: any) => {
+    this.httpKlijent.get(MojConfig.adresa_servera + "/Student/GetAll", MojConfig.http_opcije()).subscribe(((x: any) => {
       this.studentiPodaci = x;
     }));
   }
@@ -49,7 +50,7 @@ export class StudentiComponent implements OnInit {
   getpodaci(){
     if(this.studentiPodaci==null)
       return [];
-    return this.studentiPodaci.filter((s:any)=>
+    return this.studentiPodaci.data.filter((s:any)=>
       ((s.ime+' '+s.prezime).startsWith(this.filter_imePrezime)||
         (s.prezime+' '+s.ime).startsWith(this.filter_imePrezime))
       &&(s.broj_indeksa).startsWith(this.filter_brojIndeksa)
@@ -83,7 +84,7 @@ export class StudentiComponent implements OnInit {
     formData.append('broj_indeksa', this.student.broj_indeksa);
     formData.append('godinaStudija', this.student.godinaStudija);
     formData.append('nacin_studiranja', this.student.nacin_studiranja);
-    formData.append('fakultetID', this.student.fakultetID);
+    formData.append('fakultetID', this.studentiPodaci.fakultetID? this.studentiPodaci.fakultetID : this.student.fakultetID);
     formData.append('slika',this.slika);
     this.httpKlijent.post(MojConfig.adresa_servera+"/Student/Snimi",formData).subscribe((s:any)=>{
       this.getStudenti();

@@ -3,6 +3,7 @@ import {MojConfig} from "../MojConfig";
 import {HttpClient} from "@angular/common/http";
 import {MatDialog} from "@angular/material/dialog";
 import {formatDate} from "@angular/common";
+import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
 
 @Component({
   selector: 'app-stipendije',
@@ -20,9 +21,11 @@ export class StipendijeComponent implements OnInit {
   slikaURL:string="assets/Images/no-image.jpg";
   filter_stipenditori:any;
   stipenditoriPodaci:any;
+  logiraniKorisnik:any;
   constructor(private httpKlijent:HttpClient,private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.logiraniKorisnik=AutentifikacijaHelper.getLoginInfo().autentifikacijaToken?.korisnik;
     this.getStipendije();
     this.getUposlenici();
     this.getStipenditori();
@@ -35,9 +38,16 @@ export class StipendijeComponent implements OnInit {
   }
 
   private getStipendije() {
-    this.httpKlijent.get(MojConfig.adresa_servera + "/Stipendija/GetAll").subscribe(((x: any) => {
-      this.stipendijePodaci = x;
-    }));
+    if(this.logiraniKorisnik.isUposlenikStipenditora) {
+      this.httpKlijent.get(MojConfig.adresa_servera + "/Stipendija/GetAll?uposlenikID="+this.logiraniKorisnik.id).subscribe(((x: any) => {
+        this.stipendijePodaci = x;
+      }));
+    }
+    else {
+      this.httpKlijent.get(MojConfig.adresa_servera + "/Stipendija/GetAll").subscribe(((x: any) => {
+        this.stipendijePodaci = x;
+      }));
+    }
   }
 
   private getStipenditori() {
@@ -78,7 +88,7 @@ export class StipendijeComponent implements OnInit {
       izvor:'',
       nivoObrazovanja:'',
       brojStipendisata:'',
-      uposlenikID:0
+      uposlenikID:this.logiraniKorisnik.isUposlenikStipenditora? this.logiraniKorisnik.id : 0
     }
   }
 

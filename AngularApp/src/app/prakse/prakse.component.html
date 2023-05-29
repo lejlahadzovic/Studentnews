@@ -78,7 +78,7 @@
       <input matInput [(ngModel)]="this.praksa.naslov">
     </mat-form-field>
 
-    <mat-form-field appearance="fill" id="objavljivac">
+    <mat-form-field *ngIf="this.logiraniKorisnik.isAdmin" appearance="fill" id="objavljivac">
       <mat-label>Objavljuje</mat-label>
       <mat-select [(ngModel)]="this.praksa.uposlenikID" name="food">
         <mat-option *ngFor="let uposlenik of this.uposleniciPodaci" [value]="uposlenik.id">

@@ -88,9 +88,10 @@ namespace StudentOglasi.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetAll(int? pageNumber, int pageSize=10)
+        public ActionResult GetAll(int? uposlenikID,int? pageNumber, int pageSize=10)
         {
             var data = _dbContext.Praksa
+                .Where(x => uposlenikID == null || x.UposlenikID == uposlenikID)
                 .OrderBy(x => x.ID)
                 .Select(x => new
                 {

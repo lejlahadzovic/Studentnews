@@ -94,7 +94,7 @@
       <input type="password" matInput [(ngModel)]="this.student.password">
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" >
       <mat-label>Ime</mat-label>
       <input matInput [(ngModel)]="this.student.ime">
     </mat-form-field>
@@ -104,7 +104,7 @@
       <input matInput [(ngModel)]="this.student.prezime">
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field *ngIf="this.logiraniKorisnik.isAdmin" appearance="fill" id="fakultet">
       <mat-label>Fakultet</mat-label>
       <mat-select [(ngModel)]="student.fakultetID" name="food">
         <mat-option *ngFor="let fakultet of this.fakultetiPodaci" [value]="fakultet.id">

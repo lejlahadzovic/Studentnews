@@ -57,6 +57,7 @@ import { ObjavaDetaljiComponent } from './objava-detalji/objava-detalji.componen
 import { FakultetDetaljiComponent } from './fakultet-detalji/fakultet-detalji.component';
 import { StarRatingComponent } from './star-rating/star-rating.component';
 import { KomentariComponent } from './komentari/komentari.component';
+import { PregledRezervacijaComponent } from './pregled-rezervacija/pregled-rezervacija.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { KomentariComponent } from './komentari/komentari.component';
     ObjavaDetaljiComponent,
     FakultetDetaljiComponent,
     StarRatingComponent,
-    KomentariComponent
+    KomentariComponent,
+    PregledRezervacijaComponent
   ],
     imports: [
         BrowserModule,
@@ -126,6 +128,7 @@ import { KomentariComponent } from './komentari/komentari.component';
             {path: 'univerzitet-detalji/:id', component: UniverzitetDetaljiComponent},
             {path: 'objava/:id', component: ObjavaDetaljiComponent},
             {path: 'fakultet-detalji/:id', component: FakultetDetaljiComponent},
+            {path: 'rezervacije', component: PregledRezervacijaComponent},
         ]),
         FormsModule,
         MatToolbarModule,

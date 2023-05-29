@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using StudentOglasi.Autentifikacija.Models;
 using StudentOglasi.Data;
 using StudentOglasi.Helper;
+using StudentOglasi.Helper.AutentifikacijaAutorizacija;
 using StudentOglasi.Models;
 using StudentOglasi.ViewModels;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
@@ -44,7 +46,15 @@ namespace StudentOglasi.Controllers
                 objava.Naslov = x.naslov;
                 objava.Sadrzaj = x.sadrzaj;
                 objava.KategorijaID = x.kategorijaID;
-
+                var logiraniKorisnik = HttpContext.GetAuthToken().korisnik;
+                if(logiraniKorisnik.isReferentFakulteta)
+                {
+                    objava.ReferentFakultetaID = logiraniKorisnik.ID;
+                }
+                else if (logiraniKorisnik.isReferentUniverziteta)
+                {
+                    objava.ReferentUniverzitetaID = logiraniKorisnik.ID;
+                }
                 if (x.slika != null)
                 {
                     if (x.slika.Length > 500 * 1000)
@@ -72,7 +82,7 @@ namespace StudentOglasi.Controllers
                     myFile.Close();
                 }
                 _dbContext.SaveChanges();
-                return Ok(objava);
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -80,9 +90,12 @@ namespace StudentOglasi.Controllers
             }
         }
         [HttpGet]
-        public ActionResult GetAll()
+        public ActionResult GetAll(int? referentFakultetaID, int? referentUniverzitetaID)
         {
-            var data = _dbContext.Objava
+            var data = _dbContext.Objava.
+                Where(x=>(referentFakultetaID==null && referentUniverzitetaID==null) 
+                         ||(x.ReferentFakultetaID!=null && x.ReferentFakultetaID==referentFakultetaID)
+                         ||(x.ReferentUniverzitetaID!=null && x.ReferentUniverzitetaID==referentUniverzitetaID))
                 .OrderBy(x => x.Naslov)
                 .Select(x => new
                 {

@@ -10,7 +10,7 @@
 
 
 
-  <mat-button-toggle *ngIf="loginInfo().autentifikacijaToken?.korisnik?.isAdmin" mat-button [matMenuTriggerFor]="upravljanje">Upravljanje podacima</mat-button-toggle>
+  <mat-button-toggle *ngIf="this.korisnik?.isAdmin" mat-button [matMenuTriggerFor]="upravljanje">Upravljanje podacima</mat-button-toggle>
 
     <mat-menu #upravljanje="matMenu">
       <button mat-menu-item [matMenuTriggerFor]="korisnici">Korisnici</button>
@@ -53,7 +53,7 @@
 
   <p *ngIf="loginInfo().isLogiran==true">
     <button style="position: absolute; right: 5%;top: 15px;"  mat-button [matMenuTriggerFor]="menu">
-      {{loginInfo().autentifikacijaToken?.korisnik?.username}}
+      {{this.korisnik?.username}}
       <mat-icon>keyboard_arrow_down</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
@@ -62,8 +62,13 @@
       <span>Profil</span>
     </button>
 
-    <button *ngIf="loginInfo().autentifikacijaToken?.korisnik?.isIzdavacSmjestaja" mat-menu-item (click)="smjestaji()">
+    <button *ngIf="this.korisnik?.isIzdavacSmjestaja || this.korisnik?.isReferentFakulteta
+    || this.korisnik?.isReferentUniverziteta || this.korisnik?.isUposlenikFirme || this.korisnik?.isUposlenikStipenditora" mat-menu-item (click)="objave()">
       <span>Moje objave</span>
+    </button>
+
+    <button *ngIf="this.korisnik?.isReferentFakulteta" mat-menu-item (click)="studenti()">
+      <span>Studenti</span>
     </button>
 
     <button mat-menu-item  (click)="logout()">

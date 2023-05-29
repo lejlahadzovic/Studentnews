@@ -4,6 +4,7 @@ using StudentOglasi.Models;
 using StudentOglasi.ViewModels;
 using StudentOglasi.Helper;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using StudentOglasi.Helper.AutentifikacijaAutorizacija;
 
 namespace StudentOglasi.Controllers
 {
@@ -81,7 +82,14 @@ namespace StudentOglasi.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
+            var logiraniKorisnik = HttpContext.GetAuthToken().korisnik;
+            int? fakultetID=null;
+
+            if (logiraniKorisnik.isReferentFakulteta)
+                fakultetID = logiraniKorisnik.referentFakulteta.FakultetID;
+
             var data = _dbContext.Student
+                .Where(s=>fakultetID==null||s.FakultetID==fakultetID)
                 .OrderBy(s => s.BrojIndeksa)
                 .Select(s => new 
                 {
@@ -97,7 +105,13 @@ namespace StudentOglasi.Controllers
                     naziv_fakulteta = s.Fakultet.Naziv,
                     slika = s.Slika
                 }).AsQueryable();
-            return Ok(data);
+
+            if(logiraniKorisnik.isReferentFakulteta)
+            {
+                return Ok(new { data, fakultetID });
+            }
+
+            return Ok(new { data });
         }
 
         [HttpGet]
