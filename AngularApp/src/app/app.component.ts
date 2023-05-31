@@ -99,4 +99,24 @@ export class AppComponent{
   studenti() {
     this.router.navigateByUrl("/putanja-studenti");
   }
+
+  rezervacije() {
+    this.router.navigateByUrl("/rezervacije");
+  }
+
+  prijave() {
+    if(this.korisnik.isUposlenikFirme)
+      this.router.navigateByUrl("/praksa-prijave");
+
+    else if(this.korisnik.isUposlenikStipenditora)
+      this.router.navigateByUrl("/stipendija-prijave");
+  }
+
+  pregledPrijava() {
+    this.router.navigateByUrl("/prijave");
+  }
+
+  pregledRezervacija() {
+    this.router.navigateByUrl("/moje-rezervacije");
+  }
 }

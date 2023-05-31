@@ -79,26 +79,63 @@ namespace StudentOglasi.Controllers
                 return Ok(data);
             }
 
-            [HttpPost]
-            public ActionResult Obrisi([FromBody] int id)
+            [HttpGet]
+            public ActionResult GetByUposlenikId(int uposlenikID)
             {
-                PrijavaPraksa x = _dbContext.PrijavaPraksa.Find(id);
-
-                string webRootPath = _hostingEnvironment.WebRootPath;
-                var fullPath = webRootPath + "/CV/" + x.CV;
-
-                if (System.IO.File.Exists(fullPath))
-                {
-                    System.IO.File.Delete(fullPath);
-                }
-
-                _dbContext.Remove(x);
-                _dbContext.SaveChanges();
-
-                return Ok();
+                var data = _dbContext.PrijavaPraksa
+                    .Where(x=>x.Praksa.UposlenikID == uposlenikID)
+                    .GroupBy(x => x.Praksa)
+                    .Select(group => new
+                    {
+                        Praksa = group.Key.Naslov, 
+                        Prijave = group.Select(x => new
+                        {
+                            student = x.Student.Ime +' '+x.Student.Prezime,
+                            brojIndeksa=x.Student.BrojIndeksa,
+                            propratnoPismo = Config.DokumentacijaPutanja + x.PropratnoPismo,
+                            CV = Config.CVPutanja + x.CV,
+                            certifikati = Config.ProsjekOcjenaPutanja + x.Certifikati
+                        })
+                    })
+                    .AsQueryable();
+                return Ok(data);
             }
-       
-        
+
+            [HttpGet]
+            public ActionResult GetByStudentId(int studentID)
+            {
+                var data = _dbContext.PrijavaPraksa
+                    .Where(x => x.StudentId == studentID)
+                    .Select(x => new
+                    {
+                        praksaId=x.PraksaId,
+                        naslov = x.Praksa.Naslov,
+                        pocetakPrakse = x.Praksa.PocetakPrakse,
+                        krajPrakse = x.Praksa.KrajPrakse,
+                        placena = x.Praksa.Placena,
+                        propratnoPismo = Config.DokumentacijaPutanja + x.PropratnoPismo,
+                        CV = Config.CVPutanja + x.CV,
+                        certifikati = Config.ProsjekOcjenaPutanja + x.Certifikati
+                    })
+                    .ToList();
+                return Ok(data);
+            }
+        [HttpPost]
+        public ActionResult Obrisi(int studentId, int praksaId)
+        {
+            PrijavaPraksa prijava = _dbContext.PrijavaPraksa.FirstOrDefault(r => r.StudentId == studentId && r.PraksaId == praksaId);
+
+            if (prijava == null)
+            {
+                return NotFound();
+            }
+
+            _dbContext.Remove(prijava);
+            _dbContext.SaveChanges();
+
+            return Ok();
+        }
+
         [HttpPost("{id}")]
         public ActionResult AddCV(int id, [FromForm] PrijavaPraksaVM x)
         {

@@ -67,8 +67,24 @@
       <span>Moje objave</span>
     </button>
 
+    <button *ngIf="this.korisnik?.isIzdavacSmjestaja" mat-menu-item (click)="rezervacije()">
+      <span>Rezervacije</span>
+    </button>
+
     <button *ngIf="this.korisnik?.isReferentFakulteta" mat-menu-item (click)="studenti()">
       <span>Studenti</span>
+    </button>
+
+    <button *ngIf="this.korisnik?.isUposlenikFirme || this.korisnik?.isUposlenikStipenditora" mat-menu-item (click)="prijave()">
+      <span>Prijave</span>
+    </button>
+
+    <button *ngIf="this.korisnik?.isStudent" mat-menu-item (click)="pregledPrijava()">
+      <span>Moje prijave</span>
+    </button>
+
+    <button *ngIf="this.korisnik?.isStudent" mat-menu-item (click)="pregledRezervacija()">
+      <span>Moje rezervacije</span>
     </button>
 
     <button mat-menu-item  (click)="logout()">

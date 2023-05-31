@@ -54,6 +54,20 @@ namespace StudentOglasi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Lokacija",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Lat = table.Column<double>(type: "float", nullable: false),
+                    Lng = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lokacija", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Oglas",
                 columns: table => new
                 {
@@ -112,31 +126,6 @@ namespace StudentOglasi.Migrations
                     table.PrimaryKey("PK_Stipenditor", x => x.ID);
                     table.ForeignKey(
                         name: "FK_Stipenditor_Grad_GradID",
-                        column: x => x.GradID,
-                        principalTable: "Grad",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Univerzitet",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Telefon = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Slika = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Link = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GradID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Univerzitet", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Univerzitet_Grad_GradID",
                         column: x => x.GradID,
                         principalTable: "Grad",
                         principalColumn: "ID",
@@ -230,6 +219,37 @@ namespace StudentOglasi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Univerzitet",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Telefon = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Slika = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Link = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GradID = table.Column<int>(type: "int", nullable: false),
+                    LokacijaID = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Univerzitet", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Univerzitet_Grad_GradID",
+                        column: x => x.GradID,
+                        principalTable: "Grad",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Univerzitet_Lokacija_LokacijaID",
+                        column: x => x.LokacijaID,
+                        principalTable: "Lokacija",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UposlenikFirme",
                 columns: table => new
                 {
@@ -283,59 +303,6 @@ namespace StudentOglasi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Fakultet",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Adresa = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Telefon = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Opis = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Slika = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Link = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UniverzitetID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Fakultet", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Fakultet_Univerzitet_UniverzitetID",
-                        column: x => x.UniverzitetID,
-                        principalTable: "Univerzitet",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ReferentUniverziteta",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false),
-                    Ime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Prezime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UnivetzitetID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ReferentUniverziteta", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_ReferentUniverziteta_Korisnik_ID",
-                        column: x => x.ID,
-                        principalTable: "Korisnik",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ReferentUniverziteta_Univerzitet_UnivetzitetID",
-                        column: x => x.UnivetzitetID,
-                        principalTable: "Univerzitet",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Smjestaj",
                 columns: table => new
                 {
@@ -368,6 +335,65 @@ namespace StudentOglasi.Migrations
                         name: "FK_Smjestaj_Oglas_ID",
                         column: x => x.ID,
                         principalTable: "Oglas",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Fakultet",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Adresa = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Telefon = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Opis = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Slika = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Link = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UniverzitetID = table.Column<int>(type: "int", nullable: false),
+                    LokacijaID = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Fakultet", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Fakultet_Lokacija_LokacijaID",
+                        column: x => x.LokacijaID,
+                        principalTable: "Lokacija",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_Fakultet_Univerzitet_UniverzitetID",
+                        column: x => x.UniverzitetID,
+                        principalTable: "Univerzitet",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReferentUniverziteta",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false),
+                    Ime = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Prezime = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UnivetzitetID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReferentUniverziteta", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_ReferentUniverziteta_Korisnik_ID",
+                        column: x => x.ID,
+                        principalTable: "Korisnik",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReferentUniverziteta_Univerzitet_UnivetzitetID",
+                        column: x => x.UnivetzitetID,
+                        principalTable: "Univerzitet",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -705,6 +731,11 @@ namespace StudentOglasi.Migrations
                 column: "KorisnikId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Fakultet_LokacijaID",
+                table: "Fakultet",
+                column: "LokacijaID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Fakultet_UniverzitetID",
                 table: "Fakultet",
                 column: "UniverzitetID");
@@ -855,6 +886,11 @@ namespace StudentOglasi.Migrations
                 column: "GradID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Univerzitet_LokacijaID",
+                table: "Univerzitet",
+                column: "LokacijaID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UposlenikFirme_FirmaID",
                 table: "UposlenikFirme",
                 column: "FirmaID");
@@ -945,6 +981,9 @@ namespace StudentOglasi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Grad");
+
+            migrationBuilder.DropTable(
+                name: "Lokacija");
         }
     }
 }

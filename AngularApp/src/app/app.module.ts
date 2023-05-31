@@ -57,6 +57,11 @@ import { FakultetDetaljiComponent } from './fakultet-detalji/fakultet-detalji.co
 import { StarRatingComponent } from './star-rating/star-rating.component';
 import { KomentariComponent } from './komentari/komentari.component';
 import { PregledRezervacijaComponent } from './pregled-rezervacija/pregled-rezervacija.component';
+import { PrijavePraksaComponent } from './prijave-praksa/prijave-praksa.component';
+import { StipendijaPrijaveComponent } from './stipendija-prijave/stipendija-prijave.component';
+import { PregledPrijavaComponent } from './pregled-prijava/pregled-prijava.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import { RezervacijeComponent } from './rezervacije/rezervacije.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +97,11 @@ import { PregledRezervacijaComponent } from './pregled-rezervacija/pregled-rezer
     FakultetDetaljiComponent,
     StarRatingComponent,
     KomentariComponent,
-    PregledRezervacijaComponent
+    PregledRezervacijaComponent,
+    PrijavePraksaComponent,
+    StipendijaPrijaveComponent,
+    PregledPrijavaComponent,
+    RezervacijeComponent
   ],
     imports: [
         BrowserModule,
@@ -130,6 +139,10 @@ import { PregledRezervacijaComponent } from './pregled-rezervacija/pregled-rezer
             {path: 'objava/:id', component: ObjavaDetaljiComponent},
             {path: 'fakultet-detalji/:id', component: FakultetDetaljiComponent},
             {path: 'rezervacije', component: PregledRezervacijaComponent},
+            {path: 'praksa-prijave', component: PrijavePraksaComponent},
+            {path: 'stipendija-prijave', component: StipendijaPrijaveComponent},
+            {path: 'prijave', component: PregledPrijavaComponent},
+            {path: 'moje-rezervacije', component: RezervacijeComponent},
         ]),
         FormsModule,
         MatToolbarModule,
@@ -150,7 +163,8 @@ import { PregledRezervacijaComponent } from './pregled-rezervacija/pregled-rezer
         MatChipsModule,
         MatSidenavModule,
         MatTooltipModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatTabsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

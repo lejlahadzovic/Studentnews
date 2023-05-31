@@ -73,5 +73,62 @@ namespace StudentOglasi.Controllers
                 .AsQueryable();
             return Ok(data);
         }
+
+        [HttpGet]
+        public ActionResult GetByIzdavacId(int izdavacID)
+        {
+            var data = _dbContext.Rezervacija
+                .Where(x=>x.Smjestaj.IzdavacID == izdavacID)
+                .GroupBy(x => x.Smjestaj)
+                .Select(group => new
+                {
+                    Smjestaj = group.Key.Naslov, 
+                    Rezervacije = group.Select(x => new
+                    {
+                        student = x.Student.Ime +' '+x.Student.Prezime,
+                        brojIndeksa=x.Student.BrojIndeksa,
+                        DatumPrijave = x.DatumPrijave,
+                        DatumOdjave = x.DatumOdjave,
+                        BrojOsoba = x.BrojOsoba
+                    })
+                })
+                .AsQueryable();
+            return Ok(data);
+        }
+
+        [HttpGet]
+        public ActionResult GetByStudentId(int studentID)
+        {
+            var data = _dbContext.Rezervacija
+                .Where(x => x.StudentId == studentID)
+                .Select(x => new
+                {
+                    smjestajId=x.SmjestajId,
+                    naslov = x.Smjestaj.Naslov,
+                    grad = x.Smjestaj.Grad.Naziv,
+                    cijena = x.Smjestaj.Cijena,
+                    datumPrijave = x.DatumPrijave,
+                    datumOdjave = x.DatumOdjave,
+                    brojOsoba = x.BrojOsoba
+                })
+                .ToList();
+            return Ok(data);
+        }
+
+        [HttpPost]
+        public ActionResult Obrisi(int studentId, int smjestajId)
+        {
+            Rezervacija rezervacija = _dbContext.Rezervacija.FirstOrDefault(r=>r.StudentId==studentId&&r.SmjestajId==smjestajId);
+
+            if (rezervacija == null)
+            {
+                return NotFound();
+            }
+
+            _dbContext.Remove(rezervacija);
+            _dbContext.SaveChanges();
+
+            return Ok();
+        }
     }
 }

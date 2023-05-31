@@ -80,7 +80,62 @@ namespace StudentOglasi.Controllers
                 .AsQueryable();
             return Ok(data);
         }
+        [HttpGet]
+        public ActionResult GetByUposlenikId(int uposlenikID)
+        {
+            var data = _dbContext.PrijavaStipendija
+                .Where(x => x.Stipendija.UposlenikID == uposlenikID)
+                .GroupBy(x => x.Stipendija)
+                .Select(group => new
+                {
+                    Stipendija = group.Key.Naslov,
+                    Prijave = group.Select(x => new
+                    {
+                        student = x.Student.Ime + ' ' + x.Student.Prezime,
+                        brojIndeksa = x.Student.BrojIndeksa,
+                        dokumentacija = Config.DokumentacijaPutanja + x.Dokumentacija,
+                        CV = Config.CVPutanja + x.CV,
+                        prosjekOcjena = Config.ProsjekOcjenaPutanja + x.ProsjekOcjena
+                    })
+                })
+                .AsQueryable();
+            return Ok(data);
+        }
 
+        [HttpGet]
+        public ActionResult GetByStudentId(int studentID)
+        {
+            var data = _dbContext.PrijavaStipendija
+                .Where(x => x.StudentId == studentID)
+                .Select(x => new
+                {
+                    stipendijaId=x.StipendijaID,
+                    naslov =x.Stipendija.Naslov,
+                    iznos=x.Stipendija.Iznos,
+                    rokPrijave=x.Stipendija.RokPrijave,
+                    dokumentacija = Config.DokumentacijaPutanja + x.Dokumentacija,
+                    CV = Config.CVPutanja + x.CV,
+                    prosjekOcjena = Config.ProsjekOcjenaPutanja + x.ProsjekOcjena
+                })
+                .ToList();
+            return Ok(data);
+        }
+
+        [HttpPost]
+        public ActionResult Obrisi(int studentId, int stipendijaId)
+        {
+            PrijavaStipendija prijava = _dbContext.PrijavaStipendija.FirstOrDefault(r => r.StudentId == studentId && r.StipendijaID == stipendijaId);
+
+            if (prijava == null)
+            {
+                return NotFound();
+            }
+
+            _dbContext.Remove(prijava);
+            _dbContext.SaveChanges();
+
+            return Ok();
+        }
     }
 }
 
