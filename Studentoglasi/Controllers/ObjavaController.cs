@@ -82,6 +82,7 @@ namespace StudentOglasi.Controllers
                     myFile.Close();
                 }
                 _dbContext.SaveChanges();
+                FirebaseCloudMessaging.SendNotification("Objava",edit==true? "Vaše izmjene su uspješno zabilježena": "Vaše izmjene nisu uspješno zabilježena", "success");
                 return Ok();
             }
             catch (Exception ex)
@@ -154,7 +155,7 @@ namespace StudentOglasi.Controllers
 
             _dbContext.Remove(x);
             _dbContext.SaveChanges();
-
+            FirebaseCloudMessaging.SendNotification("Objava", "Uspješno ste obrisali objavu0", "success");
             return Ok();
         }
     }
