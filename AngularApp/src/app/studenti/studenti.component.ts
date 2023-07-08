@@ -66,6 +66,7 @@ export class StudentiComponent implements OnInit {
       password:'',
       username:'',
       ime:'',
+      email:'',
       prezime:'',
       broj_indeksa:'',
       godinaStudija: 1,
@@ -79,6 +80,7 @@ export class StudentiComponent implements OnInit {
     formData.append('id', this.student.id);
     formData.append('password', this.student.password);
     formData.append('username', this.student.username);
+    formData.append('email', this.student.email);
     formData.append('ime', this.student.ime);
     formData.append('prezime', this.student.prezime);
     formData.append('broj_indeksa', this.student.broj_indeksa);

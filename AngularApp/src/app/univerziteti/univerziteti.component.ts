@@ -60,7 +60,6 @@ export class UniverzitetiComponent implements OnInit {
 
     this.httpKlijent.post(`${MojConfig.adresa_servera}/Univerzitet/Snimi`, this.univerzitet, MojConfig.http_opcije()).subscribe(x=>{
       this.preuzmiPodatke();
-      this.univerzitet=null;
     });
   }
   preuzmiPodatke() {

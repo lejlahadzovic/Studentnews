@@ -43,32 +43,7 @@ namespace StudentOglasi.Controllers
                 referent.Prezime = x.prezime;
                 referent.Email = x.email;
                 referent.FakultetID = x.fakultetID;
-                if (x.slika != null)
-                {
-                    if (x.slika.Length > 500 * 1000)
-                        return BadRequest("maksimalna velicina fajla je 500 KB");
-
-                    if (edit == true)
-                    {
-                        string webRootPath = _hostingEnvironment.WebRootPath;
-                        var fullPath = webRootPath + "/Slike/" + referent.Slika;
-
-                        if (System.IO.File.Exists(fullPath))
-                        {
-                            System.IO.File.Delete(fullPath);
-                        }
-                    }
-
-                    string ekstenzija = Path.GetExtension(x.slika.FileName);
-                    string contetntType = x.slika.ContentType;
-
-                    var filename = $"{Guid.NewGuid()}{ekstenzija}";
-
-                    var myFile = new FileStream(Config.SlikeFolder + filename, FileMode.Create);
-                    x.slika.CopyTo(myFile);
-                    referent.Slika = filename;
-                    myFile.Close();
-                }
+                referent.Slika = DodajFile.UploadSlike(x.slika, referent.Slika, _hostingEnvironment);
 
                 _dbContext.SaveChanges();
                 return Ok();
@@ -129,13 +104,8 @@ namespace StudentOglasi.Controllers
         public ActionResult Obrisi([FromBody] int id)
         {
             ReferentFakulteta r = _dbContext.ReferentFakulteta.Find(id);
-            string webRootPath = _hostingEnvironment.WebRootPath;
-            var fullPath = webRootPath + "/Slike/" + r.Slika;
+            DodajFile.ObrisiSliku(r.Slika, _hostingEnvironment);
 
-            if (System.IO.File.Exists(fullPath))
-            {
-                System.IO.File.Delete(fullPath);
-            }
             _dbContext.Remove(r);
             _dbContext.SaveChanges();
             return Ok();

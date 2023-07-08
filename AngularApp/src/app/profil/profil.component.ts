@@ -3,6 +3,8 @@ import {LoginInformacije} from "../helper/login-informacije";
 import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {MojConfig} from "../MojConfig";
+import {FileUpload} from "../models/file-upload.model";
+import {FileUploadService} from "../services/file-upload.service";
 
 @Component({
   selector: 'app-profil',
@@ -19,8 +21,10 @@ export class ProfilComponent implements OnInit {
   univerzitetiPodaci: any;
   firmePodaci: any;
   stipenditoriPodaci: any;
+  selectedFiles?: FileList;
+  currentFileUpload?: FileUpload;
 
-  constructor(private httpKlijent: HttpClient) { }
+  constructor(private httpKlijent: HttpClient, private uploadService: FileUploadService) { }
 
   ngOnInit(): void {
     this.korisnikInfo=this.loginInfo().autentifikacijaToken?.korisnik;
@@ -80,12 +84,15 @@ export class ProfilComponent implements OnInit {
   }
 
   private setSlika() {
-    if(this.korisnik.slika!=null){
-      this.slikaURL = MojConfig.SlikePutanja + this.korisnik.slika;
-    }
-    else{
-      this.slikaURL="assets/Images/User%20icon.png";
-    }
+    this.uploadService.getUserImageURL(this.korisnikInfo.id).subscribe(url => {
+      if (url) {
+        this.slikaURL = url;
+      } else if (this.korisnik.slika) {
+        this.slikaURL = MojConfig.SlikePutanja + this.korisnik.slika;
+      } else {
+        this.slikaURL = "assets/Images/User%20icon.png";
+      }
+    });
   }
 
   snimi(){
@@ -116,6 +123,7 @@ export class ProfilComponent implements OnInit {
     formData.append('id', this.korisnik.id);
     formData.append('password', this.korisnik.password);
     formData.append('username', this.korisnik.username);
+    formData.append('email', this.korisnik.email);
     formData.append('ime', this.korisnik.ime);
     formData.append('prezime', this.korisnik.prezime);
     formData.append('broj_indeksa', this.korisnik.broj_indeksa);
@@ -123,19 +131,38 @@ export class ProfilComponent implements OnInit {
     formData.append('nacin_studiranja', this.korisnik.nacin_studiranja);
     formData.append('fakultetID', this.korisnik.fakultetID);
     formData.append('slika',this.slika);
+    this.upload();
     this.httpKlijent.post(MojConfig.adresa_servera+"/Student/Snimi",formData).subscribe((s:any)=>{
       this.getStudent();
     })
   }
 
-  chooseFile(files: any) {
-    this.slika = files[0];
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.slikaURL = reader.result as string;
+  selectFile(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        this.slikaURL = fileReader.result as string;
+      };
+      fileReader.readAsDataURL(file);
     }
-    reader.readAsDataURL(this.slika)
+    this.selectedFiles = event.target.files;
+  }
+
+  upload(): void {
+    if (this.selectedFiles) {
+      const file: File | null = this.selectedFiles.item(0);
+      this.selectedFiles = undefined;
+
+      if (file) {
+        this.currentFileUpload = new FileUpload(file);
+        this.uploadService.pushFileToStorage(this.currentFileUpload).subscribe(
+          error => {
+            console.log(error);
+          }
+        );
+      }
+    }
   }
 
   edit() {

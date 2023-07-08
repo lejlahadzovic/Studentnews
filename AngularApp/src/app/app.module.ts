@@ -65,6 +65,9 @@ import { StipendijaPrijaveComponent } from './stipendija-prijave/stipendija-prij
 import { PregledPrijavaComponent } from './pregled-prijava/pregled-prijava.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import { RezervacijeComponent } from './rezervacije/rezervacije.component';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 initializeApp(environment.firebase);
 
 @NgModule({
@@ -154,6 +157,9 @@ initializeApp(environment.firebase);
             {path: 'prijave', component: PregledPrijavaComponent},
             {path: 'moje-rezervacije', component: RezervacijeComponent},
         ]),
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireDatabaseModule,
+        AngularFireStorageModule,
         FormsModule,
         MatToolbarModule,
         MatButtonToggleModule,

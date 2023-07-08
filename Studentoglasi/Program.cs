@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using StudentOglasi.Data;
+using StudentOglasi.Helper;
 using System.Text.Json.Serialization;
 
 
@@ -20,6 +21,8 @@ builder.Services.AddSwaggerGen(c =>
 }
 );
 var app = builder.Build();
+
+FirebaseCloudMessaging.InitializeFirebaseApp();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

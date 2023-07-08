@@ -55,32 +55,8 @@ namespace StudentOglasi.Controllers
                 stipendija.NivoObrazovanja = x.nivoObrazovanja;
                 stipendija.BrojStipendisata = x.brojStipendisata;
                 stipendija.UposlenikID = x.uposlenikID;
+                stipendija.Slika = DodajFile.UploadSlike(x.slika, stipendija.Slika, _hostingEnvironment);
 
-                if (x.slika != null)
-                {
-                    if (x.slika.Length > 500 * 1000)
-                        return BadRequest("max velicina fajla je 500 KB");
-
-                    if (edit == true)
-                    {
-                        string webRootPath = _hostingEnvironment.WebRootPath;
-                        var fullPath = webRootPath + "/Slike/" + stipendija.Slika;
-
-                        if (System.IO.File.Exists(fullPath))
-                        {
-                            System.IO.File.Delete(fullPath);
-                        }
-                    }
-
-                    string ekstenzija = Path.GetExtension(x.slika.FileName);
-
-                    var filename = $"{Guid.NewGuid()}{ekstenzija}";
-
-                    var myFile = new FileStream(Config.SlikeFolder + filename, FileMode.Create);
-                    x.slika.CopyTo(myFile);
-                    stipendija.Slika = filename;
-                    myFile.Close();
-                }
                 _dbContext.SaveChanges();
                 return Ok(stipendija);
             }
@@ -162,13 +138,7 @@ namespace StudentOglasi.Controllers
         {
             Stipendija x = _dbContext.Stipendija.Find(id);
 
-            string webRootPath = _hostingEnvironment.WebRootPath;
-            var fullPath = webRootPath + "/Slike/" + x.Slika;
-
-            if (System.IO.File.Exists(fullPath))
-            {
-                System.IO.File.Delete(fullPath);
-            }
+            DodajFile.ObrisiSliku(x.Slika, _hostingEnvironment);
 
             _dbContext.Remove(x);
             _dbContext.SaveChanges();

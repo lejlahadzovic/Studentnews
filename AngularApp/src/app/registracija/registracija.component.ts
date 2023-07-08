@@ -110,6 +110,7 @@ export class RegistracijaComponent implements OnInit {
     formData.append('broj_indeksa', this.broj_indeksa);
     formData.append('godinaStudija', this.godinaStudija);
     formData.append('nacin_studiranja', this.nacin_studiranja);
+    formData.append('email', this.email);
     formData.append('fakultetID', this.fakultetID);
 
     this.httpKlijent.post(MojConfig.adresa_servera + "/Student/Snimi", formData).subscribe((s: any) => {

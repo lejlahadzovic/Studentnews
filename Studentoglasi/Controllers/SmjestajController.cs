@@ -53,33 +53,8 @@ namespace StudentOglasi.Controllers
                 smjestaj.NacinGrijanja = x.nacinGrijanja;
                 smjestaj.GradID = x.gradID;
                 smjestaj.IzdavacID = x.izdavacID;
+                smjestaj.Slika = DodajFile.UploadSlike(x.slika, smjestaj.Slika, _hostingEnvironment);
 
-                if (x.slika != null)
-                {
-                    if (x.slika.Length > 500 * 1000)
-                        return BadRequest("max velicina fajla je 500 KB");
-
-                    if (edit == true)
-                    {
-                        string webRootPath = _hostingEnvironment.WebRootPath;
-                        var fullPath = webRootPath + "/Slike/" + smjestaj.Slika;
-
-                        if (System.IO.File.Exists(fullPath))
-                        {
-                            System.IO.File.Delete(fullPath);
-                        }
-                    }
-
-                    string ekstenzija = Path.GetExtension(x.slika.FileName);
-                    string contetntType = x.slika.ContentType;
-
-                    var filename = $"{Guid.NewGuid()}{ekstenzija}";
-
-                    var myFile = new FileStream(Config.SlikeFolder + filename, FileMode.Create);
-                    x.slika.CopyTo(myFile);
-                    smjestaj.Slika = filename;
-                    myFile.Close();
-                }
                 _dbContext.SaveChanges();
                 return Ok(smjestaj);
             }
@@ -166,13 +141,7 @@ namespace StudentOglasi.Controllers
         public ActionResult Obrisi([FromBody] int id)
         {
             Smjestaj x = _dbContext.Smjestaj.Find(id);
-                string webRootPath = _hostingEnvironment.WebRootPath;
-                var fullPath = webRootPath + "/Slike/" + x.Slika;
-
-                if (System.IO.File.Exists(fullPath))
-                {
-                    System.IO.File.Delete(fullPath);
-                }
+            DodajFile.ObrisiSliku(x.Slika, _hostingEnvironment);
 
             _dbContext.Remove(x);
             _dbContext.SaveChanges();

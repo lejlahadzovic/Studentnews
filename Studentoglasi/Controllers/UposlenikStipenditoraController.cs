@@ -44,33 +44,7 @@ namespace StudentOglasi.Controllers
                 uposlenik.Prezime = x.prezime;
                 uposlenik.Email = x.email;
                 uposlenik.StipenditorID = x.stipenditorID;
-
-                if (x.slika != null)
-                {
-                    if (x.slika.Length > 500 * 1000)
-                        return BadRequest("maksimalna velicina fajla je 500 KB");
-
-                    if (edit == true)
-                    {
-                        string webRootPath = _hostingEnvironment.WebRootPath;
-                        var fullPath = webRootPath + "/Slike/" + uposlenik.Slika;
-
-                        if (System.IO.File.Exists(fullPath))
-                        {
-                            System.IO.File.Delete(fullPath);
-                        }
-                    }
-
-                    string ekstenzija = Path.GetExtension(x.slika.FileName);
-                    string contetntType = x.slika.ContentType;
-
-                    var filename = $"{Guid.NewGuid()}{ekstenzija}";
-
-                    var myFile = new FileStream(Config.SlikeFolder + filename, FileMode.Create);
-                    x.slika.CopyTo(myFile);
-                    uposlenik.Slika = filename;
-                    myFile.Close();
-                }
+                uposlenik.Slika = DodajFile.UploadSlike(x.slika, uposlenik.Slika, _hostingEnvironment);
 
                 _dbContext.SaveChanges();
                 return Ok();
@@ -129,13 +103,8 @@ namespace StudentOglasi.Controllers
         public ActionResult Obrisi([FromBody] int id)
         {
             UposlenikStipenditora u = _dbContext.UposlenikStipenditora.Find(id);
-            string webRootPath = _hostingEnvironment.WebRootPath;
-            var fullPath = webRootPath + "/Slike/" + u.Slika;
+            DodajFile.ObrisiSliku(u.Slika, _hostingEnvironment);
 
-            if (System.IO.File.Exists(fullPath))
-            {
-                System.IO.File.Delete(fullPath);
-            }
             _dbContext.Remove(u);
             _dbContext.SaveChanges();
             return Ok();

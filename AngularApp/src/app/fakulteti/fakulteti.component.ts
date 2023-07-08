@@ -60,7 +60,7 @@ export class FakultetiComponent implements OnInit {
 
     this.httpKlijent.post(`${MojConfig.adresa_servera}/Fakultet/Snimi`, this.fakultet, MojConfig.http_opcije()).subscribe(x=>{
       this.preuzmiPodatke();
-      this.fakultet=null;
+
     });
   }
   preuzmiPodatke() {

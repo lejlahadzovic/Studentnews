@@ -102,3 +102,7 @@ textarea{
   margin-top: 3px;
   font-weight: bold;
 }
+:host {
+  position: relative;
+  z-index: 1;
+}

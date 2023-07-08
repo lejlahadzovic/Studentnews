@@ -55,32 +55,8 @@ namespace StudentOglasi.Controllers
                 {
                     objava.ReferentUniverzitetaID = logiraniKorisnik.ID;
                 }
-                if (x.slika != null)
-                {
-                    if (x.slika.Length > 500 * 1000)
-                        return BadRequest("maksimalna velicina fajla je 500 KB");
+                objava.Slika = DodajFile.UploadSlike(x.slika, objava.Slika, _hostingEnvironment);
 
-                    if (edit == true)
-                    {
-                        string webRootPath = _hostingEnvironment.WebRootPath;
-                        var fullPath = webRootPath + "/Slike/" + objava.Slika;
-
-                        if (System.IO.File.Exists(fullPath))
-                        {
-                            System.IO.File.Delete(fullPath);
-                        }
-                    }
-
-                    string ekstenzija = Path.GetExtension(x.slika.FileName);
-                    string contetntType = x.slika.ContentType;
-
-                    var filename = $"{Guid.NewGuid()}{ekstenzija}";
-
-                    var myFile = new FileStream(Config.SlikeFolder + filename, FileMode.Create);
-                    x.slika.CopyTo(myFile);
-                    objava.Slika = filename;
-                    myFile.Close();
-                }
                 _dbContext.SaveChanges();
                 FirebaseCloudMessaging.SendNotification("Objava",edit==true? "Vaše izmjene su uspješno zabilježena": "Vaše izmjene nisu uspješno zabilježena", "success");
                 return Ok();
@@ -145,13 +121,7 @@ namespace StudentOglasi.Controllers
         {
             Objava x = _dbContext.Objava.Find(id);
 
-            string webRootPath = _hostingEnvironment.WebRootPath;
-            var fullPath = webRootPath + "/Slike/" + x.Slika;
-
-            if (System.IO.File.Exists(fullPath))
-            {
-                System.IO.File.Delete(fullPath);
-            }
+            DodajFile.ObrisiSliku(x.Slika, _hostingEnvironment);
 
             _dbContext.Remove(x);
             _dbContext.SaveChanges();

@@ -20,6 +20,11 @@
     <input matInput type="password" [(ngModel)]="this.password">
   </mat-form-field>
 
+  <mat-form-field appearance="fill" >
+    <mat-label>Email</mat-label>
+    <input matInput [(ngModel)]="this.email">
+  </mat-form-field>
+
   <mat-form-field appearance="fill">
     <mat-label>Tip korisnika</mat-label>
     <mat-select [(value)]="tipKorisnika" disableRipple>
@@ -92,11 +97,6 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Email</mat-label>
-      <input matInput [(ngModel)]="this.email">
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
       <mat-label>Broj telefona</mat-label>
       <input matInput [(ngModel)]="this.broj_telefona">
     </mat-form-field>
@@ -112,11 +112,6 @@
     <mat-form-field appearance="fill">
       <mat-label>Prezime</mat-label>
       <input matInput [(ngModel)]="this.prezime">
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Email</mat-label>
-      <input matInput [(ngModel)]="this.email">
     </mat-form-field>
 
     <mat-form-field appearance="fill">
@@ -142,11 +137,6 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Email</mat-label>
-      <input matInput [(ngModel)]="this.email">
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
       <mat-label>Univerzitet</mat-label>
       <mat-select [(ngModel)]="this.univerzitetID">
         <mat-option *ngFor="let univerzitet of this.univerzitetiPodaci" [value]="univerzitet.id">
@@ -166,11 +156,6 @@
     <mat-form-field appearance="fill">
       <mat-label>Prezime</mat-label>
       <input matInput [(ngModel)]="this.prezime">
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Email</mat-label>
-      <input matInput [(ngModel)]="this.email">
     </mat-form-field>
 
     <mat-form-field appearance="fill">
@@ -199,11 +184,6 @@
     <mat-form-field appearance="fill">
       <mat-label>Prezime</mat-label>
       <input matInput [(ngModel)]="this.prezime">
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Email</mat-label>
-      <input matInput [(ngModel)]="this.email">
     </mat-form-field>
 
     <mat-form-field appearance="fill">
