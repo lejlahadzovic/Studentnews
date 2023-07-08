@@ -131,7 +131,7 @@ export class ProfilComponent implements OnInit {
     formData.append('nacin_studiranja', this.korisnik.nacin_studiranja);
     formData.append('fakultetID', this.korisnik.fakultetID);
     formData.append('slika',this.slika);
-    this.upload();
+    this.uploadSlike();
     this.httpKlijent.post(MojConfig.adresa_servera+"/Student/Snimi",formData).subscribe((s:any)=>{
       this.getStudent();
     })
@@ -149,7 +149,7 @@ export class ProfilComponent implements OnInit {
     this.selectedFiles = event.target.files;
   }
 
-  upload(): void {
+  uploadSlike(): void {
     if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
       this.selectedFiles = undefined;
@@ -180,6 +180,7 @@ export class ProfilComponent implements OnInit {
     formData.append('email', this.korisnik.email);
     formData.append('broj_telefona', this.korisnik.broj_telefona);
     formData.append('slika',this.slika);
+    this.uploadSlike();
     this.httpKlijent.post(MojConfig.adresa_servera+"/IzdavacSmjestaja/Snimi",formData).subscribe((x:any)=>{
     })
   }
@@ -208,6 +209,7 @@ export class ProfilComponent implements OnInit {
     formData.append('email', this.korisnik.email);
     formData.append('univerzitetID', this.korisnik.univerzitetID);
     formData.append('slika',this.slika);
+    this.uploadSlike();
     this.httpKlijent.post(MojConfig.adresa_servera+"/ReferentUniverziteta/Snimi",formData).subscribe((x:any)=>{
     })
   }
@@ -221,6 +223,7 @@ export class ProfilComponent implements OnInit {
     formData.append('email', this.korisnik.email);
     formData.append('fakultetID', this.korisnik.fakultetID);
     formData.append('slika',this.slika);
+    this.uploadSlike();
     this.httpKlijent.post(MojConfig.adresa_servera+"/ReferentFakulteta/Snimi",formData).subscribe((x:any)=>{
     })
   }
@@ -267,6 +270,7 @@ export class ProfilComponent implements OnInit {
     formData.append('prezime', this.korisnik.prezime);
     formData.append('email', this.korisnik.email);
     formData.append('stipenditorID', this.korisnik.stipenditorID);
+    this.uploadSlike();
     this.httpKlijent.post(MojConfig.adresa_servera+"/UposlenikStipenditora/Snimi",formData).subscribe((s:any)=>{
     })
   }
@@ -282,6 +286,7 @@ export class ProfilComponent implements OnInit {
     formData.append('firmaID', this.korisnik.firmaID);
     formData.append('pozicija', this.korisnik.pozicija);
     formData.append('slika',this.slika);
+    this.uploadSlike();
     this.httpKlijent.post(MojConfig.adresa_servera+"/UposlenikFirme/Snimi",formData).subscribe((s:any)=>{
     })
   }
@@ -295,6 +300,7 @@ export class ProfilComponent implements OnInit {
     formData.append('prezime', this.korisnik.prezime);
     formData.append('email', this.korisnik.email);
     formData.append('slika',this.slika);
+    this.uploadSlike();
     this.httpKlijent.post(MojConfig.adresa_servera+"/Administrator/Snimi",formData).subscribe((s:any)=>{
     })
   }
