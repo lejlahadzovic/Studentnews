@@ -31,7 +31,7 @@ namespace StudentOglasi.Helper
                     Title = title,
                     Body = message
                 },
-                Token = "fxxRrWZOanZkOum3tgqhi-:APA91bFb5XiSi2sFqmgyS2mv24OJlF5T3M6IF_5wk9t3NpEvGsp4ICXvK0NGHAd66TuPNJL0TrayJLQOi9R-ol6xza-KDoeGmJ5IKsufJ-70PHbHicU1CBJ3dOX1Rj8ofh1oKe_OE233",
+                Token = "eAj9oNCTf0Cy8S77sKWL4I:APA91bES1LRLtvnwy92oMzNfHjPmeARxeQSVc6NZekNi9NwIkh2fL1HZU0Fk6msZHfgfiCJyhpqCfMJpoZxnzTVK7vU3rAAnpQQ7BZwDI9w9URSCOn5nShDODscBB3_F1lDzTrr5Frta",
                 Data = new Dictionary<string, string>()
                 {
                     { "notificationType", notificationType }
