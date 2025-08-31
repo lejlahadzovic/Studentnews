@@ -1,7 +1,7 @@
 # StudentNews
 StudentNews is a modern web application built with Angular for the frontend and .NET Core (C#) for the backend.
 ---
-#🛠️ Tech Stack
+# 🛠️ Tech Stack
 ## Frontend (Angular)
 
 - Angular Framework for dynamic, responsive UI
